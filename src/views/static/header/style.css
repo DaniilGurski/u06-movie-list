@@ -1,0 +1,31 @@
+header {
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
+  padding: var(--spacing-md);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: var(--spacing-md);
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: var(--color-text-inverse);
+}
+
+nav ul li a:hover {
+  color: var(--color-primary-light);
+}
+
