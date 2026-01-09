@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import db from '../database.js';
+import db, { saveDatabase } from '../database.js';
 
 const router = express.Router();
 
@@ -71,7 +71,14 @@ router.get('/', (req: Request, res: Response) => {
 
     query += ' ORDER BY date_added DESC';
 
-    const movies = db.prepare(query).all(...params) as Movie[];
+    const stmt = db.prepare(query);
+    stmt.bind(params);
+    const movies: Movie[] = [];
+    while (stmt.step()) {
+      const row = stmt.getAsObject();
+      movies.push(row as unknown as Movie);
+    }
+    stmt.free();
 
     res.json(movies);
   } catch (error) {
@@ -91,9 +98,13 @@ router.get('/:id', (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    const movie = db
-      .prepare('SELECT * FROM movies WHERE id = ?')
-      .get(id) as Movie | undefined;
+    const stmt = db.prepare('SELECT * FROM movies WHERE id = ?');
+    stmt.bind([id]);
+    let movie: Movie | undefined;
+    if (stmt.step()) {
+      movie = stmt.getAsObject() as unknown as Movie;
+    }
+    stmt.free();
 
     if (!movie) {
       return res.status(404).json({
@@ -168,7 +179,7 @@ router.post('/', (req: Request<unknown, unknown, CreateMovieBody>, res: Response
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
 
-    const result = stmt.run(
+    stmt.bind([
       tmdb_id,
       title,
       poster_path || null,
@@ -180,12 +191,22 @@ router.post('/', (req: Request<unknown, unknown, CreateMovieBody>, res: Response
       review ?? null,
       is_favorite ? 1 : 0,
       date_watched || null
-    );
+    ]);
+    stmt.step();
+    const lastInsertRowid = db.exec('SELECT last_insert_rowid()')[0]?.values[0]?.[0] as number;
+    stmt.free();
+
+    // Spara databasen
+    saveDatabase();
 
     // Hämta den skapade filmen
-    const movie = db
-      .prepare('SELECT * FROM movies WHERE id = ?')
-      .get(result.lastInsertRowid) as Movie;
+    const getStmt = db.prepare('SELECT * FROM movies WHERE id = ?');
+    getStmt.bind([lastInsertRowid]);
+    let movie: Movie | undefined;
+    if (getStmt.step()) {
+      movie = getStmt.getAsObject() as unknown as Movie;
+    }
+    getStmt.free();
 
     res.status(201).json(movie);
   } catch (error) {
@@ -222,9 +243,13 @@ router.put('/:id', (req: Request<{ id: string }, unknown, UpdateMovieBody>, res:
     } = req.body;
 
     // Kolla om filmen finns
-    const existingMovie = db
-      .prepare('SELECT * FROM movies WHERE id = ?')
-      .get(id) as Movie | undefined;
+    const checkStmt = db.prepare('SELECT * FROM movies WHERE id = ?');
+    checkStmt.bind([id]);
+    let existingMovie: Movie | undefined;
+    if (checkStmt.step()) {
+      existingMovie = checkStmt.getAsObject() as unknown as Movie;
+    }
+    checkStmt.free();
 
     if (!existingMovie) {
       return res.status(404).json({
@@ -293,12 +318,22 @@ router.put('/:id', (req: Request<{ id: string }, unknown, UpdateMovieBody>, res:
       WHERE id = ?
     `;
 
-    db.prepare(query).run(...params);
+    const updateStmt = db.prepare(query);
+    updateStmt.bind(params);
+    updateStmt.step();
+    updateStmt.free();
+
+    // Spara databasen
+    saveDatabase();
 
     // Hämta uppdaterad film
-    const movie = db
-      .prepare('SELECT * FROM movies WHERE id = ?')
-      .get(id) as Movie;
+    const getStmt = db.prepare('SELECT * FROM movies WHERE id = ?');
+    getStmt.bind([id]);
+    let movie: Movie | undefined;
+    if (getStmt.step()) {
+      movie = getStmt.getAsObject() as unknown as Movie;
+    }
+    getStmt.free();
 
     res.json(movie);
   } catch (error) {
@@ -319,9 +354,13 @@ router.delete('/:id', (req: Request<{ id: string }>, res: Response) => {
     const { id } = req.params;
 
     // Kolla om filmen finns
-    const movie = db
-      .prepare('SELECT * FROM movies WHERE id = ?')
-      .get(id) as Movie | undefined;
+    const checkStmt = db.prepare('SELECT * FROM movies WHERE id = ?');
+    checkStmt.bind([id]);
+    let movie: Movie | undefined;
+    if (checkStmt.step()) {
+      movie = checkStmt.getAsObject() as unknown as Movie;
+    }
+    checkStmt.free();
 
     if (!movie) {
       return res.status(404).json({
@@ -331,7 +370,13 @@ router.delete('/:id', (req: Request<{ id: string }>, res: Response) => {
     }
 
     // Ta bort filmen
-    db.prepare('DELETE FROM movies WHERE id = ?').run(id);
+    const deleteStmt = db.prepare('DELETE FROM movies WHERE id = ?');
+    deleteStmt.bind([id]);
+    deleteStmt.step();
+    deleteStmt.free();
+
+    // Spara databasen
+    saveDatabase();
 
     res.json({
       message: 'Movie deleted successfully',
@@ -353,31 +398,37 @@ router.delete('/:id', (req: Request<{ id: string }>, res: Response) => {
 router.get('/user/stats', (req: Request, res: Response) => {
   try {
     // Räkna totalt antal filmer
-    const totalMovies = (db
-      .prepare('SELECT COUNT(*) as count FROM movies')
-      .get() as { count: number }).count;
+    const totalStmt = db.prepare('SELECT COUNT(*) as count FROM movies');
+    totalStmt.step();
+    const totalMovies = (totalStmt.getAsObject() as { count: number }).count;
+    totalStmt.free();
 
     // Räkna antal watchlist-filmer
-    const watchlistCount = (db
-      .prepare('SELECT COUNT(*) as count FROM movies WHERE status = "watchlist"')
-      .get() as { count: number }).count;
+    const watchlistStmt = db.prepare('SELECT COUNT(*) as count FROM movies WHERE status = "watchlist"');
+    watchlistStmt.step();
+    const watchlistCount = (watchlistStmt.getAsObject() as { count: number }).count;
+    watchlistStmt.free();
 
     // Räkna antal watched-filmer
-    const watchedCount = (db
-      .prepare('SELECT COUNT(*) as count FROM movies WHERE status = "watched"')
-      .get() as { count: number }).count;
+    const watchedStmt = db.prepare('SELECT COUNT(*) as count FROM movies WHERE status = "watched"');
+    watchedStmt.step();
+    const watchedCount = (watchedStmt.getAsObject() as { count: number }).count;
+    watchedStmt.free();
 
     // Räkna antal favoriter
-    const favoritesCount = (db
-      .prepare('SELECT COUNT(*) as count FROM movies WHERE is_favorite = 1')
-      .get() as { count: number }).count;
+    const favoritesStmt = db.prepare('SELECT COUNT(*) as count FROM movies WHERE is_favorite = 1');
+    favoritesStmt.step();
+    const favoritesCount = (favoritesStmt.getAsObject() as { count: number }).count;
+    favoritesStmt.free();
 
     // Beräkna genomsnittligt personligt betyg
-    const avgRow = db
-      .prepare('SELECT AVG(personal_rating) as avg FROM movies WHERE personal_rating IS NOT NULL')
-      .get() as { avg: number | null };
-
-    const avgRating = avgRow?.avg ?? null;
+    const avgStmt = db.prepare('SELECT AVG(personal_rating) as avg FROM movies WHERE personal_rating IS NOT NULL');
+    let avgRating: number | null = null;
+    if (avgStmt.step()) {
+      const avgRow = avgStmt.getAsObject() as { avg: number | null };
+      avgRating = avgRow.avg;
+    }
+    avgStmt.free();
 
     const response: StatsResponse = {
       totalMovies,

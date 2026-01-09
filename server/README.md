@@ -1,6 +1,6 @@
 # Movie Watchlist API
 
-A simple Express REST API with SQLite database for managing movie watchlists and watched movies.
+A simple Express REST API with sql.js (in-memory SQLite) for managing movie watchlists and watched movies.
 
 ## 🚀 Quick Start
 
@@ -36,15 +36,6 @@ curl http://localhost:3000/api/health
 http://localhost:3000/api
 ```
 
-### Authentication
-Send your team ID via the `x-user-id` header with every request:
-
-```javascript
-headers: {
-  'x-user-id': 'team-1'
-}
-```
-
 ---
 
 ## 🎬 Movies Endpoints
@@ -61,13 +52,13 @@ Get all movies for the current user.
 **Examples:**
 ```bash
 # Get all movies
-curl -H "x-user-id: team-1" http://localhost:3000/api/movies
+curl http://localhost:3000/api/movies
 
 # Get only watchlist
-curl -H "x-user-id: team-1" http://localhost:3000/api/movies?status=watchlist
+curl http://localhost:3000/api/movies?status=watchlist
 
 # Get only watched movies
-curl -H "x-user-id: team-1" http://localhost:3000/api/movies?status=watched
+curl http://localhost:3000/api/movies?status=watched
 ```
 
 **Response:**
@@ -75,7 +66,6 @@ curl -H "x-user-id: team-1" http://localhost:3000/api/movies?status=watched
 [
   {
     "id": 1,
-    "user_id": "team-1",
     "tmdb_id": 550,
     "title": "Fight Club",
     "poster_path": "/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg",
@@ -102,14 +92,13 @@ Get a specific movie by ID.
 
 **Example:**
 ```bash
-curl -H "x-user-id: team-1" http://localhost:3000/api/movies/1
+curl http://localhost:3000/api/movies/1
 ```
 
 **Response:**
 ```json
 {
   "id": 1,
-  "user_id": "team-1",
   "tmdb_id": 550,
   "title": "Fight Club",
   ...
@@ -127,7 +116,6 @@ Add a new movie to watchlist or watched list.
 **Required Headers:**
 ```
 Content-Type: application/json
-x-user-id: team-1
 ```
 
 **Required Fields:**
@@ -149,7 +137,6 @@ x-user-id: team-1
 ```bash
 curl -X POST http://localhost:3000/api/movies \
   -H "Content-Type: application/json" \
-  -H "x-user-id: team-1" \
   -d '{
     "tmdb_id": 550,
     "title": "Fight Club",
@@ -166,8 +153,7 @@ curl -X POST http://localhost:3000/api/movies \
 const response = await fetch('http://localhost:3000/api/movies', {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
-    'x-user-id': 'team-1'
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify({
     tmdb_id: 550,
@@ -187,7 +173,6 @@ const movie = await response.json();
 ```json
 {
   "id": 1,
-  "user_id": "team-1",
   "tmdb_id": 550,
   "title": "Fight Club",
   "status": "watchlist",
@@ -214,7 +199,6 @@ Update a movie (e.g., move from watchlist to watched, add rating/review).
 **Required Headers:**
 ```
 Content-Type: application/json
-x-user-id: team-1
 ```
 
 **Optional Fields (provide at least one):**
@@ -228,7 +212,6 @@ x-user-id: team-1
 ```bash
 curl -X PUT http://localhost:3000/api/movies/1 \
   -H "Content-Type: application/json" \
-  -H "x-user-id: team-1" \
   -d '{
     "status": "watched",
     "personal_rating": 5,
@@ -242,8 +225,7 @@ curl -X PUT http://localhost:3000/api/movies/1 \
 const response = await fetch('http://localhost:3000/api/movies/1', {
   method: 'PUT',
   headers: {
-    'Content-Type': 'application/json',
-    'x-user-id': 'team-1'
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify({
     status: 'watched',
@@ -260,7 +242,6 @@ const updatedMovie = await response.json();
 ```json
 {
   "id": 1,
-  "user_id": "team-1",
   "tmdb_id": 550,
   "title": "Fight Club",
   "status": "watched",
@@ -280,17 +261,13 @@ Delete a movie from your list.
 
 **Example:**
 ```bash
-curl -X DELETE http://localhost:3000/api/movies/1 \
-  -H "x-user-id: team-1"
+curl -X DELETE http://localhost:3000/api/movies/1
 ```
 
 **JavaScript Example:**
 ```javascript
 const response = await fetch('http://localhost:3000/api/movies/1', {
-  method: 'DELETE',
-  headers: {
-    'x-user-id': 'team-1'
-  }
+  method: 'DELETE'
 });
 
 const result = await response.json();
@@ -318,7 +295,7 @@ Get statistics for the current user.
 
 **Example:**
 ```bash
-curl -H "x-user-id: team-1" http://localhost:3000/api/movies/user/stats
+curl http://localhost:3000/api/movies/user/stats
 ```
 
 **Response:**
@@ -345,7 +322,7 @@ Visit `http://localhost:3000` to see all available endpoints.
 curl http://localhost:3000/api/health
 
 # Get all movies
-curl -H "x-user-id: team-1" http://localhost:3000/api/movies
+curl http://localhost:3000/api/movies
 ```
 
 ### Using Browser DevTools Console
@@ -354,8 +331,7 @@ curl -H "x-user-id: team-1" http://localhost:3000/api/movies
 const response = await fetch('http://localhost:3000/api/movies', {
   method: 'POST',
   headers: {
-    'Content-Type': 'application/json',
-    'x-user-id': 'team-1'
+    'Content-Type': 'application/json'
   },
   body: JSON.stringify({
     tmdb_id: 550,
@@ -377,7 +353,6 @@ console.log(movie);
 | Column | Type | Description |
 |--------|------|-------------|
 | id | INTEGER | Primary key (auto-increment) |
-| user_id | TEXT | Team identifier (from x-user-id header) |
 | tmdb_id | INTEGER | TMDB movie ID |
 | title | TEXT | Movie title |
 | poster_path | TEXT | TMDB poster path |
@@ -392,9 +367,11 @@ console.log(movie);
 | date_watched | TEXT | Date watched (for watched movies) |
 
 **Constraints:**
-- `UNIQUE(user_id, tmdb_id)` - Prevents duplicate movies per user
+- `UNIQUE(tmdb_id)` - Prevents duplicate movies
 - `CHECK(status IN ('watchlist', 'watched'))` - Only valid statuses
 - `CHECK(personal_rating BETWEEN 1 AND 5)` - Rating must be 1-5
+
+**Note:** This API uses sql.js, an in-memory SQLite database that runs in JavaScript. The database is automatically saved to disk after each write operation.
 
 ---
 
@@ -428,32 +405,30 @@ npm run reset-db
 ### 3. "Movie already exists"
 **Problem:** Trying to add a movie that's already in your list
 
-**Solution:** Each user can only have one entry per TMDB movie. Use PUT to update it instead.
+**Solution:** Each TMDB movie can only be added once. Use PUT to update it instead.
 
 ### 4. 404 Not Found
 **Problem:** Wrong endpoint or movie doesn't exist
 
-**Solution:** Check the endpoint URL and make sure the movie belongs to your user_id
+**Solution:** Check the endpoint URL and make sure the movie ID exists
 
 ---
 
 ## 💡 Tips for Students
 
-1. **Always include `x-user-id` header** - This is how the API knows which team's data to access
+1. **Check the Network tab** - Open Browser DevTools → Network tab to see all requests and responses
 
-2. **Check the Network tab** - Open Browser DevTools → Network tab to see all requests and responses
+2. **Status must be exact** - Use `"watchlist"` or `"watched"` (lowercase, exact spelling)
 
-3. **Status must be exact** - Use `"watchlist"` or `"watched"` (lowercase, exact spelling)
+3. **Test with Postman or curl first** - Before integrating into your frontend, test endpoints directly
 
-4. **Test with Postman or curl first** - Before integrating into your frontend, test endpoints directly
+4. **Read error messages** - Error responses include helpful hints
 
-5. **Read error messages** - Error responses include helpful hints
+5. **Use async/await** - All fetch calls should use async/await or .then()
 
-6. **Use async/await** - All fetch calls should use async/await or .then()
+6. **Handle loading states** - API calls take time, show loading indicators
 
-7. **Handle loading states** - API calls take time, show loading indicators
-
-8. **Handle errors** - Always use try/catch with fetch calls
+7. **Handle errors** - Always use try/catch with fetch calls
 
 ---
 
@@ -475,8 +450,7 @@ PORT=3001
 Make sure:
 1. Backend is running (`npm run dev` in server folder)
 2. Using correct URL: `http://localhost:3000`
-3. Including `x-user-id` header
-4. CORS is enabled (it is by default)
+3. CORS is enabled (it is by default)
 
 ---
 
@@ -485,14 +459,9 @@ Make sure:
 ```typescript
 // src/services/movieApi.ts
 const API_BASE_URL = 'http://localhost:3000/api';
-const USER_ID = 'team-1'; // Your team ID
 
 export async function getWatchlist(): Promise<Movie[]> {
-  const response = await fetch(`${API_BASE_URL}/movies?status=watchlist`, {
-    headers: {
-      'x-user-id': USER_ID
-    }
-  });
+  const response = await fetch(`${API_BASE_URL}/movies?status=watchlist`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch watchlist');
@@ -505,8 +474,7 @@ export async function addToWatchlist(movie: Movie): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/movies`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'x-user-id': USER_ID
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       tmdb_id: movie.id,
@@ -533,8 +501,7 @@ export async function markAsWatched(
   const response = await fetch(`${API_BASE_URL}/movies/${movieId}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
-      'x-user-id': USER_ID
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify({
       status: 'watched',
@@ -551,10 +518,7 @@ export async function markAsWatched(
 
 export async function deleteMovie(movieId: number): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/movies/${movieId}`, {
-    method: 'DELETE',
-    headers: {
-      'x-user-id': USER_ID
-    }
+    method: 'DELETE'
   });
 
   if (!response.ok) {
@@ -563,11 +527,7 @@ export async function deleteMovie(movieId: number): Promise<void> {
 }
 
 export async function getStats(): Promise<UserStats> {
-  const response = await fetch(`${API_BASE_URL}/movies/user/stats`, {
-    headers: {
-      'x-user-id': USER_ID
-    }
-  });
+  const response = await fetch(`${API_BASE_URL}/movies/user/stats`);
 
   if (!response.ok) {
     throw new Error('Failed to fetch stats');
@@ -579,9 +539,22 @@ export async function getStats(): Promise<UserStats> {
 
 ---
 
+## 🗄️ Database Technology
+
+This API uses **sql.js**, an in-memory SQLite database that runs entirely in JavaScript using WebAssembly. 
+
+**Key features:**
+- In-memory database (fast read/write operations)
+- Automatically saved to disk after each write
+- No native dependencies (pure JavaScript)
+- Can run in both Node.js and browsers
+
+**Database file:** The database is saved as `database.db` in the server root directory.
+
 ## 🎓 Learning Resources
 
 - [Express.js Documentation](https://expressjs.com/)
+- [sql.js Documentation](https://sql.js.org/)
 - [MDN: Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 - [MDN: HTTP Methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
 - [MDN: HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
@@ -591,3 +564,4 @@ export async function getStats(): Promise<UserStats> {
 ## 📄 License
 
 MIT - Free to use for educational purposes
+# movie-api-with-sqljs

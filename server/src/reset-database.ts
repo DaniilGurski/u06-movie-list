@@ -1,7 +1,8 @@
-import Database from 'better-sqlite3';
+import initSqlJs from 'sql.js';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-import { unlinkSync, existsSync } from 'fs';
+import { unlinkSync, existsSync, writeFileSync } from 'fs';
+import { createRequire } from 'module';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,11 +16,22 @@ if (existsSync(dbPath)) {
   console.log('✓ Tog bort befintlig databas');
 }
 
+// Initiera sql.js
+const require = createRequire(import.meta.url);
+const sqlJsPath = require.resolve('sql.js');
+const sqlJsDir = dirname(sqlJsPath);
+
+const SQL = await initSqlJs({
+  locateFile: (file: string) => {
+    return join(sqlJsDir, file);
+  }
+});
+
 // Skapa ny databas
-const db = new Database(dbPath);
+const db = new SQL.Database();
 
 // Slå på foreign keys
-db.pragma('foreign_keys = ON');
+db.run('PRAGMA foreign_keys = ON');
 
 // Skapa tabeller (en databas per projekt, ingen användaruppdelning)
 const createMoviesTable = `
@@ -41,7 +53,12 @@ const createMoviesTable = `
   )
 `;
 
-db.exec(createMoviesTable);
+db.run(createMoviesTable);
+
+// Spara databasen
+const data = db.export();
+const buffer = Buffer.from(data);
+writeFileSync(dbPath, buffer);
 
 console.log('✓ Skapade nya databastabeller');
 console.log('');
@@ -49,5 +66,3 @@ console.log('✅ Databasåterställning klar!');
 console.log('   Du kan nu starta servern med: npm run dev');
 
 db.close();
-
-
