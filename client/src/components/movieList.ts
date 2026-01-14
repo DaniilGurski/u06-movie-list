@@ -1,4 +1,5 @@
 import type { TMDBMovie } from "../types/movie";
+import { addMovieToWatchlist } from "../lib/store";
 
 export default function MovieList(movies: TMDBMovie[]) {
     const list = document.createElement("ul");
@@ -35,6 +36,12 @@ export default function MovieList(movies: TMDBMovie[]) {
         const overview = document.createElement("p");
         overview.textContent = movie.overview;
 
+        const addButton = document.createElement("button");
+        addButton.textContent = "Add to Watchlist";
+        addButton.addEventListener("click", () => {
+            addMovieToWatchlist(movie);
+        });
+
         movieInfo.appendChild(title);
         movieInfo.appendChild(rating);
         movieInfo.appendChild(releaseDate);
@@ -42,6 +49,7 @@ export default function MovieList(movies: TMDBMovie[]) {
 
         listItem.appendChild(img);
         listItem.appendChild(movieInfo);
+        listItem.appendChild(addButton);
 
         list.appendChild(listItem);
     });
