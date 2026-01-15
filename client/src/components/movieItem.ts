@@ -1,6 +1,5 @@
 import type { TMDBMovie } from "../types/movie";
 import { addMovieToWatchlist } from "../lib/store";
-import { getMovieByIdTMDB } from "../services/tmdbApi";
 
 export default function MovieItem(movie: TMDBMovie) {
     const listItem = document.createElement("li");
