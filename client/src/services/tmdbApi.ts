@@ -45,11 +45,13 @@ export const getSearchedMovieTMDB = async (
     name: string
 ): Promise<TMDBMovie[]> => {
     try {
-        const res = await fetch(`http://localhost:3000/api/tmdb/${name}`);
+        const res = await fetch(
+            `http://localhost:3000/api/tmdb?search=${name}`
+        );
 
         if (!res.ok) {
             throw new Error(
-                `Failed to fetch popular movies: ${res.statusText}`
+                `Failed to fetch searched movies: ${res.statusText}`
             );
         }
 
