@@ -2,27 +2,56 @@ import header from "../../components/header";
 import footer from "../../components/footer";
 import SearchField from "../../components/search";
 import MovieList from "../../components/movieList";
-import { getMovies, getSearchInputValue } from "../../lib/store";
+import { getSearchInputValue } from "../../lib/store";
+import { getWatchedMovies } from "../../services/movieApi";
 
-export default function browse() {
-    const browse = document.createDocumentFragment();
-    const content = document.createDocumentFragment();
 
-    const heading = document.createElement("h2");
-    heading.setAttribute("id", "browse-heading");
+
+export default function watchedMovies(){
+
+    const browseWatched = document.createDocumentFragment();
+    const contentWatched = document.createDocumentFragment();
+
+    const heading = document.createElement("h2")
+     heading.setAttribute("id", "browse-heading");
     const defaultSearchInputValue = getSearchInputValue();
 
     heading.textContent =
-        defaultSearchInputValue.trim() !== "" ? "Results" : "Popular";
+        defaultSearchInputValue.trim() !== "" ? "Results" : "Watched";
 
     const searchField = SearchField();
 
-    // Get movies from store and render list
-    const movies = getMovies();
-    const movieList = MovieList(movies);
+    const watchedFilmsList = document.createElement("ul")
 
-    content.append(searchField, heading, movieList);
-    browse.append(header(), content, footer());
+     const movieList = getWatchedMovies();
 
-    return browse;
+     movieList.then((movies) => {
+        watchedFilmsList.append(
+            ...movies.map((movie) => {
+                let li = document.createElement("li")
+                li.textContent= movie.title
+                return li
+            })
+        )
+     })
+
+     .catch((error) => {
+    const errorMessage = document.createElement("p");
+    errorMessage.textContent = "Kunde inte ladda filmerna. Försök igen senare.";
+    errorMessage.style.color = "red"; // kan ändras senare
+    watchedFilmsList.appendChild(errorMessage);
+    
+    console.error("Error fetching watched movies:", error);
+  });
+
+     
+    browseWatched.append(searchField, heading, watchedFilmsList);
+    contentWatched.append(header(), browseWatched, footer());
+
+    return contentWatched;
 }
+
+
+
+
+    
