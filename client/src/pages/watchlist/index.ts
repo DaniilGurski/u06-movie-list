@@ -7,8 +7,7 @@ export default () => {
     // TODO: create a function for this
     document.title = "Watchlist";
 
-    document.createElement("div");
-    const browse = document.createDocumentFragment();
+    const page = document.createDocumentFragment();
     const content = document.createDocumentFragment();
 
     const heading = document.createElement("h1");
@@ -36,7 +35,7 @@ export default () => {
 
     main.appendChild(userList);
     content.append(heading, main);
-    browse.append(header(), content, footer());
+    page.append(header(), content, footer());
 
-    return browse;
+    return page;
 };
