@@ -3,13 +3,19 @@ import type { TMDBMovie } from "../types/movie";
 export default function ListItem(movie: TMDBMovie) {
     const listItem = document.createElement("li");
 
-    const posterUrl = movie.poster_path
-        ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-        : "https://via.placeholder.com/500x750?text=No+Poster";
+    if (movie.poster_path) {
+        const posterUrl = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
-    const img = document.createElement("img");
-    img.src = posterUrl;
-    img.alt = movie.title;
+        const img = document.createElement("img");
+        img.src = posterUrl;
+        img.alt = movie.title;
+
+        listItem.appendChild(img);
+    } else {
+        const placeholderPoster = document.createElement("div");
+        placeholderPoster.textContent = "No Poster";
+        listItem.appendChild(placeholderPoster);
+    }
 
     const movieInfo = document.createElement("div");
 
@@ -30,7 +36,6 @@ export default function ListItem(movie: TMDBMovie) {
     movieInfo.appendChild(releaseDate);
     movieInfo.appendChild(overview);
 
-    listItem.appendChild(img);
     listItem.appendChild(movieInfo);
 
     return listItem;

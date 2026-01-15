@@ -36,6 +36,7 @@ class Store {
     ) {
         try {
             this.movies = await getSearchedMovieTMDB(movieName);
+            console.log(this.movies);
             if (shouldTriggerRender) {
                 this.triggerRender();
             }
