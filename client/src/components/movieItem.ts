@@ -1,7 +1,7 @@
 import type { TMDBMovie } from "../types/movie";
 import { addMovieToWatchlist } from "../lib/store";
 
-export default function ListItem(movie: TMDBMovie) {
+export default function MovieItem(movie: TMDBMovie) {
     const listItem = document.createElement("li");
 
     if (movie.poster_path) {
@@ -31,7 +31,7 @@ export default function ListItem(movie: TMDBMovie) {
 
     const overview = document.createElement("p");
     overview.textContent = movie.overview;
-    
+
     const addButton = document.createElement("button");
     addButton.textContent = "Add to Watchlist";
     addButton.addEventListener("click", () => {

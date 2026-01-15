@@ -34,11 +34,10 @@ class Store {
 
     async loadSearchedMovie(
         movieName: string,
-        shouldTriggerRender: boolean = true,
+        shouldTriggerRender: boolean = true
     ) {
         try {
             this.movies = await getSearchedMovieTMDB(movieName);
-            console.log(this.movies);
             if (shouldTriggerRender) {
                 this.triggerRender();
             }
@@ -79,14 +78,14 @@ class Store {
             overview: movie.overview,
         };
         try {
-            const addedMovie = await movieApi.addMovieToWatchlist(convertedMovie);
+            const addedMovie = await movieApi.addMovieToWatchlist(
+                convertedMovie
+            );
             this.watchlist.push(addedMovie);
-        } catch (error) {
-         
-        }
+        } catch (error) {}
         this.triggerRender();
     }
-    
+
     triggerRender() {
         if (this.renderCallback) {
             this.renderCallback();

@@ -25,6 +25,22 @@ export const getPopularMoviesTMDB = async (): Promise<TMDBMovie[]> => {
     }
 };
 
+export const getMovieByIdTMDB = async (id: number) => {
+    try {
+        const res = await fetch(`http://localhost:3000/api/tmdb/${id}`);
+
+        if (!res.ok) {
+            throw new Error(`Failed to fetch movie by ID: ${res.statusText}`);
+        }
+
+        const data: TMDBResponse = await res.json();
+        return data.results;
+    } catch (error) {
+        console.error("Error getting movie by ID:", error);
+        throw error;
+    }
+};
+
 export const getSearchedMovieTMDB = async (
     name: string
 ): Promise<TMDBMovie[]> => {
@@ -41,6 +57,6 @@ export const getSearchedMovieTMDB = async (
         return data.results;
     } catch (error) {
         console.error("Error getting searched movies:", error);
-        throw error; // Re-throw so caller can handle it
+        throw error;
     }
 };
