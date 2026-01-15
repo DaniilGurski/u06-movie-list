@@ -1,5 +1,5 @@
 import type { TMDBMovie } from "../types/movie";
-import ListItem from "./listItem";
+import MovieItem from "./movieItem";
 
 export default function MovieList(movies: TMDBMovie[]) {
     const list = document.createElement("ul");
@@ -12,8 +12,7 @@ export default function MovieList(movies: TMDBMovie[]) {
     }
 
     movies.forEach((movie) => {
-        const listItem = ListItem(movie);
-
+        const listItem = MovieItem(movie);
         list.appendChild(listItem);
     });
 

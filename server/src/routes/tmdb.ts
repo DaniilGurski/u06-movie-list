@@ -35,6 +35,37 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    if (!TMDB_KEY) {
+      console.error("No TMDB API key configured");
+      return res.status(500).json({ error: "Server configuration error" });
+    }
+
+    const { id } = req.params;
+
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${TMDB_KEY}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.error(`TMDB API error: ${response.statusText}`);
+      return res.status(response.status).json({
+        error: "Failed to get movie by ID",
+      });
+    }
+
+    const searchResults = await response.json();
+    res.status(200).json(searchResults);
+  } catch (error) {
+    console.error("Error getting movie by ID:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.get("/:name", async (req, res) => {
   try {
     if (!TMDB_KEY) {
