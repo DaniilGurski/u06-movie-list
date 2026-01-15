@@ -8,7 +8,7 @@ import * as movieApi from "../services/movieApi.ts";
 
 class Store {
     renderCallback: () => void;
-    watchlist: TMDBMovieInList[] = [];
+    userList: TMDBMovieInList[] = [];
     movies: TMDBMovie[] = [];
     searchInputValue: string = "";
 
@@ -78,12 +78,40 @@ class Store {
             overview: movie.overview,
         };
         try {
-            const addedMovie = await movieApi.addMovieToWatchlist(
-                convertedMovie
-            );
-            this.watchlist.push(addedMovie);
-        } catch (error) {}
+            await movieApi.addMovieToWatchlist(convertedMovie);
+            // fetch the updated user list
+            // we should do this on each Create,Update,Delete to the list
+            await this.fetchUserList();
+        } catch (error) {
+            //TODO: handle error
+        }
         this.triggerRender();
+    }
+
+
+    /**
+     * fetches the users movie list from the api
+     * @returns a promise of the user's movie list
+     */
+    async fetchUserList() {
+        try {
+            this.userList = await movieApi.getWatchlist();
+        } catch (error) {
+            console.error("Error fetching userList:", error);
+        }
+
+        return this.userList;
+    }
+
+    /**
+     * returns the users movie list or fetches it first if it is empty
+     * @returns a promise of the user's movie list
+     */
+    async getUserList() {
+        if (this.userList.length === 0) {
+            return await this.fetchUserList();
+        }
+        return this.userList;
     }
 
     triggerRender() {
@@ -101,4 +129,5 @@ export const addMovieToWatchlist = store.addMovieToWatchlist.bind(store); // Asy
 export const getMovies = store.getMovies.bind(store);
 export const getSearchInputValue = store.getSearchInputValue.bind(store);
 export const setSearchInputValue = store.setSearchInputValue.bind(store);
+export const getUserList = store.getUserList.bind(store); // Async
 export const setRenderCallback = store.setRenderCallback.bind(store);
