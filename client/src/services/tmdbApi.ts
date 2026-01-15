@@ -40,7 +40,7 @@ export const getSearchedMovieTMDB = async (
         const data: TMDBResponse = await res.json();
         return data.results;
     } catch (error) {
-        console.error("Error getting popular movies:", error);
+        console.error("Error getting searched movies:", error);
         throw error; // Re-throw so caller can handle it
     }
 };

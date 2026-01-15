@@ -1,25 +1,25 @@
-import initSqlJs, { Database } from 'sql.js';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { createRequire } from 'module';
+import initSqlJs, { Database } from "sql.js";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import { readFileSync, writeFileSync, existsSync } from "fs";
+import { createRequire } from "module";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const dbPath = join(__dirname, '../database.db');
+const dbPath = join(__dirname, "../database.db");
 
 let db: Database | null = null;
 
 // Initiera databasen
 const initDatabase = async (): Promise<void> => {
   const require = createRequire(import.meta.url);
-  const sqlJsPath = require.resolve('sql.js');
+  const sqlJsPath = require.resolve("sql.js");
   const sqlJsDir = dirname(sqlJsPath);
-  
+
   const SQL = await initSqlJs({
     locateFile: (file: string) => {
       return join(sqlJsDir, file);
-    }
+    },
   });
 
   // Försök ladda befintlig databas, annars skapa ny
@@ -27,18 +27,18 @@ const initDatabase = async (): Promise<void> => {
     try {
       const buffer = readFileSync(dbPath);
       db = new SQL.Database(buffer);
-      console.log('✓ Laddade befintlig databas');
+      console.log("✓ Laddade befintlig databas");
     } catch (error) {
-      console.log('⚠️  Kunde inte ladda databas, skapar ny...');
+      console.log("⚠️  Kunde inte ladda databas, skapar ny...");
       db = new SQL.Database();
     }
   } else {
     db = new SQL.Database();
-    console.log('✓ Skapade ny databas');
+    console.log("✓ Skapade ny databas");
   }
 
   // Slå på foreign keys
-  db.run('PRAGMA foreign_keys = ON');
+  db.run("PRAGMA foreign_keys = ON");
 
   // Skapa tabeller
   const createMoviesTable = `
@@ -62,7 +62,7 @@ const initDatabase = async (): Promise<void> => {
 
   db.run(createMoviesTable);
   saveDatabase();
-  console.log('✓ Databastabeller initierade');
+  console.log("✓ Databastabeller initierade");
 };
 
 // Spara databasen till fil
@@ -73,7 +73,7 @@ const saveDatabase = (): void => {
     const buffer = Buffer.from(data);
     writeFileSync(dbPath, buffer);
   } catch (error) {
-    console.error('Fel vid sparning av databas:', error);
+    console.error("Fel vid sparning av databas:", error);
   }
 };
 
@@ -83,7 +83,7 @@ await initDatabase();
 // Wrapper-funktioner för att matcha better-sqlite3 API
 export const getDatabase = (): Database => {
   if (!db) {
-    throw new Error('Databasen är inte initierad');
+    throw new Error("Databasen är inte initierad");
   }
   return db;
 };
