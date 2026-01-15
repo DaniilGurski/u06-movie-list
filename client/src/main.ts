@@ -1,10 +1,10 @@
 import router from "./router.ts";
-import { setRenderCallback } from "./lib/store.ts";
+import { loadPopularMovies, setRenderCallback } from "./lib/store.ts";
 import "./style.css";
 
 const app = document.querySelector("#app")!;
 
-const renderApp = () => {
+const renderApp = async () => {
     const page = router();
     app.replaceChildren(page);
 };
@@ -28,5 +28,9 @@ document.addEventListener("click", (e) => {
 });
 
 // Init
-renderApp();
-setRenderCallback(renderApp);
+window.addEventListener("DOMContentLoaded", async () => {
+    await loadPopularMovies(false);
+
+    renderApp();
+    setRenderCallback(renderApp);
+});
