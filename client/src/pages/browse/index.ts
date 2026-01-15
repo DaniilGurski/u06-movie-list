@@ -9,7 +9,6 @@ export default function browse() {
     const content = document.createDocumentFragment();
 
     const heading = document.createElement("h2");
-    heading.setAttribute("id", "browse-heading");
     const defaultSearchInputValue = getSearchInputValue();
 
     heading.textContent =
