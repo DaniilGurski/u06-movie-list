@@ -2,8 +2,8 @@ import header from "../../components/header";
 import footer from "../../components/footer";
 import SearchField from "../../components/search";
 import MovieList from "../../components/movieList";
-import { getSearchInputValue } from "../../lib/store";
-import { getWatchedMovies } from "../../services/movieApi";
+import { getUserList, getSearchInputValue } from "../../lib/store";
+
 
 
 
@@ -23,22 +23,30 @@ export default function watchedMovies(){
 
     const watchedFilmsList = document.createElement("ul")
 
-     const movieList = getWatchedMovies();
+    getUserList()
+        .then((movies) => {
 
-     movieList.then((movies) => {
-        watchedFilmsList.append(
-            ...movies.map((movie) => {
-                let li = document.createElement("li")
-                li.textContent= movie.title
-                return li
-            })
-        )
-     })
+            const watchedMovies = movies.filter(movie => movie.status === "watched")
+
+            if(watchedMovies.length === 0){
+                const p = document.createElement("p")
+                p.textContent = "You have not marked any movies as watched yet."
+                watchedFilmsList.appendChild(p)
+            }
+            else{
+                watchedFilmsList.append(
+                    ...watchedMovies.map(movie => {
+                        const li = document.createElement("li")
+                        li.textContent = movie.title
+                        return li
+                    })
+                )
+            }
+        })
 
      .catch((error) => {
     const errorMessage = document.createElement("p");
     errorMessage.textContent = "Kunde inte ladda filmerna. Försök igen senare.";
-    errorMessage.style.color = "red"; // kan ändras senare
     watchedFilmsList.appendChild(errorMessage);
     
     console.error("Error fetching watched movies:", error);

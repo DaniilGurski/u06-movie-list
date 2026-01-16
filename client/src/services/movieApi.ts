@@ -32,6 +32,7 @@ export const addMovieToWatchlist = async (
     }
 };
 
+/*
 export const getWatchedMovies = async (): Promise<TMDBMovieInList[]> => {
     try{
         const res = await fetch(`${baseURL}?status=watched`);
@@ -47,3 +48,4 @@ export const getWatchedMovies = async (): Promise<TMDBMovieInList[]> => {
     }
   
 };
+*/
