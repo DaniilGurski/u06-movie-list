@@ -1,7 +1,28 @@
+import type { Route } from "./types/route";
 import browse from "./pages/browse";
 import watchlist from "./pages/watchlist";
 import notFound from "./pages/notFound";
 import details from "./pages/details";
+
+// Nu kan vi lägga till/ta bort vad som ska finnas i menyn samt dölja det med "showInNav"
+
+export const routes: Route[] = [{
+    path: "/",
+    label: "Home page",
+    showInNav: false
+}, {
+    path: "/browse",
+    label: "Browse",
+    showInNav: true
+}, {
+    path: "/watchlist",
+    label: "Watchlist",
+    showInNav: true
+}, {
+    path: "/watched",
+    label: "Watched",
+    showInNav: true
+},]
 
 const router = (): HTMLElement | DocumentFragment => {
     const path = window.location.pathname;
