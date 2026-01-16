@@ -102,3 +102,4 @@ export const getMovies = store.getMovies.bind(store);
 export const getSearchInputValue = store.getSearchInputValue.bind(store);
 export const setSearchInputValue = store.setSearchInputValue.bind(store);
 export const setRenderCallback = store.setRenderCallback.bind(store);
+
