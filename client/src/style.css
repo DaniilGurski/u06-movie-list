@@ -255,3 +255,8 @@ h6 {
     background-color: oklch(0 0 0);
     color: oklch(1 0 0);
 }
+
+.movie-card__button--watched[aria-pressed="true"] {
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+}
