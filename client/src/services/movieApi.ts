@@ -1,13 +1,13 @@
 // API-anrop till Movie API
-import type { TMDBMovieInList } from "../types/movie";
+import type {
+    TMDBMovieInList
+} from "../types/movie";
 
 const baseURL = "http://localhost:3000/api/movies";
 
 // Lägg till film i /watchlist eller /watched
 
-const addMovie = async (
-    movie: TMDBMovieInList,
-): Promise<TMDBMovieInList> => {
+const addMovie = async (movie: TMDBMovieInList): Promise<TMDBMovieInList> => {
     try {
         const res = await fetch(baseURL, {
             method: "POST",
@@ -18,9 +18,7 @@ const addMovie = async (
         });
 
         if (!res.ok) {
-            throw new Error(
-                `Failed to add movie to watchlist: ${res.statusText}`,
-            );
+            throw new Error(`Failed to add movie to watchlist: ${res.statusText}`);
         }
 
         const data: TMDBMovieInList = await res.json();
@@ -39,6 +37,35 @@ const addMovie = async (
 export const addMovieToWatchlist = addMovie;
 export const addMovieToWatched = addMovie;
 
+// Uppdatera en films status (exempelvis om en film redan finns i /watchlist eller /watched)
+
+export const updateMovieStatus = async (
+    id: number,
+    status: "watchlist" | "watched"
+): Promise<TMDBMovieInList> => {
+    try {
+        const res = await fetch(`${baseURL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                status
+            }),
+        });
+
+        if (!res.ok) {
+            throw new Error(`Failed to update movie status: ${res.statusText}`);
+        }
+
+        const data: TMDBMovieInList = await res.json();
+        return data;
+    } catch (error) {
+        console.error("Error updating movie status:", error);
+        throw error;
+    }
+};
+
 // Ta bort en film från /watchlist eller /watched
 
 const deleteMovie = async (id: number): Promise<void> => {
@@ -48,9 +75,7 @@ const deleteMovie = async (id: number): Promise<void> => {
         });
 
         if (!res.ok) {
-            throw new Error(
-                `Failed to delete movie: ${res.statusText}`,
-            );
+            throw new Error(`Failed to delete movie: ${res.statusText}`);
         }
     } catch (error) {
         console.error("Error deleting movie:", error);

@@ -60,7 +60,7 @@ export default function MovieItem(movie: TMDBMovie) {
         : "false"
     );
     addTooWatchListButton.addEventListener("click", () => {
-        if (inWatchlist) {
+        if (isMovieInWatchlist(movie.id)) {
             removeMovieFromWatchlist(movie);
         } else {
             addMovieToWatchlist(movie);
@@ -81,7 +81,7 @@ export default function MovieItem(movie: TMDBMovie) {
         : "false"
     );
     markAsWatchedButton.addEventListener("click", () => {
-        if (inWatched) {
+        if (isMovieInWatched(movie.id)) {
             removeMovieFromWatched(movie);
         } else {
             addMovieToWatched(movie);

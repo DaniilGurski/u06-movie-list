@@ -68,21 +68,23 @@ class Store {
     // Add to /watchlist
 
     async addMovieToWatchlist(movie: TMDBMovie) {
-        // Convert to TMDBMovieInList
-        const convertedMovie: TMDBMovieInList = {
-            tmdb_id: movie.id,
-            title: movie.title,
-            status: "watchlist",
-            // optional tmdb data
-            poster_path: movie.poster_path,
-            release_date: movie.release_date,
-            vote_average: movie.vote_average,
-            overview: movie.overview,
-        };
         try {
-            await movieApi.addMovieToWatchlist(convertedMovie);
-            // fetch the updated user list
-            // we should do this on each Create,Update,Delete to the list
+            // Tittar om filmen redan finns i databasen och gör den det så ändrar vi status från en lista till en annan (eftersom det inte går att ha en film i båda listorna
+            const movieIdAlreadyExistsInDb = this.getMovieDbId(movie.id);
+            if (movieIdAlreadyExistsInDb) {
+                await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watchlist");
+            } else {
+                const convertedMovie: TMDBMovieInList = {
+                    tmdb_id: movie.id,
+                    title: movie.title,
+                    status: "watchlist",
+                    poster_path: movie.poster_path,
+                    release_date: movie.release_date,
+                    vote_average: movie.vote_average,
+                    overview: movie.overview,
+                };
+                await movieApi.addMovieToWatchlist(convertedMovie);
+            }
             await this.fetchUserList();
         } catch (error) {
             //TODO: handle error
@@ -93,21 +95,23 @@ class Store {
     // Add to /watched
 
     async addMovieToWatched(movie: TMDBMovie) {
-        // Convert to TMDBMovieInList
-        const convertedMovie: TMDBMovieInList = {
-            tmdb_id: movie.id,
-            title: movie.title,
-            status: "watched",
-            // optional tmdb data
-            poster_path: movie.poster_path,
-            release_date: movie.release_date,
-            vote_average: movie.vote_average,
-            overview: movie.overview,
-        };
+        // Tittar om filmen redan finns i databasen och gör den det så ändrar vi status från en lista till en annan (eftersom det inte går att ha en film i båda listorna
         try {
-            await movieApi.addMovieToWatched(convertedMovie);
-            // fetch the updated user list
-            // we should do this on each Create,Update,Delete to the list
+            const movieIdAlreadyExistsInDb = this.getMovieDbId(movie.id);
+            if (movieIdAlreadyExistsInDb) {
+                await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watched");
+            } else {
+                const convertedMovie: TMDBMovieInList = {
+                    tmdb_id: movie.id,
+                    title: movie.title,
+                    status: "watched",
+                    poster_path: movie.poster_path,
+                    release_date: movie.release_date,
+                    vote_average: movie.vote_average,
+                    overview: movie.overview,
+                };
+                await movieApi.addMovieToWatched(convertedMovie);
+            }
             await this.fetchUserList();
         } catch (error) {
             //TODO: handle error
