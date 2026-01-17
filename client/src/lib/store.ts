@@ -114,6 +114,14 @@ class Store {
         return this.userList;
     }
 
+    // Tittar om en film är i användarens watchlist
+
+    isMovieInWatchlist(movieId: number): boolean {
+        return this.userList.some((movie) => {
+            return movie.tmdb_id === movieId;
+        });
+    }
+
     triggerRender() {
         if (this.renderCallback) {
             this.renderCallback();
@@ -131,3 +139,4 @@ export const getSearchInputValue = store.getSearchInputValue.bind(store);
 export const setSearchInputValue = store.setSearchInputValue.bind(store);
 export const getUserList = store.getUserList.bind(store); // Async
 export const setRenderCallback = store.setRenderCallback.bind(store);
+export const isMovieInWatchlist = store.isMovieInWatchlist.bind(store);
