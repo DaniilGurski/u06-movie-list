@@ -88,7 +88,6 @@ export default function MovieItem(movie: TMDBMovie) {
     description.className = "movie-card__description";
     description.textContent = movie.overview;
 
-
     // Knappen för att adda till /watchlist
 
     const inWatchlist = isMovieInWatchlist(movie.id);
