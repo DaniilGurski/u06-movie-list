@@ -192,6 +192,30 @@ h6 {
     }
 }
 
+.movie-card__placeholder {
+    display: flex;
+    flex-flow: column wrap;
+    gap: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    inline-size: 100%;
+    block-size: 100%;
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+    aspect-ratio: 1;
+}
+
+.movie-card__placeholder-icon {
+    inline-size: 5rem;
+    block-size: auto;
+    aspect-ratio: 1;
+}
+
+.movie-card__placeholder-label {
+    font-size: 2rem;
+    font-weight: 400;
+}
+
 .movie-card__content {
     place-self: center center;
     display: flex;
@@ -257,6 +281,11 @@ h6 {
 }
 
 .movie-card__button--watched[aria-pressed="true"] {
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+}
+
+.movie-card__button--details {
     background-color: oklch(0 0 0);
     color: oklch(1 0 0);
 }
