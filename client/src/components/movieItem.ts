@@ -1,11 +1,17 @@
 import type { TMDBMovie } from "../types/movie";
-import { addMovieToWatchlist, isMovieInWatchlist } from "../lib/store";
+import {
+    addMovieToWatchlist,
+    removeMovieFromWatchlist,
+    isMovieInWatchlist,
+    addMovieToWatched,
+    removeMovieFromWatched,
+    isMovieInWatched
+} from "../lib/store";
 
 export default function MovieItem(movie: TMDBMovie) {
     const card = document.createElement("div");
     card.className = "movie-card";
 
-    // Image
     const imageDiv = document.createElement("div");
     imageDiv.className = "movie-card__image";
 
@@ -16,7 +22,6 @@ export default function MovieItem(movie: TMDBMovie) {
     img.alt = movie.title;
     imageDiv.appendChild(img);
 
-    // Content
     const content = document.createElement("div");
     content.className = "movie-card__content";
 
@@ -40,25 +45,53 @@ export default function MovieItem(movie: TMDBMovie) {
     description.className = "movie-card__description";
     description.textContent = movie.overview;
 
+
+    // Knappen för att adda till /watchlist
+
     const inWatchlist = isMovieInWatchlist(movie.id);
 
-    const addButton = document.createElement("button");
-    addButton.classList.add("movie-card__button", "movie-card__button--watchlist");
-    addButton.textContent = inWatchlist
+    const addTooWatchListButton = document.createElement("button");
+    addTooWatchListButton.classList.add("movie-card__button", "movie-card__button--watchlist");
+    addTooWatchListButton.textContent = inWatchlist
         ? "In Watchlist"
         : "Add to Watchlist";
-    addButton.setAttribute("aria-pressed", inWatchlist
+    addTooWatchListButton.setAttribute("aria-pressed", inWatchlist
         ? "true"
         : "false"
     );
-    addButton.addEventListener("click", () => {
-        addMovieToWatchlist(movie);
-        addButton.setAttribute("aria-pressed", "true");
+    addTooWatchListButton.addEventListener("click", () => {
+        if (inWatchlist) {
+            removeMovieFromWatchlist(movie);
+        } else {
+            addMovieToWatchlist(movie);
+        }
+    });
+
+    // Knappen för att adda till /watched
+
+    const inWatched = isMovieInWatched(movie.id);
+
+    const markAsWatchedButton = document.createElement("button");
+    markAsWatchedButton.classList.add("movie-card__button", "movie-card__button--watched");
+    markAsWatchedButton.textContent = inWatched
+        ? "Watched"
+        : "Mark as Watched";
+    markAsWatchedButton.setAttribute("aria-pressed", inWatched
+        ? "true"
+        : "false"
+    );
+    markAsWatchedButton.addEventListener("click", () => {
+        if (inWatched) {
+            removeMovieFromWatched(movie);
+        } else {
+            addMovieToWatched(movie);
+        }
     });
 
     const actions = document.createElement("div");
     actions.className = "movie-card__actions";
-    actions.appendChild(addButton);
+    actions.appendChild(addTooWatchListButton);
+    actions.appendChild(markAsWatchedButton);
 
     content.appendChild(title);
     content.appendChild(rating);
