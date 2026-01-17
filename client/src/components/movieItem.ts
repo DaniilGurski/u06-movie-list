@@ -31,7 +31,6 @@ export default function MovieItem(movie: TMDBMovie) {
         svg.setAttribute("class", "movie-card__placeholder-icon");
         svg.setAttribute("aria-hidden", "true");
 
-
         const path1 = document.createElementNS("http://www.w3.org/2000/svg", "path");
         path1.setAttribute("d", "m2 2 20 20M10.41 10.41a2 2 0 1 1-2.83-2.83M13.5 13.5 6 21M18 12l3 3");
 
@@ -64,7 +63,6 @@ export default function MovieItem(movie: TMDBMovie) {
         posterImage.appendChild(createPlaceholder("No poster available"));
     }
 
-
     const content = document.createElement("div");
     content.className = "movie-card__content";
 
@@ -92,16 +90,30 @@ export default function MovieItem(movie: TMDBMovie) {
 
     const inWatchlist = isMovieInWatchlist(movie.id);
 
-    const addTooWatchListButton = document.createElement("button");
-    addTooWatchListButton.classList.add("movie-card__button", "movie-card__button--watchlist");
-    addTooWatchListButton.textContent = inWatchlist
+    const watchlistIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    watchlistIcon.setAttribute("viewBox", "0 0 24 24");
+    watchlistIcon.setAttribute("fill", "none");
+    watchlistIcon.setAttribute("stroke", "currentColor");
+    watchlistIcon.setAttribute("stroke-linecap", "round");
+    watchlistIcon.setAttribute("stroke-linejoin", "round");
+    watchlistIcon.setAttribute("stroke-width", "2");
+    watchlistIcon.setAttribute("class", "movie-card__icon movie-card__icon--watchlist");
+    watchlistIcon.setAttribute("aria-hidden", "true");
+
+    const watchlistPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    watchlistPath.setAttribute("d", "M5 12h14M12 5v14");
+    watchlistIcon.appendChild(watchlistPath);
+
+    const addToWatchlistButton = document.createElement("button");
+    addToWatchlistButton.classList.add("movie-card__button", "movie-card__button--watchlist");
+    addToWatchlistButton.setAttribute("aria-label", inWatchlist
         ? "In Watchlist"
-        : "Add to Watchlist";
-    addTooWatchListButton.setAttribute("aria-pressed", inWatchlist
-        ? "true"
-        : "false"
+        : "Add to Watchlist"
     );
-    addTooWatchListButton.addEventListener("click", () => {
+    addToWatchlistButton.setAttribute("aria-pressed", inWatchlist ? "true" : "false");
+    addToWatchlistButton.appendChild(watchlistIcon);
+
+    addToWatchlistButton.addEventListener("click", () => {
         if (isMovieInWatchlist(movie.id)) {
             removeMovieFromWatchlist(movie);
         } else {
@@ -113,15 +125,29 @@ export default function MovieItem(movie: TMDBMovie) {
 
     const inWatched = isMovieInWatched(movie.id);
 
+    const watchedIcon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    watchedIcon.setAttribute("viewBox", "0 0 24 24");
+    watchedIcon.setAttribute("fill", "none");
+    watchedIcon.setAttribute("stroke", "currentColor");
+    watchedIcon.setAttribute("stroke-linecap", "round");
+    watchedIcon.setAttribute("stroke-linejoin", "round");
+    watchedIcon.setAttribute("stroke-width", "2");
+    watchedIcon.setAttribute("class", "movie-card__icon movie-card__icon--watched");
+    watchedIcon.setAttribute("aria-hidden", "true");
+
+    const watchedPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    watchedPath.setAttribute("d", "M20 6 9 17l-5-5");
+    watchedIcon.appendChild(watchedPath);
+
     const markAsWatchedButton = document.createElement("button");
     markAsWatchedButton.classList.add("movie-card__button", "movie-card__button--watched");
-    markAsWatchedButton.textContent = inWatched
+    markAsWatchedButton.setAttribute("aria-label", inWatched
         ? "Watched"
-        : "Mark as Watched";
-    markAsWatchedButton.setAttribute("aria-pressed", inWatched
-        ? "true"
-        : "false"
+        : "Mark as Watched"
     );
+    markAsWatchedButton.setAttribute("aria-pressed", inWatched ? "true" : "false");
+    markAsWatchedButton.appendChild(watchedIcon);
+
     markAsWatchedButton.addEventListener("click", () => {
         if (isMovieInWatched(movie.id)) {
             removeMovieFromWatched(movie);
@@ -132,21 +158,18 @@ export default function MovieItem(movie: TMDBMovie) {
 
     // Knappen för att navigera till /details-sidan
 
-    const detailsButton = document.createElement("button");
-    detailsButton.classList.add("movie-card__button", "movie-card__button--details");
-    detailsButton.textContent = "View Details";
-    detailsButton.addEventListener("click", () => {
-        history.pushState({}, "", `/details/${movie.id}`);
-        window.dispatchEvent(new PopStateEvent("popstate"));
-    })
+    const detailsLink = document.createElement("a");
+    detailsLink.classList.add("movie-card__button", "movie-card__button--details");
+    detailsLink.href = `/details/${movie.id}`;
+    detailsLink.textContent = "View Details";
 
     // Wrapper för interaktionsknapparna
 
     const actions = document.createElement("div");
     actions.className = "movie-card__actions";
-    actions.appendChild(addTooWatchListButton);
+    actions.appendChild(addToWatchlistButton);
     actions.appendChild(markAsWatchedButton);
-    actions.appendChild(detailsButton);
+    actions.appendChild(detailsLink);
 
     content.appendChild(title);
     content.appendChild(rating);
