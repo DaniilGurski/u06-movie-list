@@ -1,5 +1,5 @@
 import router from "./router.ts";
-import { loadPopularMovies, setRenderCallback, getUserList } from "./lib/store.ts";
+import { loadPopularMovies, setRenderCallback } from "./lib/store.ts";
 import "./style.css";
 
 const app = document.querySelector("#app")!;
@@ -30,7 +30,6 @@ document.addEventListener("click", (e) => {
 // Init
 window.addEventListener("DOMContentLoaded", async () => {
     await loadPopularMovies(false);
-    await getUserList(); // Hämta användarens watchlist
 
     renderApp();
     setRenderCallback(renderApp);
