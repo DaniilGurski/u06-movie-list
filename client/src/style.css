@@ -157,6 +157,55 @@ h6 {
     }
 }
 
+/* Search container */
+
+.search {
+    border-radius: .5rem;
+    background-color: oklch(1 0 0);
+}
+
+.search__form {
+    display: flex;
+    flex-flow: row wrap;
+    gap: .75rem;
+    inline-size: 100%;
+    background-color: oklch(0.9702 0 0);
+    padding: 1.5rem;
+    border-radius: .5rem;
+}
+
+.search__input {
+    border: 2px solid currentColor;
+    border-radius: .5rem;
+    padding-inline: 1rem;
+    padding-block: .5rem;
+    flex: 1;
+}
+
+.search__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    padding-inline: 1rem;
+    padding-block: .5rem;
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+    border: 2px solid currentColor;
+    border-radius: .5rem;
+    block-size: 3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    inline-size: 100%;
+    cursor: pointer;
+    touch-action: manipulation;
+
+    @media (width >=60rem) {
+        inline-size: fit-content;
+    }
+}
+
 /* Page */
 
 .page {
