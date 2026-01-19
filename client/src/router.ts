@@ -2,6 +2,7 @@ import type { Route } from "./types/route";
 import browse from "./pages/browse";
 import watchlist from "./pages/watchlist";
 import notFound from "./pages/notFound";
+import watchedMovies from "./pages/watched"
 import details from "./pages/details";
 
 // Nu kan vi lägga till/ta bort vad som ska finnas i menyn samt dölja det med "showInNav"
@@ -49,6 +50,8 @@ const router = (): HTMLElement | DocumentFragment => {
             return browse();
         case "/watchlist":
             return watchlist();
+        case "/watched":
+            return watchedMovies();
         default:
             return notFound();
     }
