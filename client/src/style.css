@@ -1,0 +1,158 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: oklch(1 0 0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    html {
+        interpolate-size: allow-keywords;
+    }
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    color: oklch(0 0 0);
+}
+
+img,
+picture {
+    display: block;
+    max-inline-size: 100%;
+    block-size: auto;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+p {
+    text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-wrap: balance;
+}
+
+#app {
+    isolation: isolate;
+}
+
+/* Utility */
+
+.container {
+    inline-size: 100%;
+    max-inline-size: calc(70rem + 3rem);
+    padding-inline: 1.25rem;
+    margin-inline: auto;
+    container-type: inline-size;
+}
+
+.visually-hidden {
+    position: absolute;
+    clip: rect(1px, 1px, 1px, 1px);
+    -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
+    clip-path: inset(0px 0px 99.9% 99.9%);
+    overflow: hidden;
+    height: 1px;
+    width: 1px;
+    padding: 0;
+    border: 0;
+}
+
+/* Header och nav */
+
+.header {
+    inline-size: 100%;
+    overflow: hidden;
+    background-color: oklch(1 0 0);
+}
+
+.header__layout {
+    display: grid;
+    grid-template-areas: "logo" "nav";
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+
+    @media (width >=60rem) {
+        grid-template-areas: "logo nav";
+    }
+}
+
+.logo {
+    display: block;
+    color: oklch(0 0 0);
+    text-decoration: none;
+    place-self: center center;
+
+    @media (width >=60rem) {
+        place-self: center start;
+    }
+}
+
+.logo__text {
+    font-size: 2rem;
+    font-weight: 400;
+    color: inherit;
+}
+
+.logo__accent {
+    font-weight: 700;
+    color: oklch(0.6379 0.2484 31.02);
+}
+
+.main-nav {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1rem;
+    place-self: center center;
+    justify-content: center;
+    inline-size: 100%;
+
+    @media (width >=60rem) {
+        inline-size: fit-content;
+        place-self: center end;
+        justify-content: end;
+    }
+}
+
+.main-nav__link {
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: oklch(0 0 0);
+
+    @media (hover: hover) {
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

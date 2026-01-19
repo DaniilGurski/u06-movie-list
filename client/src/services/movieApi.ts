@@ -32,20 +32,18 @@ export const addMovieToWatchlist = async (
     }
 };
 
-/*
-export const getWatchedMovies = async (): Promise<TMDBMovieInList[]> => {
-    try{
-        const res = await fetch(`${baseURL}?status=watched`);
-  if (!res.ok) throw new Error("Failed to fetch watched movies");
+export const getWatchlist = async (): Promise<TMDBMovieInList[]> => {
+    try {
+        const res = await fetch(baseURL);
 
-   const data: TMDBMovieInList[] = await res.json();
+        if (!res.ok) {
+            throw new Error(`Failed to fetch watchlist: ${res.statusText}`);
+        }
+
+        const data: TMDBMovieInList[] = await res.json();
         return data;
-    }
-  
-    catch(error){
-        console.error("Error fetching watched:", error);
+    } catch (error) {
+        console.error("Error fetching watchlist:", error);
         throw error; // Re-throw so caller can handle it
     }
-  
 };
-*/
