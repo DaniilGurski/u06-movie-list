@@ -1,7 +1,6 @@
 import header from "../../components/header";
 import footer from "../../components/footer";
 import SearchField from "../../components/search";
-import MovieList from "../../components/movieList";
 import { getUserList, getSearchInputValue } from "../../lib/store";
 
 
@@ -9,8 +8,10 @@ import { getUserList, getSearchInputValue } from "../../lib/store";
 
 export default function watchedMovies(){
 
-    const browseWatched = document.createDocumentFragment();
-    const contentWatched = document.createDocumentFragment();
+    document.title = "Watched movies"
+
+    const page = document.createDocumentFragment();
+    const content = document.createDocumentFragment();
 
     const heading = document.createElement("h2")
      heading.setAttribute("id", "browse-heading");
@@ -45,7 +46,7 @@ export default function watchedMovies(){
         })
 
      .catch((error) => {
-    const errorMessage = document.createElement("p");
+    const errorMessage = document.createElement("li");
     errorMessage.textContent = "Kunde inte ladda filmerna. Försök igen senare.";
     watchedFilmsList.appendChild(errorMessage);
     
@@ -53,10 +54,10 @@ export default function watchedMovies(){
   });
 
      
-    browseWatched.append(searchField, heading, watchedFilmsList);
-    contentWatched.append(header(), browseWatched, footer());
+    page.append(searchField, heading, watchedFilmsList);
+    content.append(header(), page, footer());
 
-    return contentWatched;
+    return content;
 }
 
 
