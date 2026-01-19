@@ -18,7 +18,7 @@ export default function browse() {
 
     // Get movies from store and render list
     const movies = getMovies();
-    const movieList = MovieList(movies);
+    const movieList = MovieList({ movies });
 
     content.append(searchField, heading, movieList);
     browse.append(header(), content, footer());

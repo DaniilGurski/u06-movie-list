@@ -67,15 +67,18 @@ class Store {
 
     // Add to /watchlist
 
-    async addMovieToWatchlist(movie: TMDBMovie) {
+    async addMovieToWatchlist(movie: TMDBMovie | TMDBMovieInList) {
         try {
+            // Få "tmdb_id" oavsett om vi använder "id" eller "tmdb_id"
+            const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
+
             // Tittar om filmen redan finns i databasen och gör den det så ändrar vi status från en lista till en annan (eftersom det inte går att ha en film i båda listorna
-            const movieIdAlreadyExistsInDb = this.getMovieDbId(movie.id);
+            const movieIdAlreadyExistsInDb = this.getMovieDbId(tmdbId);
             if (movieIdAlreadyExistsInDb) {
                 await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watchlist");
             } else {
                 const convertedMovie: TMDBMovieInList = {
-                    tmdb_id: movie.id,
+                    tmdb_id: tmdbId,
                     title: movie.title,
                     status: "watchlist",
                     poster_path: movie.poster_path,
@@ -94,15 +97,17 @@ class Store {
 
     // Add to /watched
 
-    async addMovieToWatched(movie: TMDBMovie) {
+    async addMovieToWatched(movie: TMDBMovie | TMDBMovieInList) {
         // Tittar om filmen redan finns i databasen och gör den det så ändrar vi status från en lista till en annan (eftersom det inte går att ha en film i båda listorna
         try {
-            const movieIdAlreadyExistsInDb = this.getMovieDbId(movie.id);
+            const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
+
+            const movieIdAlreadyExistsInDb = this.getMovieDbId(tmdbId);
             if (movieIdAlreadyExistsInDb) {
                 await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watched");
             } else {
                 const convertedMovie: TMDBMovieInList = {
-                    tmdb_id: movie.id,
+                    tmdb_id: tmdbId,
                     title: movie.title,
                     status: "watched",
                     poster_path: movie.poster_path,
@@ -121,8 +126,9 @@ class Store {
 
     // Ta bort från /watchlist
 
-    async removeMovieFromWatchlist(movie: TMDBMovie) {
-        const dbId = this.getMovieDbId(movie.id);
+    async removeMovieFromWatchlist(movie: TMDBMovie | TMDBMovieInList) {
+        const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
+        const dbId = this.getMovieDbId(tmdbId);
         if (!dbId) return;
 
         try {
@@ -136,8 +142,9 @@ class Store {
 
     // Ta bort från /watched
 
-    async removeMovieFromWatched(movie: TMDBMovie) {
-        const dbId = this.getMovieDbId(movie.id);
+    async removeMovieFromWatched(movie: TMDBMovie | TMDBMovieInList) {
+                const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
+        const dbId = this.getMovieDbId(tmdbId);
         if (!dbId) return;
 
         try {

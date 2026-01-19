@@ -157,6 +157,30 @@ h6 {
     }
 }
 
+/* Page */
+
+.page {
+    display: flex;
+    flex-flow: column wrap;
+    row-gap: 1.5rem;
+    margin-block: 1.5rem;
+}
+
+.page__title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-block-end: calc(-1rem);
+
+    @media (width >=60rem) {
+        font-size: 2.5rem;
+    }
+}
+
+.page__introduction {
+    font-size: 1.25rem;
+    font-weight: 400;
+}
+
 /* Filmgrid */
 
 .movie-cards {
@@ -246,10 +270,6 @@ h6 {
     display: none;
 }
 
-/* .movie-card__divider {
-    border-block: 1px solid oklch(0 0 0);
-} */
-
 .movie-card__actions {
     display: flex;
     flex-flow: row wrap;
@@ -276,6 +296,11 @@ h6 {
     @media (width >=60rem) {
         inline-size: fit-content;
     }
+
+    &[aria-pressed="true"] {
+        background-color: oklch(0 0 0);
+        color: oklch(1 0 0);
+    }
 }
 
 .movie-card__icon {
@@ -284,17 +309,25 @@ h6 {
     color: inherit;
 }
 
-.movie-card__button--watchlist[aria-pressed="true"] {
-    background-color: oklch(0.7952 0.1617 86.05);
-    border-color: oklch(0 0 0);
-}
-
-.movie-card__button--watched[aria-pressed="true"] {
-    background-color: oklch(0.7227 0.192 149.58);
-    border-color: oklch(0 0 0);
-}
-
 .movie-card__button--details {
     background-color: oklch(0 0 0);
     color: oklch(1 0 0);
+}
+
+/* "Fusk-BEM", hehe */
+
+.movie-card__content-group {
+    display: flex;
+    flex-flow: column wrap;
+    gap: .75rem;
+}
+
+.movie-card__content-group-label {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.movie-card__content-group-value {
+    font-size: 1rem;
+    font-weight: 400;
 }
