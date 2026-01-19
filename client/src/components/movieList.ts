@@ -3,7 +3,6 @@ import MovieItem from "./movieItem";
 
 export default function MovieList(movies: TMDBMovie[]) {
     const list = document.createElement("ul");
-    list.classList.add("movie-cards", "container");
 
     if (movies.length === 0) {
         const emptyMessage = document.createElement("li");

@@ -13,7 +13,7 @@ class Store {
     searchInputValue: string = "";
 
     constructor() {
-        this.renderCallback = () => { };
+        this.renderCallback = () => {};
     }
 
     async loadPopularMovies(shouldTriggerRender: boolean = true) {
@@ -65,26 +65,22 @@ class Store {
         this.renderCallback = renderApp;
     }
 
-    // Add to /watchlist
-
     async addMovieToWatchlist(movie: TMDBMovie) {
+        // Convert to TMDBMovieInList
+        const convertedMovie: TMDBMovieInList = {
+            tmdb_id: movie.id,
+            title: movie.title,
+            status: "watchlist",
+            // optional tmdb data
+            poster_path: movie.poster_path,
+            release_date: movie.release_date,
+            vote_average: movie.vote_average,
+            overview: movie.overview,
+        };
         try {
-            // Tittar om filmen redan finns i databasen och gör den det så ändrar vi status från en lista till en annan (eftersom det inte går att ha en film i båda listorna
-            const movieIdAlreadyExistsInDb = this.getMovieDbId(movie.id);
-            if (movieIdAlreadyExistsInDb) {
-                await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watchlist");
-            } else {
-                const convertedMovie: TMDBMovieInList = {
-                    tmdb_id: movie.id,
-                    title: movie.title,
-                    status: "watchlist",
-                    poster_path: movie.poster_path,
-                    release_date: movie.release_date,
-                    vote_average: movie.vote_average,
-                    overview: movie.overview,
-                };
-                await movieApi.addMovieToWatchlist(convertedMovie);
-            }
+            await movieApi.addMovieToWatchlist(convertedMovie);
+            // fetch the updated user list
+            // we should do this on each Create,Update,Delete to the list
             await this.fetchUserList();
         } catch (error) {
             //TODO: handle error
@@ -92,62 +88,6 @@ class Store {
         this.triggerRender();
     }
 
-    // Add to /watched
-
-    async addMovieToWatched(movie: TMDBMovie) {
-        // Tittar om filmen redan finns i databasen och gör den det så ändrar vi status från en lista till en annan (eftersom det inte går att ha en film i båda listorna
-        try {
-            const movieIdAlreadyExistsInDb = this.getMovieDbId(movie.id);
-            if (movieIdAlreadyExistsInDb) {
-                await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watched");
-            } else {
-                const convertedMovie: TMDBMovieInList = {
-                    tmdb_id: movie.id,
-                    title: movie.title,
-                    status: "watched",
-                    poster_path: movie.poster_path,
-                    release_date: movie.release_date,
-                    vote_average: movie.vote_average,
-                    overview: movie.overview,
-                };
-                await movieApi.addMovieToWatched(convertedMovie);
-            }
-            await this.fetchUserList();
-        } catch (error) {
-            //TODO: handle error
-        }
-        this.triggerRender();
-    }
-
-    // Ta bort från /watchlist
-
-    async removeMovieFromWatchlist(movie: TMDBMovie) {
-        const dbId = this.getMovieDbId(movie.id);
-        if (!dbId) return;
-
-        try {
-            await movieApi.deleteMovieFromWatchlist(dbId);
-            await this.fetchUserList();
-        } catch (error) {
-            //TODO: handle error
-        }
-        this.triggerRender();
-    }
-
-    // Ta bort från /watched
-
-    async removeMovieFromWatched(movie: TMDBMovie) {
-        const dbId = this.getMovieDbId(movie.id);
-        if (!dbId) return;
-
-        try {
-            await movieApi.deleteMovieFromWatched(dbId);
-            await this.fetchUserList();
-        } catch (error) {
-            //TODO: handle error
-        }
-        this.triggerRender();
-    }
 
     /**
      * fetches the users movie list from the api
@@ -174,31 +114,6 @@ class Store {
         return this.userList;
     }
 
-    // Hämtar databasens id från tmdb_id
-
-    getMovieDbId(tmdbId: number): number | undefined {
-        const movie = this.userList.find((movie) => {
-            return movie.tmdb_id === tmdbId;
-        });
-        return movie?.id;
-    }
-
-    // Tittar om en film är i /watchlist
-
-    isMovieInWatchlist(movieId: number): boolean {
-        return this.userList.some((movie) => {
-            return movie.tmdb_id === movieId && movie.status === "watchlist";
-        });
-    }
-
-    // Tittar om en film är i /watched
-
-    isMovieInWatched(movieId: number): boolean {
-        return this.userList.some((movie) => {
-            return movie.tmdb_id === movieId && movie.status === "watched";
-        });
-    }
-
     triggerRender() {
         if (this.renderCallback) {
             this.renderCallback();
@@ -208,23 +123,11 @@ class Store {
 
 const store = new Store();
 
-// "Nu i den ordning de kommer"!
-
 export const loadPopularMovies = store.loadPopularMovies.bind(store); // Async
 export const loadSearchedMovie = store.loadSearchedMovie.bind(store); // Async
+export const addMovieToWatchlist = store.addMovieToWatchlist.bind(store); // Async
+export const getMovies = store.getMovies.bind(store);
 export const getSearchInputValue = store.getSearchInputValue.bind(store);
 export const setSearchInputValue = store.setSearchInputValue.bind(store);
-export const getMovies = store.getMovies.bind(store);
-export const setRenderCallback = store.setRenderCallback.bind(store);
-
-export const addMovieToWatchlist = store.addMovieToWatchlist.bind(store); // Async
-export const addMovieToWatched = store.addMovieToWatched.bind(store); // Async
-
-export const removeMovieFromWatchlist = store.removeMovieFromWatchlist.bind(store); // Async
-export const removeMovieFromWatched = store.removeMovieFromWatched.bind(store); // Async
-
-export const isMovieInWatchlist = store.isMovieInWatchlist.bind(store);
-export const isMovieInWatched = store.isMovieInWatched.bind(store);
-
 export const getUserList = store.getUserList.bind(store); // Async
-
+export const setRenderCallback = store.setRenderCallback.bind(store);
