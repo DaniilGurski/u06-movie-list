@@ -12,13 +12,15 @@ export default function MovieItem(config: MovieItemConfig) {
     const card = document.createElement("div");
     card.className = "movie-card";
 
+    // Olika sidor kan "använda" olika UI-element. Exempelvis kan /watchlist ha olika knappar från /watched
 
-
-    const movie = config.movie;
-    const showButtons = config.showButtons !== undefined ? config.showButtons : {};
-    const showDateAdded = config.showDateAdded;
-    const showPersonalRating = config.showPersonalRating;
-    const showPersonalReview = config.showPersonalReview;
+    const {
+        movie,
+        showButtons = { }, // Varje sida måste själv enabla vilka knappar ett kort ska ha
+        showDateAdded,
+        showPersonalRating,
+        showPersonalReview
+    } = config;
 
     // Få "tmdb_id" oavsett om vi använder "id" eller "tmdb_id"
     const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
