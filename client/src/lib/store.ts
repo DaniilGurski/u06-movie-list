@@ -131,3 +131,4 @@ export const getSearchInputValue = store.getSearchInputValue.bind(store);
 export const setSearchInputValue = store.setSearchInputValue.bind(store);
 export const getUserList = store.getUserList.bind(store); // Async
 export const setRenderCallback = store.setRenderCallback.bind(store);
+
