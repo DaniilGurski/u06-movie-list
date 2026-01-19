@@ -1,5 +1,6 @@
 import type { MovieListConfig } from "../types/movie";
 import MovieItem from "./movieItem";
+import { noMoviesInList } from "../components/noMoviesInList";
 
 export default function MovieList(config: MovieListConfig) {
 
@@ -26,17 +27,19 @@ export default function MovieList(config: MovieListConfig) {
     list.classList.add("movie-cards");
 
     if (movies.length === 0) {
-        const emptyMessage = document.createElement("li");
-        emptyMessage.textContent = "No movies found";
-        list.appendChild(emptyMessage);
+        const emptyState = noMoviesInList("/src/assets/images/big_chungus.webp", "No movies in this list", "Big Chungus says: maybe you hate movies?");
+        section.appendChild(emptyState);
     } else {
+        const list = document.createElement("ul");
+        list.classList.add("movie-cards");
+
         movies.forEach((movie) => {
-            // 
             const card = MovieItem({ movie, ...itemConfig });
             list.appendChild(card);
         });
+
+        section.appendChild(list);
     }
 
-    section.appendChild(list);
     return section;
 }

@@ -4,22 +4,24 @@ import MovieList from "../../components/movieList";
 import { getUserListCached } from "../../lib/store";
 
 export default () => {
-    document.title = "Watchlist";
+    document.title = "Watched";
 
     const page = document.createDocumentFragment();
 
-    const movies = getUserListCached().filter((movie) => movie.status === "watchlist");
+    const movies = getUserListCached().filter((movie) => movie.status === "watched");
 
     const watchlistPageMovieList = MovieList({
         movies,
-        heading: "Watchlist",
-        introduction: "This page shows a all movies added to the watchlist.",
+        heading: "Watched",
+        introduction: "This page shows a all movies added to the watched list.",
         itemConfig: {
             showButtons: {
-                watched: true,
+                remove: true,
+                favorite: true,
                 details: true
             },
-            showDateAdded: true
+            showPersonalRating: true,
+            showPersonalReview: true
         }
     });
 

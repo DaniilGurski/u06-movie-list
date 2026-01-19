@@ -9,18 +9,29 @@ export default function browse() {
     const content = document.createDocumentFragment();
 
     const heading = document.createElement("h2");
-    const defaultSearchInputValue = getSearchInputValue();
+    // const defaultSearchInputValue = getSearchInputValue();
 
-    heading.textContent =
-        defaultSearchInputValue.trim() !== "" ? "Results" : "Popular";
+    // heading.textContent =
+    //     defaultSearchInputValue.trim() !== "" ? "Results" : "Popular";
 
     const searchField = SearchField();
 
     // Get movies from store and render list
     const movies = getMovies();
-    const movieList = MovieList({ movies });
+    const browsePageMovieList = MovieList({
+        heading: "Popular",
+        introduction: "This movies are popular right now.",
+        movies,
+        itemConfig: {
+            showButtons: {
+                watchlist: true,
+                watched: true,
+                details: true
+            }
+        }
+    });
 
-    content.append(searchField, heading, movieList);
+    content.append(searchField, heading, browsePageMovieList);
     browse.append(header(), content, footer());
 
     return browse;

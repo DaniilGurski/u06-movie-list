@@ -170,6 +170,7 @@ export default function MovieItem(config: MovieItemConfig) {
         const addToWatchlistButton = document.createElement("button");
         addToWatchlistButton.classList.add("movie-card__button", "movie-card__button--watchlist");
         addToWatchlistButton.textContent = inWatchlist ? "In Watchlist" : "Add to Watchlist";
+        addToWatchlistButton.setAttribute("aria-pressed", inWatchlist ? "true" : "false");
 
         addToWatchlistButton.addEventListener("click", () => {
             if (isMovieInWatchlist(tmdbId)) {
@@ -190,6 +191,7 @@ export default function MovieItem(config: MovieItemConfig) {
         const markAsWatchedButton = document.createElement("button");
         markAsWatchedButton.classList.add("movie-card__button", "movie-card__button--watched");
         markAsWatchedButton.textContent = inWatched ? "Watched" : "Mark as Watched";
+        markAsWatchedButton.setAttribute("aria-pressed", inWatched ? "true" : "false");
 
         markAsWatchedButton.addEventListener("click", () => {
             if (isMovieInWatched(tmdbId)) {
@@ -210,6 +212,7 @@ export default function MovieItem(config: MovieItemConfig) {
         const favoriteButton = document.createElement("button");
         favoriteButton.classList.add("movie-card__button", "movie-card__button--favorite");
         favoriteButton.textContent = isFavorite ? "Remove as favorite" : "Add as favorite";
+        favoriteButton.setAttribute("aria-pressed", isFavorite ? "true" : "false");
 
         favoriteButton.addEventListener("click", () => {
             // TODO: Implementera toggleFavorite i store
@@ -239,7 +242,7 @@ export default function MovieItem(config: MovieItemConfig) {
     if (showButtons.remove) {
         const removeButton = document.createElement("button");
         removeButton.classList.add("movie-card__button", "movie-card__button--remove");
-        removeButton.textContent = "Remove from watchlist";
+        removeButton.textContent = "Remove";
 
         removeButton.addEventListener("click", () => {
             if ("status" in movie) {

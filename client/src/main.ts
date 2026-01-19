@@ -30,7 +30,7 @@ document.addEventListener("click", (e) => {
 // Init
 window.addEventListener("DOMContentLoaded", async () => {
     await loadPopularMovies(false);
-    await getUserList(); // Hämta användarens watchlist
+    await getUserList(); // Hämta användarens listor
 
     renderApp();
     setRenderCallback(renderApp);

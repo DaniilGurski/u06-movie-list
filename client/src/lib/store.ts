@@ -181,6 +181,12 @@ class Store {
         return this.userList;
     }
 
+    // Hm.. Det här tog lite tid att fatta. Är detta ett fulhack?
+
+    getUserListCached() {
+    return this.userList;
+}
+
     // Hämtar databasens id från tmdb_id
 
     getMovieDbId(tmdbId: number): number | undefined {
@@ -234,4 +240,8 @@ export const isMovieInWatchlist = store.isMovieInWatchlist.bind(store);
 export const isMovieInWatched = store.isMovieInWatched.bind(store);
 
 export const getUserList = store.getUserList.bind(store); // Async
+
+export const getUserListCached = store.getUserListCached.bind(store);
+
+
 

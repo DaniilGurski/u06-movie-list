@@ -319,7 +319,7 @@ h6 {
 .movie-card__content-group {
     display: flex;
     flex-flow: column wrap;
-    gap: .75rem;
+    gap: .25rem;
 }
 
 .movie-card__content-group-label {
@@ -329,5 +329,28 @@ h6 {
 
 .movie-card__content-group-value {
     font-size: 1rem;
+    font-weight: 400;
+}
+
+/* Inga filmer att visa */
+
+.movie-cards__empty-list {
+    display: flex;
+    flex-flow: column wrap;
+    gap: .75rem;
+}
+
+.movie-cards__empty-list-image {
+    inline-size: 25vw;
+    object-fit: cover;
+}
+
+.movie-cards__empty-list-heading {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.movie-cards__empty-list-text {
+    font-size: 1.125rem;
     font-weight: 400;
 }
