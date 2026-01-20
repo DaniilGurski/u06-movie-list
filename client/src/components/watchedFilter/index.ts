@@ -16,18 +16,9 @@ export default () => {
     ratingSelect.value = watchedFilter.rating?.toString() || "all";
 
     // Handle form changes
-    form.addEventListener("change", (event) => {
-        const target = event.target as HTMLInputElement;
-        if (target.id === "favorites") {
-            console.log("Favorites checkbox changed");
-        } else if (target.id === "rating") {
-            console.log("Rating select changed");
-        }
-
+    form.addEventListener("change", () => {
         const formData = new FormData(form);
-        console.log(formData);
-
-        const filterObj: Parameters<typeof setWatchedFilter>[0] = {
+        setWatchedFilter({
             favoriteStatus:
                 // checkbox currently has no way to filter by not favorited
                 formData.get("favorites") === "on" ? "favorite" : "all",
@@ -35,11 +26,7 @@ export default () => {
                 ratingSelect.value === "all"
                     ? undefined
                     : parseInt(ratingSelect.value),
-        };
-
-        console.log(filterObj);
-
-        setWatchedFilter(filterObj);
+        });
     });
 
     return form;

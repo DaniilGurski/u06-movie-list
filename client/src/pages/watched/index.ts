@@ -27,14 +27,6 @@ export default () => {
             watchedFilterState.rating === undefined ||
             movie.personal_rating === watchedFilterState.rating;
 
-        const passes = passesFavoriteStatus && passesRating;
-        if (!passes) {
-            console.log(`Movie ${movie.title} does not pass the filter`);
-            console.log(`Favorite status: ${passesFavoriteStatus}`);
-            console.log(`Rating: ${passesRating}`);
-            console.log(movie);
-        }
-
         return passesFavoriteStatus && passesRating;
     });
 
