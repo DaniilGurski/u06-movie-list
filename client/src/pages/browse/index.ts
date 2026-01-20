@@ -26,9 +26,9 @@ export default function browse() {
             showButtons: {
                 watchlist: true,
                 watched: true,
-                details: true
-            }
-        }
+                details: true,
+            },
+        },
     });
 
     content.append(searchField, heading, browsePageMovieList);

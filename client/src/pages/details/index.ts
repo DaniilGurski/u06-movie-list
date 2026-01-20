@@ -1,18 +1,29 @@
 import header from "../../components/header";
 import footer from "../../components/footer";
+import MovieItem from "../../components/movieItem";
+import type { TMDBMovie } from "../../types/movie";
 
-export default (movieId: number) => {
-
+export default (movie: TMDBMovie) => {
     document.title = "Details";
 
     const details = document.createDocumentFragment();
     const content = document.createDocumentFragment();
 
-    const heading = document.createElement("h1");
-    heading.textContent = `Details for movie ${movieId}`;
+    if (!movie) {
+        throw new Error("Movie not found");
+    }
 
-    content.append(heading);
+    const form = document.createElement("form");
+    const card = MovieItem({
+        movie,
+        showEditables: {
+            personalRating: true,
+            personalReview: true,
+        },
+    });
+    form.append(card);
+
+    content.append(form);
     details.append(header(), content, footer());
-
     return details;
 };

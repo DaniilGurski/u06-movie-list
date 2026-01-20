@@ -230,26 +230,30 @@ router.post(
         message: (error as Error).message,
       });
     }
-  }
+  },
 );
 
 /**
- * PUT /api/movies/:id
+ * PUT /api/movies/:tmdb_id
  * Uppdatera en film (t.ex. flytta från watchlist till watched, uppdatera betyg/recension)
  * Body: { status?, personal_rating?, review?, is_favorite?, date_watched? }
  */
 router.put(
-  "/:id",
-  (req: Request<{ id: string }, unknown, UpdateMovieBody>, res: Response) => {
+  "/:tmdb_id",
+  (
+    req: Request<{ tmdb_id: string }, unknown, UpdateMovieBody>,
+    res: Response,
+  ) => {
     try {
-      const { id } = req.params;
+      const { tmdb_id } = req.params;
       const { status, personal_rating, review, is_favorite, date_watched } =
         req.body;
 
       // Kolla om filmen finns
-      const checkStmt = db().prepare("SELECT * FROM movies WHERE id = ?");
-      checkStmt.bind([id]);
+      const checkStmt = db().prepare("SELECT * FROM movies WHERE tmdb_id = ?");
+      checkStmt.bind([tmdb_id]);
       let existingMovie: Movie | undefined;
+
       if (checkStmt.step()) {
         existingMovie = checkStmt.getAsObject() as unknown as Movie;
       }
@@ -313,13 +317,13 @@ router.put(
       }
 
       // Lägg till parametrar till WHERE-villkoret
-      params.push(id);
+      params.push(tmdb_id);
 
       // Uppdatera filmen
       const query = `
       UPDATE movies
       SET ${updates.join(", ")}
-      WHERE id = ?
+      WHERE tmdb_id = ?
     `;
 
       const updateStmt = db().prepare(query);
@@ -331,8 +335,8 @@ router.put(
       saveDatabase();
 
       // Hämta uppdaterad film
-      const getStmt = db().prepare("SELECT * FROM movies WHERE id = ?");
-      getStmt.bind([id]);
+      const getStmt = db().prepare("SELECT * FROM movies WHERE tmdb_id = ?");
+      getStmt.bind([tmdb_id]);
       let movie: Movie | undefined;
       if (getStmt.step()) {
         movie = getStmt.getAsObject() as unknown as Movie;
@@ -347,7 +351,7 @@ router.put(
         message: (error as Error).message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -410,7 +414,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Räkna antal watchlist-filmer
     const watchlistStmt = db().prepare(
-      'SELECT COUNT(*) as count FROM movies WHERE status = "watchlist"'
+      'SELECT COUNT(*) as count FROM movies WHERE status = "watchlist"',
     );
     watchlistStmt.step();
     const watchlistCount = (watchlistStmt.getAsObject() as { count: number })
@@ -419,7 +423,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Räkna antal watched-filmer
     const watchedStmt = db().prepare(
-      'SELECT COUNT(*) as count FROM movies WHERE status = "watched"'
+      'SELECT COUNT(*) as count FROM movies WHERE status = "watched"',
     );
     watchedStmt.step();
     const watchedCount = (watchedStmt.getAsObject() as { count: number }).count;
@@ -427,7 +431,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Räkna antal favoriter
     const favoritesStmt = db().prepare(
-      "SELECT COUNT(*) as count FROM movies WHERE is_favorite = 1"
+      "SELECT COUNT(*) as count FROM movies WHERE is_favorite = 1",
     );
     favoritesStmt.step();
     const favoritesCount = (favoritesStmt.getAsObject() as { count: number })
@@ -436,7 +440,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Beräkna genomsnittligt personligt betyg
     const avgStmt = db().prepare(
-      "SELECT AVG(personal_rating) as avg FROM movies WHERE personal_rating IS NOT NULL"
+      "SELECT AVG(personal_rating) as avg FROM movies WHERE personal_rating IS NOT NULL",
     );
     let avgRating: number | null = null;
     if (avgStmt.step()) {

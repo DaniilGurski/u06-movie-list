@@ -1,11 +1,15 @@
 import router from "./router.ts";
-import { loadPopularMovies, setRenderCallback, getUserList } from "./lib/store.ts";
+import {
+    loadPopularMovies,
+    setRenderCallback,
+    getUserList,
+} from "./lib/store.ts";
 import "./style.css";
 
 const app = document.querySelector("#app")!;
 
 const renderApp = async () => {
-    const page = router();
+    const page = await router();
     app.replaceChildren(page);
 };
 
