@@ -180,6 +180,7 @@ h6 {
     padding-inline: 1rem;
     padding-block: .5rem;
     flex: 1;
+    min-inline-size: 0;
 }
 
 .search__button {
@@ -200,6 +201,7 @@ h6 {
     inline-size: 100%;
     cursor: pointer;
     touch-action: manipulation;
+    white-space: nowrap;
 
     @media (width >=60rem) {
         inline-size: fit-content;
@@ -341,6 +343,7 @@ h6 {
     inline-size: 100%;
     cursor: pointer;
     touch-action: manipulation;
+    white-space: nowrap;
 
     @media (width >=60rem) {
         inline-size: fit-content;
