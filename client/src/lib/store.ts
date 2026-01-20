@@ -11,9 +11,18 @@ class Store {
     userList: TMDBMovieInList[] = [];
     movies: TMDBMovie[] = [];
     searchInputValue: string = "";
+    watchedListFilter: {
+        favoriteStatus: "all" | "favorite" | "no_favorite";
+        rating?: {
+            min: number;
+            max: number;
+        };
+    } = {
+        favoriteStatus: "all",
+    };
 
     constructor() {
-        this.renderCallback = () => { };
+        this.renderCallback = () => {};
     }
 
     async loadPopularMovies(shouldTriggerRender: boolean = true) {
@@ -34,7 +43,7 @@ class Store {
 
     async loadSearchedMovie(
         movieName: string,
-        shouldTriggerRender: boolean = true
+        shouldTriggerRender: boolean = true,
     ) {
         try {
             this.movies = await getSearchedMovieTMDB(movieName);
@@ -75,7 +84,10 @@ class Store {
             // Tittar om filmen redan finns i databasen och gör den det så ändrar vi status från en lista till en annan (eftersom det inte går att ha en film i båda listorna
             const movieIdAlreadyExistsInDb = this.getMovieDbId(tmdbId);
             if (movieIdAlreadyExistsInDb) {
-                await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watchlist");
+                await movieApi.updateMovieStatus(
+                    movieIdAlreadyExistsInDb,
+                    "watchlist",
+                );
             } else {
                 const convertedMovie: TMDBMovieInList = {
                     tmdb_id: tmdbId,
@@ -104,7 +116,10 @@ class Store {
 
             const movieIdAlreadyExistsInDb = this.getMovieDbId(tmdbId);
             if (movieIdAlreadyExistsInDb) {
-                await movieApi.updateMovieStatus(movieIdAlreadyExistsInDb, "watched");
+                await movieApi.updateMovieStatus(
+                    movieIdAlreadyExistsInDb,
+                    "watched",
+                );
             } else {
                 const convertedMovie: TMDBMovieInList = {
                     tmdb_id: tmdbId,
@@ -143,7 +158,7 @@ class Store {
     // Ta bort från /watched
 
     async removeMovieFromWatched(movie: TMDBMovie | TMDBMovieInList) {
-                const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
+        const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
         const dbId = this.getMovieDbId(tmdbId);
         if (!dbId) return;
 
@@ -184,8 +199,8 @@ class Store {
     // Hm.. Det här tog lite tid att fatta. Är detta ett fulhack?
 
     getUserListCached() {
-    return this.userList;
-}
+        return this.userList;
+    }
 
     // Hämtar databasens id från tmdb_id
 
@@ -212,6 +227,12 @@ class Store {
         });
     }
 
+    // Watched List Filter
+
+    getWatchedFilter() {
+        return this.watchedListFilter;
+    }
+
     triggerRender() {
         if (this.renderCallback) {
             this.renderCallback();
@@ -233,7 +254,8 @@ export const setRenderCallback = store.setRenderCallback.bind(store);
 export const addMovieToWatchlist = store.addMovieToWatchlist.bind(store); // Async
 export const addMovieToWatched = store.addMovieToWatched.bind(store); // Async
 
-export const removeMovieFromWatchlist = store.removeMovieFromWatchlist.bind(store); // Async
+export const removeMovieFromWatchlist =
+    store.removeMovieFromWatchlist.bind(store); // Async
 export const removeMovieFromWatched = store.removeMovieFromWatched.bind(store); // Async
 
 export const isMovieInWatchlist = store.isMovieInWatchlist.bind(store);
@@ -242,6 +264,6 @@ export const isMovieInWatched = store.isMovieInWatched.bind(store);
 export const getUserList = store.getUserList.bind(store); // Async
 
 export const getUserListCached = store.getUserListCached.bind(store);
+export const getWatchedFilter = store.getWatchedFilter.bind(store);
 
-
-
+export const triggerRender = store.triggerRender.bind(store);
