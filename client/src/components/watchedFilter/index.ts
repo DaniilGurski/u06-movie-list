@@ -1,6 +1,7 @@
 import templateString from "./template.html?raw";
 import { stringToHTMLElement } from "../../lib/utils";
 import { getWatchedFilter, setWatchedFilter } from "../../lib/store";
+import "./style.css";
 
 export default () => {
     const form = stringToHTMLElement(templateString) as HTMLFormElement;
