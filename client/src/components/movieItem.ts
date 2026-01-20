@@ -20,6 +20,8 @@ export default function MovieItem(movie: TMDBMovie) {
 
     const movieInfo = document.createElement("div");
 
+    // Titel (med år i parantes)
+
     const title = document.createElement("h3");
     title.textContent = movie.title;
 

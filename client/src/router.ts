@@ -1,9 +1,11 @@
 import type { Route } from "./types/route";
 import browse from "./pages/browse";
 import watchlist from "./pages/watchlist";
+import watched from "./pages/watched";
 import notFound from "./pages/notFound";
 import watchedMovies from "./pages/watched"
 import details from "./pages/details";
+import test from "./pages/test"; // Testsida för movieList.ts
 
 // Nu kan vi lägga till/ta bort vad som ska finnas i menyn samt dölja det med "showInNav"
 
@@ -23,7 +25,12 @@ export const routes: Route[] = [{
     path: "/watched",
     label: "Watched",
     showInNav: true
-},]
+},
+{
+    path: "/test",
+    label: "Test",
+    showInNav: false
+}]
 
 const router = (): HTMLElement | DocumentFragment => {
     const path = window.location.pathname;
