@@ -8,6 +8,7 @@ export interface TMDBMovie {
 }
 
 export type TMDBMovieInList = {
+    id?: number; // ??Backend tilldelar??
     tmdb_id: TMDBMovie["id"];
     title: TMDBMovie["title"];
     status: "watchlist" | "watched";
