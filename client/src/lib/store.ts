@@ -219,7 +219,7 @@ class Store {
     }
 }
 
-const store = new Store();
+export const store = new Store();
 
 // "Nu i den ordning de kommer"!
 
@@ -242,6 +242,7 @@ export const isMovieInWatched = store.isMovieInWatched.bind(store);
 export const getUserList = store.getUserList.bind(store); // Async
 
 export const getUserListCached = store.getUserListCached.bind(store);
+
 
 
 
