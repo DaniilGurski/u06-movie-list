@@ -13,10 +13,7 @@ class Store {
     searchInputValue: string = "";
     watchedListFilter: {
         favoriteStatus: "all" | "favorite" | "no_favorite";
-        rating?: {
-            min: number;
-            max: number;
-        };
+        rating?: number;
     } = {
         favoriteStatus: "all",
     };
@@ -232,7 +229,7 @@ class Store {
     getWatchedFilter() {
         return this.watchedListFilter;
     }
-    
+
     setWatchedFilter(filter: typeof this.watchedListFilter) {
         this.watchedListFilter = filter;
         this.triggerRender();

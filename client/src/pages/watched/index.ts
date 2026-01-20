@@ -23,12 +23,9 @@ export default () => {
             (watchedFilterState.favoriteStatus === "no_favorite" &&
                 !movie.is_favorite);
 
-        const rating = movie.personal_rating || 0;
-
         const passesRating =
             watchedFilterState.rating === undefined ||
-            (rating >= watchedFilterState.rating.min &&
-                rating <= watchedFilterState.rating.max);
+            movie.personal_rating === watchedFilterState.rating;
 
         const passes = passesFavoriteStatus && passesRating;
         if (!passes) {
