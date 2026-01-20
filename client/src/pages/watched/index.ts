@@ -1,5 +1,6 @@
 import header from "../../components/header";
 import footer from "../../components/footer";
+import watchedFilter from "../../components/watchedFilter";
 import MovieList from "../../components/movieList";
 import { getUserListCached, getWatchedFilter } from "../../lib/store";
 
@@ -12,21 +13,22 @@ export default () => {
         (movie) => movie.status === "watched",
     );
 
-    const watchedFilter = getWatchedFilter();
+    const watchedFilterState = getWatchedFilter();
 
     const filteredMovies = movies.filter((movie) => {
         const passesFavoriteStatus =
-            watchedFilter.favoriteStatus === "all" ||
-            (watchedFilter.favoriteStatus === "favorite" &&
+            watchedFilterState.favoriteStatus === "all" ||
+            (watchedFilterState.favoriteStatus === "favorite" &&
                 movie.is_favorite) ||
-            (watchedFilter.favoriteStatus === "no_favorite" &&
+            (watchedFilterState.favoriteStatus === "no_favorite" &&
                 !movie.is_favorite);
 
+        const rating = movie.personal_rating || 0;
+
         const passesRating =
-            watchedFilter.rating === undefined ||
-            (typeof movie.personal_rating === "number" &&
-                movie.personal_rating >= watchedFilter.rating.min &&
-                movie.personal_rating <= watchedFilter.rating.max);
+            watchedFilterState.rating === undefined ||
+            (rating >= watchedFilterState.rating.min &&
+                rating <= watchedFilterState.rating.max);
 
         const passes = passesFavoriteStatus && passesRating;
         if (!passes) {
@@ -54,7 +56,7 @@ export default () => {
         },
     });
 
-    page.append(header(), watchlistPageMovieList, footer());
+    page.append(header(), watchedFilter(), watchlistPageMovieList, footer());
 
     return page;
 };

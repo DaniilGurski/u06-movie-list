@@ -232,6 +232,11 @@ class Store {
     getWatchedFilter() {
         return this.watchedListFilter;
     }
+    
+    setWatchedFilter(filter: typeof this.watchedListFilter) {
+        this.watchedListFilter = filter;
+        this.triggerRender();
+    }
 
     triggerRender() {
         if (this.renderCallback) {
@@ -265,5 +270,6 @@ export const getUserList = store.getUserList.bind(store); // Async
 
 export const getUserListCached = store.getUserListCached.bind(store);
 export const getWatchedFilter = store.getWatchedFilter.bind(store);
+export const setWatchedFilter = store.setWatchedFilter.bind(store);
 
 export const triggerRender = store.triggerRender.bind(store);
