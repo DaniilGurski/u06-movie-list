@@ -26,6 +26,12 @@ export default () => {
         }
     });
 
+    const movieListContainer = document.createElement("section");
+    movieListContainer.appendChild(watchlistPageMovieList);
+
+    page.append(header(), movieListContainer, footer());
+
+
     store.renderCallback = () => {
         // Skapa en ny MovieList med uppdaterad userList
         const updatedMovies = store.getUserListCached().filter((movie) => movie.status === "watched");
@@ -47,14 +53,13 @@ export default () => {
         });
 
         // Byt ut den gamla listan mot den nya
-        page.replaceChild(newMovieList, watchlistPageMovieList);
+        movieListContainer.replaceChild(newMovieList, watchlistPageMovieList);
 
         // Uppdatera referensen så att nästa gång renderCallback körs använder vi nya listan
         watchlistPageMovieList = newMovieList;
     };
 
-
-    page.append(header(), watchlistPageMovieList, footer());
-
+    
+    
     return page;
 };
