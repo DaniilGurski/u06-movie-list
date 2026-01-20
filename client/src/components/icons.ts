@@ -37,6 +37,30 @@ export function watchedIcon(): SVGElement {
     return svg;
 }
 
+// Edit-ikon för movie-card
+
+export function editIcon(): SVGElement {
+    const svg = baseSVG("movie-card__icon movie-card__icon--edit");
+    svgPath(svg, "M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497zM15 5l4 4");
+    return svg;
+}
+
+// Hjärt-ikon för movie-card
+
+export function heartIcon(): SVGElement {
+    const svg = baseSVG("movie-card__icon movie-card__icon--heart");
+    svgPath(svg, "M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5");
+    return svg;
+}
+
+// Kryss-ikon för söket
+
+export function clearIcon(): SVGElement {
+    const svg = baseSVG("search__input-icon");
+    svgPath(svg, "M18 6 6 18M6 6l12 12");
+    return svg;
+}
+
 // Error-ikon för när en posterbild inte kan läsas in
 
 export function placeholderIcon(): SVGElement {
