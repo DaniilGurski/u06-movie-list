@@ -24,7 +24,6 @@ export default function MovieList(config: MovieListConfig) {
     }
 
     const list = document.createElement("ul");
-    list.classList.add("movie-cards");
 
     if (movies.length === 0) {
         const emptyState = noMoviesInList("/src/assets/images/big_chungus.webp", "No movies in this list", "Big Chungus says: maybe you hate movies?");
