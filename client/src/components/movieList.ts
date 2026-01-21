@@ -4,16 +4,28 @@ import { noMoviesInList } from "../components/noMoviesInList";
 
 export default function MovieList(config: MovieListConfig) {
 
-    const { movies, itemConfig, heading, introduction } = config;
+    const { movies, itemConfig, heading, introduction, showCount } = config;
 
     const section = document.createElement("section");
     section.classList.add("page", "container");
 
     if (heading) {
+        const header = document.createElement("div");
+        header.className = "page__header";
+
         const h1 = document.createElement("h1");
         h1.className = "page__title";
         h1.textContent = heading;
-        section.appendChild(h1);
+        header.appendChild(h1);
+
+        if (showCount) {
+            const count = document.createElement("span");
+            count.className = "page__movie-count";
+            count.textContent = `${movies.length} movies in list`;
+            header.appendChild(count);
+        }
+
+        section.appendChild(header);
     }
 
     if (introduction) {
