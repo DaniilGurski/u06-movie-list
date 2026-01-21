@@ -63,6 +63,9 @@ h6 {
 }
 
 #app {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
     isolation: isolate;
 }
 
@@ -425,14 +428,26 @@ h6 {
 /* Inga filmer att visa */
 
 .movie-cards__empty-list {
-    display: flex;
-    flex-flow: column wrap;
+    display: grid;
+    place-items: center;
     gap: .75rem;
 }
 
+/* Strictly for the lulz */
+
 .movie-cards__empty-list-image {
-    inline-size: 25vw;
     object-fit: cover;
+    animation: pulsate 2s ease-in-out infinite alternate;
+}
+
+@keyframes pulsate {
+    from {
+        transform: scaleX(1);
+    }
+
+    to {
+        transform: scaleX(1.5);
+    }
 }
 
 .movie-cards__empty-list-heading {
