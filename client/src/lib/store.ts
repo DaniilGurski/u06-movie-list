@@ -175,7 +175,6 @@ class Store {
             console.error("Error updating movie data:", error);
             throw error;
         }
-        this.triggerRender();
     }
 
     /**

@@ -6,6 +6,7 @@ import { getUserListCached, updateMovieData } from "../../lib/store";
 
 export default async (movie: TMDBMovie) => {
     document.title = "Details";
+    console.log("render");
 
     const details = document.createDocumentFragment();
     const content = document.createDocumentFragment();
@@ -62,8 +63,10 @@ export default async (movie: TMDBMovie) => {
                 review: review || null,
             });
 
-            // TODO: Make a proper status message ?
-            alert("Changes saved");
+            const statusSpan = form.querySelector(
+                "#status-message",
+            ) as HTMLSpanElement;
+            statusSpan.textContent = "Changes saved !";
         });
     }
 

@@ -388,6 +388,8 @@ export default function MovieItem(config: MovieItemConfig) {
     // Submit för editables
     if (showEditables?.personalRating || showEditables?.personalReview) {
         const submitButton = document.createElement("button");
+        const statusSpan = document.createElement("span");
+        statusSpan.setAttribute("id", "status-message");
         submitButton.type = "submit";
         submitButton.classList.add(
             "movie-card__button",
@@ -396,6 +398,7 @@ export default function MovieItem(config: MovieItemConfig) {
         submitButton.textContent = "Save changes";
 
         content.appendChild(submitButton);
+        content.append(statusSpan);
     }
 
     card.appendChild(posterImage);
