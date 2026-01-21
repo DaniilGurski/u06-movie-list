@@ -21,7 +21,8 @@ export default function MovieList(config: MovieListConfig) {
         if (showCount) {
             const count = document.createElement("span");
             count.className = "page__movie-count";
-            count.textContent = `${movies.length} movies in list`;
+            count.textContent = `${movies.length} ${movies.length === 1 ? 'movie' : 'movies'} in list`;
+
             header.appendChild(count);
         }
 
