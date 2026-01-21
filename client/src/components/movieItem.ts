@@ -5,7 +5,7 @@ import {
     isMovieInWatchlist,
     addMovieToWatched,
     removeMovieFromWatched,
-    isMovieInWatched
+    isMovieInWatched,
 } from "../lib/store";
 
 export default function MovieItem(config: MovieItemConfig) {
@@ -16,10 +16,12 @@ export default function MovieItem(config: MovieItemConfig) {
 
     const {
         movie,
-        showButtons = { }, // Varje sida måste själv enabla vilka knappar ett kort ska ha
+        showButtons = {}, // Varje sida måste själv enabla vilka knappar ett kort ska ha
         showDateAdded,
+        showEditables,
+        defaultValues,
         showPersonalRating,
-        showPersonalReview
+        showPersonalReview,
     } = config;
 
     // Få "tmdb_id" oavsett om vi använder "id" eller "tmdb_id"
@@ -48,7 +50,9 @@ export default function MovieItem(config: MovieItemConfig) {
         img.alt = "";
 
         img.addEventListener("error", () => {
-            posterImage.replaceChildren(createPlaceholder("Error loading poster"));
+            posterImage.replaceChildren(
+                createPlaceholder("Error loading poster"),
+            );
         });
 
         posterImage.appendChild(img);
@@ -88,7 +92,10 @@ export default function MovieItem(config: MovieItemConfig) {
     // Betyg från TMDB
 
     const rating = document.createElement("div");
-    rating.classList.add("movie-card__content-group", "movie-card__content-group--rating");
+    rating.classList.add(
+        "movie-card__content-group",
+        "movie-card__content-group--rating",
+    );
 
     const ratingLabel = document.createElement("span");
     ratingLabel.className = "movie-card__content-group-label";
@@ -106,7 +113,10 @@ export default function MovieItem(config: MovieItemConfig) {
 
     if (showDateAdded && "date_added" in movie && movie.date_added) {
         const dateAdded = document.createElement("div");
-        dateAdded.classList.add("movie-card__content-group", "movie-card__content-group--date-added");
+        dateAdded.classList.add(
+            "movie-card__content-group",
+            "movie-card__content-group--date-added",
+        );
 
         const dateAddedLabel = document.createElement("span");
         dateAddedLabel.className = "movie-card__content-group-label";
@@ -123,9 +133,16 @@ export default function MovieItem(config: MovieItemConfig) {
 
     // "Mitt ditt personliga betyg"
 
-    if (showPersonalRating && "personal_rating" in movie && movie.personal_rating) {
+    if (
+        showPersonalRating &&
+        "personal_rating" in movie &&
+        movie.personal_rating
+    ) {
         const personalRating = document.createElement("div");
-        personalRating.classList.add("movie-card__content-group", "movie-card__content-group--personal-rating");
+        personalRating.classList.add(
+            "movie-card__content-group",
+            "movie-card__content-group--personal-rating",
+        );
 
         const personalRatingLabel = document.createElement("span");
         personalRatingLabel.className = "movie-card__content-group-label";
@@ -144,7 +161,10 @@ export default function MovieItem(config: MovieItemConfig) {
 
     if (showPersonalReview && "review" in movie && movie.review) {
         const review = document.createElement("div");
-        review.classList.add("movie-card__content-group", "movie-card__content-group--review");
+        review.classList.add(
+            "movie-card__content-group",
+            "movie-card__content-group--review",
+        );
 
         const reviewLabel = document.createElement("span");
         reviewLabel.className = "movie-card__content-group-label";
@@ -170,9 +190,18 @@ export default function MovieItem(config: MovieItemConfig) {
         const inWatchlist = isMovieInWatchlist(tmdbId);
 
         const addToWatchlistButton = document.createElement("button");
-        addToWatchlistButton.classList.add("movie-card__button", "movie-card__button--watchlist");
-        addToWatchlistButton.textContent = inWatchlist ? "In Watchlist" : "Add to Watchlist";
-        addToWatchlistButton.setAttribute("aria-pressed", inWatchlist ? "true" : "false");
+        addToWatchlistButton.classList.add(
+            "movie-card__button",
+            "movie-card__button--watchlist",
+        );
+        addToWatchlistButton.textContent = inWatchlist
+            ? "In Watchlist"
+            : "Add to Watchlist";
+        addToWatchlistButton.setAttribute(
+            "aria-pressed",
+            inWatchlist ? "true" : "false",
+        );
+        addToWatchlistButton.type = "button";
 
         addToWatchlistButton.addEventListener("click", () => {
             if (isMovieInWatchlist(tmdbId)) {
@@ -191,9 +220,18 @@ export default function MovieItem(config: MovieItemConfig) {
         const inWatched = isMovieInWatched(tmdbId);
 
         const markAsWatchedButton = document.createElement("button");
-        markAsWatchedButton.classList.add("movie-card__button", "movie-card__button--watched");
-        markAsWatchedButton.textContent = inWatched ? "Watched" : "Mark as Watched";
-        markAsWatchedButton.setAttribute("aria-pressed", inWatched ? "true" : "false");
+        markAsWatchedButton.classList.add(
+            "movie-card__button",
+            "movie-card__button--watched",
+        );
+        markAsWatchedButton.textContent = inWatched
+            ? "Watched"
+            : "Mark as Watched";
+        markAsWatchedButton.setAttribute(
+            "aria-pressed",
+            inWatched ? "true" : "false",
+        );
+        markAsWatchedButton.type = "button";
 
         markAsWatchedButton.addEventListener("click", () => {
             if (isMovieInWatched(tmdbId)) {
@@ -212,9 +250,17 @@ export default function MovieItem(config: MovieItemConfig) {
         const isFavorite = "is_favorite" in movie && movie.is_favorite;
 
         const favoriteButton = document.createElement("button");
-        favoriteButton.classList.add("movie-card__button", "movie-card__button--favorite");
-        favoriteButton.textContent = isFavorite ? "Remove as favorite" : "Add as favorite";
-        favoriteButton.setAttribute("aria-pressed", isFavorite ? "true" : "false");
+        favoriteButton.classList.add(
+            "movie-card__button",
+            "movie-card__button--favorite",
+        );
+        favoriteButton.textContent = isFavorite
+            ? "Remove as favorite"
+            : "Add as favorite";
+        favoriteButton.setAttribute(
+            "aria-pressed",
+            isFavorite ? "true" : "false",
+        );
 
         favoriteButton.addEventListener("click", () => {
             // TODO: Implementera toggleFavorite i store
@@ -224,26 +270,14 @@ export default function MovieItem(config: MovieItemConfig) {
         actions.appendChild(favoriteButton);
     }
 
-    // Edit
-
-    if (showButtons.edit) {
-        const editButton = document.createElement("button");
-        editButton.classList.add("movie-card__button", "movie-card__button--edit");
-        editButton.textContent = "Edit personal note or score";
-
-        editButton.addEventListener("click", () => {
-            // TODO: Öppna edit-modal eller navigera till edit-vy
-            console.log("TODO inte klar.");
-        });
-
-        actions.appendChild(editButton);
-    }
-
     // Ta bort film från /watched
 
     if (showButtons.remove) {
         const removeButton = document.createElement("button");
-        removeButton.classList.add("movie-card__button", "movie-card__button--remove");
+        removeButton.classList.add(
+            "movie-card__button",
+            "movie-card__button--remove",
+        );
         removeButton.textContent = "Remove";
 
         removeButton.addEventListener("click", () => {
@@ -263,7 +297,10 @@ export default function MovieItem(config: MovieItemConfig) {
 
     if (showButtons.details) {
         const detailsLink = document.createElement("a");
-        detailsLink.classList.add("movie-card__button", "movie-card__button--details");
+        detailsLink.classList.add(
+            "movie-card__button",
+            "movie-card__button--details",
+        );
         detailsLink.href = `/details/${tmdbId}`;
         detailsLink.textContent = "View Details";
 
@@ -271,6 +308,95 @@ export default function MovieItem(config: MovieItemConfig) {
     }
 
     content.appendChild(actions);
+
+    // Select för personligt betyg
+
+    if (showEditables?.personalRating) {
+        const personalRatingGroup = document.createElement("div");
+        personalRatingGroup.classList.add(
+            "movie-card__content-group",
+            "movie-card__content-group--editable",
+        );
+
+        const personalRatingLabel = document.createElement("label");
+        personalRatingLabel.className = "movie-card__content-group-label";
+        personalRatingLabel.textContent = "My rating";
+        personalRatingLabel.htmlFor = `personal-rating-${tmdbId}`;
+
+        const personalRatingSelect = document.createElement("select");
+        personalRatingSelect.className = "movie-card__input";
+        personalRatingSelect.id = `personal-rating-${tmdbId}`;
+        personalRatingSelect.name = "personal_rating";
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Select a rating";
+        personalRatingSelect.appendChild(defaultOption);
+
+        for (let i = 1; i <= 5; i++) {
+            const option = document.createElement("option");
+            option.value = String(i);
+            option.textContent = "⭐".repeat(i);
+
+            // Pre-select om filmen har en rating
+            if (
+                defaultValues?.personalRating &&
+                defaultValues.personalRating === i
+            ) {
+                option.selected = true;
+            }
+
+            personalRatingSelect.appendChild(option);
+        }
+
+        personalRatingGroup.appendChild(personalRatingLabel);
+        personalRatingGroup.appendChild(personalRatingSelect);
+        content.appendChild(personalRatingGroup);
+    }
+
+    // Textarea för personligt review
+    if (showEditables?.personalReview) {
+        const personalReviewGroup = document.createElement("div");
+        personalReviewGroup.classList.add(
+            "movie-card__content-group",
+            "movie-card__content-group--editable",
+        );
+
+        const personalReviewLabel = document.createElement("label");
+        personalReviewLabel.className = "movie-card__content-group-label";
+        personalReviewLabel.textContent = "My note about this movie";
+        personalReviewLabel.htmlFor = `personal-review-${tmdbId}`;
+
+        const personalReviewTextarea = document.createElement("textarea");
+        personalReviewTextarea.className = "movie-card__textarea";
+        personalReviewTextarea.id = `personal-review-${tmdbId}`;
+        personalReviewTextarea.name = "review";
+        personalReviewTextarea.placeholder =
+            "Write your thoughts about this movie...";
+        personalReviewTextarea.rows = 4;
+
+        // Pre-fill om filmen har en review
+        if (defaultValues?.personalReview) {
+            personalReviewTextarea.value = defaultValues.personalReview;
+        }
+
+        personalReviewGroup.appendChild(personalReviewLabel);
+        personalReviewGroup.appendChild(personalReviewTextarea);
+        content.appendChild(personalReviewGroup);
+    }
+
+    // Submit för editables
+    if (showEditables?.personalRating || showEditables?.personalReview) {
+        const submitButton = document.createElement("button");
+        submitButton.type = "submit";
+        submitButton.classList.add(
+            "movie-card__button",
+            "movie-card__button--submit",
+        );
+        submitButton.textContent = "Save changes";
+
+        content.appendChild(submitButton);
+    }
 
     card.appendChild(posterImage);
     card.appendChild(content);

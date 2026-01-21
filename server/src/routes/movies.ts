@@ -230,7 +230,7 @@ router.post(
         message: (error as Error).message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -347,7 +347,7 @@ router.put(
         message: (error as Error).message,
       });
     }
-  }
+  },
 );
 
 /**
@@ -410,7 +410,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Räkna antal watchlist-filmer
     const watchlistStmt = db().prepare(
-      'SELECT COUNT(*) as count FROM movies WHERE status = "watchlist"'
+      'SELECT COUNT(*) as count FROM movies WHERE status = "watchlist"',
     );
     watchlistStmt.step();
     const watchlistCount = (watchlistStmt.getAsObject() as { count: number })
@@ -419,7 +419,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Räkna antal watched-filmer
     const watchedStmt = db().prepare(
-      'SELECT COUNT(*) as count FROM movies WHERE status = "watched"'
+      'SELECT COUNT(*) as count FROM movies WHERE status = "watched"',
     );
     watchedStmt.step();
     const watchedCount = (watchedStmt.getAsObject() as { count: number }).count;
@@ -427,7 +427,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Räkna antal favoriter
     const favoritesStmt = db().prepare(
-      "SELECT COUNT(*) as count FROM movies WHERE is_favorite = 1"
+      "SELECT COUNT(*) as count FROM movies WHERE is_favorite = 1",
     );
     favoritesStmt.step();
     const favoritesCount = (favoritesStmt.getAsObject() as { count: number })
@@ -436,7 +436,7 @@ router.get("/user/stats", (req: Request, res: Response) => {
 
     // Beräkna genomsnittligt personligt betyg
     const avgStmt = db().prepare(
-      "SELECT AVG(personal_rating) as avg FROM movies WHERE personal_rating IS NOT NULL"
+      "SELECT AVG(personal_rating) as avg FROM movies WHERE personal_rating IS NOT NULL",
     );
     let avgRating: number | null = null;
     if (avgStmt.step()) {
