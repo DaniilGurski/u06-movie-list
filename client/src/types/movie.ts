@@ -38,4 +38,5 @@ export type MovieListConfig = {
     itemConfig: Omit<MovieItemConfig, "movie">;
     heading?: string;
     introduction?: string;
+    showCount?: boolean;
 };

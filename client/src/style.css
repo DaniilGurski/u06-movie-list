@@ -247,6 +247,14 @@ h6 {
     margin-block: 1.5rem;
 }
 
+.page__header {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
 .page__title {
     font-size: 2rem;
     font-weight: 700;
