@@ -391,7 +391,7 @@ export default function MovieItem(config: MovieItemConfig) {
         submitButton.type = "submit";
         submitButton.classList.add(
             "movie-card__button",
-            "movie-card__button--submit",
+            "movie-card__button--details",
         );
         submitButton.textContent = "Save changes";
 
