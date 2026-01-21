@@ -2,7 +2,7 @@ import header from "../../components/header";
 import footer from "../../components/footer";
 import MovieItem from "../../components/movieItem";
 import type { TMDBMovie } from "../../types/movie";
-import { getUserList } from "../../lib/store";
+import { getUserListCached, updateMovieData } from "../../lib/store";
 
 export default async (movie: TMDBMovie) => {
     document.title = "Details";
@@ -15,20 +15,23 @@ export default async (movie: TMDBMovie) => {
     }
 
     const form = document.createElement("form");
-    const userList = await getUserList();
-    const isMovieInList = userList.find(
-        (movie) => movie.tmdb_id === movie.tmdb_id,
-    );
+    const savedMovie = getUserListCached().find((savedMovie) => {
+        return savedMovie.tmdb_id === movie.id;
+    });
 
     let card;
 
-    // You can only edit personal rating and reviews for movies which are already in list
-    if (isMovieInList) {
+    // You can only edit personal ratings and reviews for movies that are already in the list
+    if (savedMovie) {
         card = MovieItem({
             movie,
             showEditables: {
                 personalRating: true,
                 personalReview: true,
+            },
+            defaultValues: {
+                personalRating: savedMovie.personal_rating,
+                personalReview: savedMovie.review,
             },
         });
     } else {
@@ -39,6 +42,21 @@ export default async (movie: TMDBMovie) => {
 
     // Check if movie is in user list
     form.append(card);
+
+    // Handle form submission for updating personal rating and review
+    if (savedMovie) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const personalRating = formData.get("personal_rating");
+            const review = formData.get("review") as string;
+
+            await updateMovieData(movie.id, {
+                personal_rating: personalRating ? Number(personalRating) : null,
+                review: review || null,
+            });
+        });
+    }
 
     content.append(form);
     details.append(header(), content, footer());

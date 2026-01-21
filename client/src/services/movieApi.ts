@@ -38,7 +38,6 @@ export const addMovieToWatchlist = addMovie;
 export const addMovieToWatched = addMovie;
 
 // Uppdatera en films status (exempelvis om en film redan finns i /watchlist eller /watched)
-
 export const updateMovieStatus = async (
     tmdb_id: number,
     status: "watchlist" | "watched",
@@ -62,6 +61,32 @@ export const updateMovieStatus = async (
         return data;
     } catch (error) {
         console.error("Error updating movie status:", error);
+        throw error;
+    }
+};
+
+// Update data like personal rating, personal review for a movie
+export const updateMovieData = async (
+    tmdbId: number,
+    data: { personal_rating?: number | null; review?: string | null },
+): Promise<TMDBMovieInList> => {
+    try {
+        const res = await fetch(`${baseURL}/${tmdbId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        });
+
+        if (!res.ok) {
+            throw new Error(`Failed to update movie data: ${res.statusText}`);
+        }
+
+        const updatedMovie: TMDBMovieInList = await res.json();
+        return updatedMovie;
+    } catch (error) {
+        console.error("Error updating movie data:", error);
         throw error;
     }
 };

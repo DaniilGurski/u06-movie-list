@@ -244,6 +244,8 @@ router.put(
     req: Request<{ tmdb_id: string }, unknown, UpdateMovieBody>,
     res: Response,
   ) => {
+    console.log("put request to /:tmdb_id made");
+
     try {
       const { tmdb_id } = req.params;
       const { status, personal_rating, review, is_favorite, date_watched } =

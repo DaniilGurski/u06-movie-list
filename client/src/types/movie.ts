@@ -35,6 +35,10 @@ export type MovieItemConfig = {
     showDateAdded?: boolean;
     showPersonalRating?: boolean;
     showPersonalReview?: boolean;
+    defaultValues?: {
+        personalRating?: number;
+        personalReview?: string;
+    };
 };
 
 export type MovieListConfig = {

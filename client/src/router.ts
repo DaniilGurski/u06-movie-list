@@ -6,6 +6,7 @@ import notFound from "./pages/notFound";
 import details from "./pages/details";
 import test from "./pages/test"; // Testsida för movieList.ts
 import { getMovieByIdTMDB } from "./services/tmdbApi";
+import { getUserListCached } from "./lib/store";
 
 // Nu kan vi lägga till/ta bort vad som ska finnas i menyn samt dölja det med "showInNav"
 
@@ -44,14 +45,13 @@ const router = async (): Promise<HTMLElement | DocumentFragment> => {
 
     if (path.startsWith("/details")) {
         const movieId = Number(path.split("/")[2]);
-        const movie = await getMovieByIdTMDB(movieId);
 
         // Visa 404-sidan om id/nummer saknas, är noll, negativt eller inte är ett nummer
         if (isNaN(movieId) || movieId <= 0) {
             return notFound();
         }
 
-        // Annars visa details sidan med aktuellt id/nummer
+        const movie = await getMovieByIdTMDB(movieId);
         return details(movie);
     }
 

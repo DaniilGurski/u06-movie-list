@@ -21,6 +21,7 @@ export default function MovieItem(config: MovieItemConfig) {
         showDateAdded,
         showPersonalRating,
         showPersonalReview,
+        defaultValues,
     } = config;
 
     // Få "tmdb_id" oavsett om vi använder "id" eller "tmdb_id"
@@ -106,6 +107,95 @@ export default function MovieItem(config: MovieItemConfig) {
     rating.appendChild(ratingLabel);
     rating.appendChild(ratingValue);
     content.appendChild(rating);
+
+    // Select för personligt betyg
+
+    if (showEditables?.personalRating) {
+        const personalRatingGroup = document.createElement("div");
+        personalRatingGroup.classList.add(
+            "movie-card__content-group",
+            "movie-card__content-group--editable",
+        );
+
+        const personalRatingLabel = document.createElement("label");
+        personalRatingLabel.className = "movie-card__content-group-label";
+        personalRatingLabel.textContent = "My rating";
+        personalRatingLabel.htmlFor = `personal-rating-${tmdbId}`;
+
+        const personalRatingSelect = document.createElement("select");
+        personalRatingSelect.className = "movie-card__input";
+        personalRatingSelect.id = `personal-rating-${tmdbId}`;
+        personalRatingSelect.name = "personal_rating";
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Select a rating";
+        personalRatingSelect.appendChild(defaultOption);
+
+        for (let i = 1; i <= 5; i++) {
+            const option = document.createElement("option");
+            option.value = String(i);
+            option.textContent = "⭐".repeat(i);
+
+            // Pre-select om filmen har en rating
+            if (
+                defaultValues?.personalRating &&
+                defaultValues.personalRating === i
+            ) {
+                option.selected = true;
+            }
+
+            personalRatingSelect.appendChild(option);
+        }
+
+        personalRatingGroup.appendChild(personalRatingLabel);
+        personalRatingGroup.appendChild(personalRatingSelect);
+        content.appendChild(personalRatingGroup);
+    }
+
+    // Textarea för personligt review
+    if (showEditables?.personalReview) {
+        const personalReviewGroup = document.createElement("div");
+        personalReviewGroup.classList.add(
+            "movie-card__content-group",
+            "movie-card__content-group--editable",
+        );
+
+        const personalReviewLabel = document.createElement("label");
+        personalReviewLabel.className = "movie-card__content-group-label";
+        personalReviewLabel.textContent = "My note about this movie";
+        personalReviewLabel.htmlFor = `personal-review-${tmdbId}`;
+
+        const personalReviewTextarea = document.createElement("textarea");
+        personalReviewTextarea.className = "movie-card__textarea";
+        personalReviewTextarea.id = `personal-review-${tmdbId}`;
+        personalReviewTextarea.name = "review";
+        personalReviewTextarea.placeholder =
+            "Write your thoughts about this movie...";
+        personalReviewTextarea.rows = 4;
+
+        // Pre-fill om filmen har en review
+        if (defaultValues?.personalReview) {
+            personalReviewTextarea.value = defaultValues.personalReview;
+        }
+
+        personalReviewGroup.appendChild(personalReviewLabel);
+        personalReviewGroup.appendChild(personalReviewTextarea);
+        content.appendChild(personalReviewGroup);
+    }
+
+    // Submit för editables
+    if (showEditables?.personalRating || showEditables?.personalReview) {
+        const submitButton = document.createElement("button");
+        submitButton.type = "submit";
+        submitButton.classList.add(
+            "movie-card__button",
+            "movie-card__button--submit",
+        );
+        submitButton.textContent = "Save changes";
+
+        content.appendChild(submitButton);
+    }
 
     // Datum tillagd
 
