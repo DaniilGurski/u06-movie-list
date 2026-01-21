@@ -436,3 +436,63 @@ h6 {
     font-size: 1.125rem;
     font-weight: 400;
 }
+
+/* Footer */
+
+.footer {
+    inline-size: 100%;
+    overflow: hidden;
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+}
+
+.footer__layout {
+    display: grid;
+    grid-template-areas: "group up" "disclaimer disclaimer";
+    grid-template-columns: 1fr auto;
+    gap: 1.5rem;
+    padding-block: 1.5rem;
+
+    @media (width >=60rem) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.footer__group-info {
+    grid-area: group;
+    place-self: center left;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.footer__up-button {
+    grid-area: up;
+    place-self: center right;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: oklch(1 0 0);
+    color: oklch(0 0 0);
+    border: none;
+    border-radius: .5rem;
+    padding: .5rem;
+    inline-size: 3rem;
+    block-size: 3rem;
+    cursor: pointer;
+}
+
+.footer__up-button-icon {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+}
+
+.footer__disclaimer-label {
+    grid-area: disclaimer;
+    grid-column: span 2;
+    place-self: center left;
+
+    @media (width >=60rem) {
+        grid-column: span 1;
+    }
+}
