@@ -436,6 +436,7 @@ h6 {
 /* Strictly for the lulz */
 
 .movie-cards__empty-list-image {
+    inline-size: calc(100% / 1.5); /* To not cause overflow */
     object-fit: cover;
     animation: pulsate 2s ease-in-out infinite alternate;
 }
