@@ -66,6 +66,38 @@ export const updateMovieStatus = async (
     }
 };
 
+// ========== ERNEST - TASK 3.5: Favorite toggle ==========
+// Uppdatera en films favorite-status
+// Added: API function to toggle favorite status
+
+export const updateMovieFavorite = async (
+    id: number,
+    isFavorite: boolean
+): Promise<TMDBMovieInList> => {
+    try {
+        const res = await fetch(`${baseURL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                is_favorite: isFavorite
+            }),
+        });
+
+        if (!res.ok) {
+            throw new Error(`Failed to update favorite status: ${res.statusText}`);
+        }
+
+        const data: TMDBMovieInList = await res.json();
+        return data;
+    } catch (error) {
+        console.error("Error updating favorite status:", error);
+        throw error;
+    }
+};
+// ========== END ERNEST - TASK 3.5 ==========
+
 // Ta bort en film från /watchlist eller /watched
 
 const deleteMovie = async (id: number): Promise<void> => {

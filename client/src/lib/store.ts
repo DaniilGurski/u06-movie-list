@@ -212,6 +212,38 @@ class Store {
         });
     }
 
+    // ========== ERNEST - TASK 3.5: Favorite toggle ==========
+    // Toggle favorite status for a movie
+    // Added: Store function to toggle favorite status
+
+    async toggleFavorite(movie: TMDBMovie | TMDBMovieInList) {
+        try {
+            const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
+            const dbId = this.getMovieDbId(tmdbId);
+            
+            if (!dbId) {
+                console.error("Movie not found in database");
+                return;
+            }
+
+            // Find current favorite status from userList
+            const currentMovie = this.userList.find(m => m.id === dbId);
+            const currentFavoriteStatus = currentMovie?.is_favorite ?? false;
+            const newFavoriteStatus = !currentFavoriteStatus;
+
+            // Update favorite status via API
+            await movieApi.updateMovieFavorite(dbId, newFavoriteStatus);
+            
+            // Refresh user list to get updated data
+            await this.fetchUserList();
+        } catch (error) {
+            console.error("Error toggling favorite:", error);
+            //TODO: handle error
+        }
+        this.triggerRender();
+    }
+    // ========== END ERNEST - TASK 3.5 ==========
+
     triggerRender() {
         if (this.renderCallback) {
             this.renderCallback();
@@ -238,6 +270,11 @@ export const removeMovieFromWatched = store.removeMovieFromWatched.bind(store); 
 
 export const isMovieInWatchlist = store.isMovieInWatchlist.bind(store);
 export const isMovieInWatched = store.isMovieInWatched.bind(store);
+
+// ========== ERNEST - TASK 3.5: Favorite toggle ==========
+// Export toggleFavorite function
+export const toggleFavorite = store.toggleFavorite.bind(store); // Async
+// ========== END ERNEST - TASK 3.5 ==========
 
 export const getUserList = store.getUserList.bind(store); // Async
 

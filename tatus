@@ -1,0 +1,108 @@
+* [33m914123e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Restore adam-reusable-movie-card changes
+*   [33m1341592[m Merge branch 'adam-reusable-movie-card'
+[32m|[m[33m\[m  
+[32m|[m * [33md1265f2[m Added correct text color to search input
+* [33m|[m   [33m38b8cbc[m Merge pull request #18 from DaniilGurski/adam-reusable-movie-card
+[34m|[m[35m\[m [33m\[m  
+[34m|[m * [33m\[m   [33m846ef9c[m Merge branch 'main' into adam-reusable-movie-card
+[34m|[m [33m|[m[34m\[m [33m\[m  
+[34m|[m [33m|[m[34m/[m [33m/[m  
+[34m|[m[34m/[m[33m|[m [33m/[m   
+[34m|[m [33m|[m[33m/[m    
+* [33m|[m [33mb8b647a[m Revert "Task 1: Implement browse page movie list and Add to Watchlist" (#16)
+* [33m|[m   [33m5069f79[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32mern[m[33m)[m Merge pull request #11 from DaniilGurski/ernestify
+[1;32m|[m[1;33m\[m [33m\[m  
+[1;32m|[m * [33m|[m [33m7397bee[m[33m ([m[1;31morigin/ernestify[m[33m)[m bug fix .env file
+[1;32m|[m * [33m|[m [33mc3596be[m Task 1: Implement browse page movie list and Add to Watchlist
+* [1;33m|[m [33m|[m   [33maab31ca[m Merge pull request #13 from DaniilGurski/create-watched-page
+[1;34m|[m[1;35m\[m [1;33m\[m [33m\[m  
+[1;34m|[m * [1;33m\[m [33m\[m   [33mac281ee[m Resolve merge conflict in router.ts
+[1;34m|[m [1;36m|[m[31m\[m [1;33m\[m [33m\[m  
+[1;34m|[m [1;36m|[m * [1;33m\[m [33m\[m   [33m1343bf2[m Merge branch 'main' into create-watched-page
+[1;34m|[m [1;36m|[m [32m|[m[33m\[m [1;33m\[m [33m\[m  
+[1;34m|[m * [32m|[m [33m|[m [1;33m|[m [33m|[m [33mdfdad3c[m updated repo
+[1;34m|[m [32m|[m[32m/[m [33m/[m [1;33m/[m [33m/[m  
+[1;34m|[m * [33m|[m [1;33m|[m [33m|[m [33m2128571[m Remove root node_modules
+[1;34m|[m * [33m|[m [1;33m|[m [33m|[m [33m6dcff26[m new changes
+[1;34m|[m * [33m|[m [1;33m|[m [33m|[m [33m9cfcba1[m[33m ([m[1;31morigin/create-watched-page[m[33m)[m glömde spara
+[1;34m|[m * [33m|[m [1;33m|[m [33m|[m [33m748a77d[m watched page and fetch watched movielist
+[1;34m|[m * [33m|[m [1;33m|[m [33m|[m [33m897b7e2[m added watched.ts file
+* [33m|[m [33m|[m [1;33m|[m [33m|[m   [33mb213ae5[m Merge pull request #15 from DaniilGurski/revert-14-adam-movie-card
+[34m|[m[35m\[m [33m\[m [33m\[m [1;33m\[m [33m\[m  
+[34m|[m * [33m|[m [33m|[m [1;33m|[m [33m|[m [33mc419c48[m Revert "Movie card component + add to watchlist/watched list"
+[34m|[m[34m/[m [33m/[m [33m/[m [1;33m/[m [33m/[m  
+* [33m|[m [33m|[m [1;33m|[m [33m|[m   [33mc30ca1e[m Merge pull request #14 from DaniilGurski/adam-movie-card
+[33m|[m[1;31m\[m [33m\[m [33m\[m [1;33m\[m [33m\[m  
+[33m|[m [1;31m|[m[33m_[m[33m|[m[33m/[m [1;33m/[m [33m/[m  
+[33m|[m[33m/[m[1;31m|[m [33m|[m [1;33m|[m [33m|[m   
+[33m|[m [1;31m|[m [33m|[m [1;33m|[m * [33md1cc596[m Added more icons to icons.ts. Added clear input to search input component.
+[33m|[m [1;31m|[m [33m|[m [1;33m|[m * [33m333fd88[m Fixed overflow issue on search input on small screens. Added nowrap to buttons.
+[33m|[m [1;31m|[m [33m|[m [1;33m|[m * [33m6aeea53[m Added some markup to search.ts + added styling
+[33m|[m [1;31m|[m [33m|[m [1;33m|[m * [33m0da2aa4[m Changed config in movieItem.ts to use object destructuring  with a default value directly to make the code more readable
+[33m|[m [1;31m|[m [33m|[m [1;33m|[m * [33m943c503[m Finished work on reusable moviecarrd. Added card to all list pages. Created empylist component.
+[33m|[m [1;31m|[m [33m|[m [1;33m|[m * [33mc28bcd1[m Rewrote movieItem.ts and movieList.ts to be reusable components
+[33m|[m [1;31m|[m [33m|[m[1;31m_[m[1;33m|[m[1;31m/[m  
+[33m|[m [1;31m|[m[1;31m/[m[33m|[m [1;33m|[m   
+[33m|[m * [33m|[m [1;33m|[m [33mc00e4d0[m Added icons to watched and watchlist buttons. Changed details button to a link instead.
+[33m|[m * [33m|[m [1;33m|[m [33mbb736ad[m Added link to details page from movieItem.ts
+[33m|[m * [33m|[m [1;33m|[m [33mefef1bf[m Added better error handling for when the poster image cant load or is unavailable. Changed to show blank alt. Minor CSS tweaks.
+[33m|[m * [33m|[m [1;33m|[m [33ma571119[m Fixed bug where clicking both buttons in movieItem.ts tried to create duplicate entries in the database, which failed. Now the logic is changed and if a movie is in a list, clicking the other one will update it to that list instead. Changes to movieApi.ts to call PUT to change movie status. Changes to store.ts to first check if a movie already exists in the database before creating it. Changes to movieItem.ts so that when click handlers check CURRENT state.
+[33m|[m * [33m|[m [1;33m|[m [33m9bae5e5[m Fixed styling issue on watched button in movieItem.ts
+[33m|[m * [33m|[m [1;33m|[m [33mf9e6067[m Implemented logic for the watchlist and watched buttons. Added movieApi functions (delete). Added store functions (addMovieToWatched, removeMovieFromWatched). Add id to TMDBMovieInList. Fetch uer list on app init for button state. Updated movieItem.ts to use the new logic.
+[33m|[m * [33m|[m [1;33m|[m [33mba6d5df[m Made HTML and styling changes to movieItem.ts and movieList.ts. Added helper in store to see if a movie is in the watchlist.
+[33m|[m[33m/[m [33m/[m [1;33m/[m  
+* [33m|[m [1;33m|[m   [33m94a7b21[m fetch and display users watchlist
+[1;32m|[m[1;33m\[m [33m\[m [1;33m\[m  
+[1;32m|[m * [33m|[m [1;33m|[m [33md958876[m[33m ([m[1;31morigin/push-xqpqqyykovrr[m[33m)[m chore: remove useless element creation & rename browse -> page
+[1;32m|[m * [33m|[m [1;33m|[m [33m2b5955b[m feat: fetch and display users watchlist
+* [1;33m|[m [33m|[m [1;33m|[m   [33m688d603[m implement header (task 5.1)
+[1;33m|[m[1;35m\[m [1;33m\[m [33m\[m [1;33m\[m  
+[1;33m|[m [1;35m|[m[1;33m_[m[1;33m|[m[1;33m_[m[33m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[1;35m|[m [1;33m|[m [33m|[m   
+[1;33m|[m * [1;33m|[m [33m|[m [33m7c3172c[m Rewrote header.ts to not use innerHTML anymore.
+[1;33m|[m * [1;33m|[m [33m|[m [33mef54f5b[m Added global styles + header styles. Added a route config with paths in the router. Added a type for it aswell. Rewrote the header component and added the nav logic to it.
+[1;33m|[m[1;33m/[m [1;33m/[m [33m/[m  
+* [1;33m|[m [33m|[m   [33m39054f1[m remove tmdb route handler
+[1;36m|[m[31m\[m [1;33m\[m [33m\[m  
+[1;36m|[m * [1;33m|[m [33m|[m [33m43b8fcc[m[33m ([m[1;31morigin/fix/daniil[m[33m)[m remove tmdb route handler
+* [31m|[m [1;33m|[m [33m|[m [33m4f2efc6[m Task 4.1 - details page + rotuer logic (#9)
+[31m|[m[31m/[m [1;33m/[m [33m/[m  
+* [1;33m/[m [33m/[m [33m3258cf5[m Search bugfix/daniil (#5)
+[1;33m|[m[1;33m/[m [33m/[m  
+[1;33m|[m [33m|[m * [33m67c722b[m[33m ([m[1;31morigin/adam-four-one[m[33m)[m Cleaned up details page and fixed typos
+[1;33m|[m [33m|[m * [33m82cb094[m Added a simple details page that displays movieId. Added logic in router to route users to the 'right' details page
+[1;33m|[m [33m|[m[33m/[m  
+[1;33m|[m [33m|[m *   [33mea949d7[m[33m ([m[1;31morigin/search-bugfix/daniil[m[33m)[m Merge branch 'main' into search-bugfix/daniil
+[1;33m|[m [33m|[m [33m|[m[1;33m\[m  
+[1;33m|[m [33m|[m[1;33m_[m[33m|[m[1;33m/[m  
+[1;33m|[m[1;33m/[m[33m|[m [33m|[m   
+* [33m|[m [33m|[m [33m82aeaee[m implement GET movie by id endpoint, change movie item file name (#4)
+[33m|[m[33m/[m [33m/[m  
+* [33m|[m   [33m709247f[m Merge pull request #3 from DaniilGurski/push-lmokzlytpmvl
+[35m|[m[36m\[m [33m\[m  
+[35m|[m * [33m|[m [33mef84357[m feat: add basic watchlist page
+[35m|[m[35m/[m [33m/[m  
+[35m|[m * [33m37a53ce[m fix searching error
+[35m|[m * [33m80d99ca[m remove unused imports, code
+[35m|[m * [33me73bae1[m implement GET movie by id endpoint, change movie item file name
+[35m|[m[35m/[m  
+[35m|[m * [33ma85c61d[m[33m ([m[1;31morigin/adam-dev[m[33m)[m Added PLANNING.md and TASKS.md with suggested tasks for the projects
+[35m|[m[35m/[m  
+* [33m64a1682[m Merge pull request #2 from DaniilGurski/watchlistButton
+* [33m0e9f4ec[m remove change log
+*   [33m50c4d14[m Merge pull request #1 from DaniilGurski/browse-page/daniil
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [33m54d408d[m added .env.example
+[1;32m|[m * [33m162ee55[m change error message
+[1;32m|[m * [33m7d11aee[m move search handling to search component
+[1;32m|[m * [33mb441ac3[m add movie poster placeholder
+[1;32m|[m * [33m40b414e[m make list item component
+[1;32m|[m * [33mdbb1d69[m[33m ([m[1;31morigin/browse-page/daniil[m[33m)[m add changelog
+[1;32m|[m * [33mfddf7a8[m call db before using properties
+[1;32m|[m * [33m3a2fbb5[m implement base of browse page logic
+[1;32m|[m[1;32m/[m  
+* [33m3570eaa[m remove comment
+* [33m5be3535[m restructure, change router logic
+[1;33m|[m * [33m792ada9[m[33m ([m[1;31morigin/isak-test-api[m[33m)[m show popular movies using components
+[1;33m|[m[1;33m/[m  
+* [33mb278120[m init

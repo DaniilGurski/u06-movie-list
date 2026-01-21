@@ -5,7 +5,8 @@ import {
     isMovieInWatchlist,
     addMovieToWatched,
     removeMovieFromWatched,
-    isMovieInWatched
+    isMovieInWatched,
+    toggleFavorite
 } from "../lib/store";
 
 export default function MovieItem(config: MovieItemConfig) {
@@ -217,8 +218,10 @@ export default function MovieItem(config: MovieItemConfig) {
         favoriteButton.setAttribute("aria-pressed", isFavorite ? "true" : "false");
 
         favoriteButton.addEventListener("click", () => {
-            // TODO: Implementera toggleFavorite i store
-            console.log("Inte klart :)");
+            // ========== ERNEST - TASK 3.5: Favorite toggle ==========
+            // Implemented: Call toggleFavorite function from store
+            toggleFavorite(movie);
+            // ========== END ERNEST - TASK 3.5 ==========
         });
 
         actions.appendChild(favoriteButton);
