@@ -448,7 +448,7 @@ h6 {
 /* Strictly for the lulz */
 
 .movie-cards__empty-list-image {
-    animation: pulsate 2s ease-in-out infinite alternate;
+    animation: glitch 0.8s ease-in-out infinite;
 
     & img {
         max-inline-size: calc((100% / 1.5)) - (1.25rem * 2);
@@ -459,16 +459,54 @@ h6 {
 
 @keyframes pulsate {
     from {
-        transform: scaleX(1);
+        transform: scaleX(0);
         filter: blur(0px);
     }
 
     to {
-        transform: scaleX(1.5);
+        transform: scaleX(5);
         filter: blur(100px);
     }
 }
 
+@keyframes glitch {
+    0%,
+    100% {
+        transform: translate(0);
+        filter: hue-rotate(0deg);
+    }
+    10% {
+        transform: translate(-5px, 3px) skewX(5deg);
+        filter: hue-rotate(90deg);
+    }
+    20% {
+        transform: translate(5px, -3px) skewX(-5deg);
+        filter: hue-rotate(180deg);
+    }
+    30% {
+        transform: translate(-3px, -5px);
+        filter: hue-rotate(270deg);
+    }
+    40% {
+        transform: translate(3px, 5px) scale(1.1);
+        filter: hue-rotate(360deg);
+    }
+    50% {
+        transform: translate(5px, -5px) skewY(3deg);
+    }
+    60% {
+        transform: translate(-5px, 5px) scale(0.95);
+    }
+    70% {
+        transform: translate(0, -8px) skewX(-3deg);
+    }
+    80% {
+        transform: translate(-8px, 0) skewY(5deg);
+    }
+    90% {
+        transform: translate(8px, 3px);
+    }
+}
 .movie-cards__empty-list-heading {
     font-size: 1.25rem;
     font-weight: 700;
