@@ -65,8 +65,8 @@ export default async (movie: TMDBMovie) => {
                 "#status-message",
             ) as HTMLSpanElement;
 
-            if (!personalRating || !review) {
-                statusSpan.textContent = "All fields required";
+            if (!personalRating) {
+                statusSpan.textContent = "Rating required";
                 return;
             }
 
