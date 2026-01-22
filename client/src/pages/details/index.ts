@@ -30,6 +30,7 @@ export default async (movie: TMDBMovie) => {
     }
 
     const form = document.createElement("form");
+    form.classList.add("details-form");
     const savedMovie = getUserListCached().find((savedMovie) => {
         return savedMovie.tmdb_id === movie.id;
     });
