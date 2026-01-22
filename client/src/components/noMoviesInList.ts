@@ -1,6 +1,6 @@
 export function noMoviesInList(imgSrc?: string, heading?: string, message?: string): HTMLElement {
     const container = document.createElement("div");
-    container.classList.add("movie-cards__empty-list", "container");
+    container.classList.add("movie-cards__empty-list");
 
     if (imgSrc) {
         const img = document.createElement("img");
