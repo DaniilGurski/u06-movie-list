@@ -556,12 +556,10 @@ h6 {
 @keyframes pulsate {
     from {
         transform: scaleX(1);
-        filter: blur(0px);
     }
 
     to {
         transform: scaleX(1.5);
-        filter: blur(100px);
     }
 }
 

@@ -5,7 +5,8 @@ import { heartIcon } from "../icons";
 import "./style.css";
 
 export default () => {
-    const form = stringToHTMLElement(templateString) as HTMLFormElement;
+    const container = stringToHTMLElement(templateString);
+    const form = container.querySelector("form")!;
 
     const favoritesLabel = form.querySelector('label[for="favorites"]')!;
     favoritesLabel.appendChild(heartIcon("filter__form-favorite__icon"));
@@ -41,5 +42,5 @@ export default () => {
         });
     });
 
-    return form;
+    return container;
 };
