@@ -8,6 +8,7 @@ import {
     isMovieInWatched,
     toggleFavorite,
 } from "../lib/store";
+import { formatDate } from "../lib/utils";
 
 export default function MovieItem(config: MovieItemConfig) {
     const card = document.createElement("div");
@@ -125,7 +126,7 @@ export default function MovieItem(config: MovieItemConfig) {
 
         const dateAddedValue = document.createElement("span");
         dateAddedValue.className = "movie-card__content-group-value";
-        dateAddedValue.textContent = movie.date_added;
+        dateAddedValue.textContent = formatDate(movie.date_added);
 
         dateAdded.appendChild(dateAddedLabel);
         dateAdded.appendChild(dateAddedValue);

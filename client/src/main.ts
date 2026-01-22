@@ -39,3 +39,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     renderApp();
     setRenderCallback(renderApp);
 });
+
+// Add date formatting
+// Validation for rate select
