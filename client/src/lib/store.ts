@@ -202,6 +202,32 @@ class Store {
         return this.userList;
     }
 
+    async toggleFavorite(movie: TMDBMovie | TMDBMovieInList) {
+        try {
+            const tmdbId = "tmdb_id" in movie ? movie.tmdb_id : movie.id;
+            const dbId = this.getMovieDbId(tmdbId);
+
+            if (!dbId) {
+                console.error("Movie not found in database");
+                return;
+            }
+
+            // Find current favorite status from userList
+            const currentMovie = this.userList.find((m) => m.id === dbId);
+            const currentFavoriteStatus = currentMovie?.is_favorite ?? false;
+            const newFavoriteStatus = !currentFavoriteStatus;
+
+            // Update favorite status via API
+            await movieApi.updateMovieFavorite(dbId, newFavoriteStatus);
+
+            // Refresh user list to get updated data
+            await this.fetchUserList();
+        } catch (error) {
+            console.error("Error toggling favorite:", error);
+        }
+        this.triggerRender();
+    }
+
     // Hm.. Det här tog lite tid att fatta. Är detta ett fulhack?
 
     getUserListCached() {
@@ -226,7 +252,6 @@ class Store {
     }
 
     // Tittar om en film är i /watched
-
     isMovieInWatched(movieId: number): boolean {
         return this.userList.some((movie) => {
             return movie.tmdb_id === movieId && movie.status === "watched";
@@ -265,3 +290,4 @@ export const isMovieInWatched = store.isMovieInWatched.bind(store);
 export const getUserList = store.getUserList.bind(store); // Async
 
 export const getUserListCached = store.getUserListCached.bind(store);
+export const toggleFavorite = store.toggleFavorite.bind(store);

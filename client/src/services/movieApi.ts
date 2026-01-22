@@ -91,6 +91,36 @@ export const updateMovieData = async (
     }
 };
 
+// Uppdatera en films favorite-status
+export const updateMovieFavorite = async (
+    id: number,
+    isFavorite: boolean,
+): Promise<TMDBMovieInList> => {
+    try {
+        const res = await fetch(`${baseURL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                is_favorite: isFavorite,
+            }),
+        });
+
+        if (!res.ok) {
+            throw new Error(
+                `Failed to update favorite status: ${res.statusText}`,
+            );
+        }
+
+        const data: TMDBMovieInList = await res.json();
+        return data;
+    } catch (error) {
+        console.error("Error updating favorite status:", error);
+        throw error;
+    }
+};
+
 // Ta bort en film från /watchlist eller /watched
 
 const deleteMovie = async (id: number): Promise<void> => {
