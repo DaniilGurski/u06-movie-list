@@ -25,8 +25,6 @@ class Store {
     async loadPopularMovies(shouldTriggerRender: boolean = true) {
         try {
             this.movies = await getPopularMoviesTMDB();
-            console.log("loadPopularMovies:", this.movies);
-
             if (shouldTriggerRender) {
                 this.triggerRender();
             }
