@@ -10,7 +10,20 @@ export default async (movie: TMDBMovie) => {
     setPageTitle("Details");
 
     const details = document.createDocumentFragment();
+
     const content = document.createElement("main");
+    content.classList.add("container");
+
+    const section = document.createElement("section");
+    section.classList.add("page");
+
+    const heading = document.createElement("h1");
+    heading.classList.add("page__title");
+    heading.textContent = `Details for ${movie.title}`;
+
+    const intro = document.createElement("p");
+    intro.classList.add("page__introduction");
+    intro.textContent = "View and edit details for this movie, like your personal rating or note about this movie.";
 
     if (!movie) {
         throw new Error("Movie not found");
@@ -81,7 +94,8 @@ export default async (movie: TMDBMovie) => {
         });
     }
 
-    content.append(form, backButton());
+    section.append(heading, intro, form, backButton());
+    content.append(section);
     details.append(header(), content, footer());
     return details;
 };
