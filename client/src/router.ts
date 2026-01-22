@@ -4,7 +4,6 @@ import watchlist from "./pages/watchlist";
 import watched from "./pages/watched";
 import notFound from "./pages/notFound";
 import details from "./pages/details";
-import test from "./pages/test"; // Testsida för movieList.ts
 import { getMovieByIdTMDB } from "./services/tmdbApi";
 import { getUserListCached } from "./lib/store";
 
@@ -63,8 +62,6 @@ const router = async (): Promise<HTMLElement | DocumentFragment> => {
             return watchlist();
         case "/watched":
             return watched();
-        case "/test":
-            return test();
         default:
             return notFound();
     }
