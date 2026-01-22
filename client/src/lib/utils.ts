@@ -22,3 +22,15 @@ export const formatDate = (dateString: string): string => {
 export const setPageTitle = (title: string) => {
     document.title = `${title} | MaybeMovies`;
 };
+
+// AND BOOM GOES THE DYNAMITE.
+
+export function showToast(message: string) {
+    const toast = document.createElement("div");
+    toast.className = "page__toast";
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    //setTimeout, minns ni den ELLER?!!?!?
+    setTimeout(() => toast.remove(), 3000);
+}

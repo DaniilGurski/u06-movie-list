@@ -307,6 +307,21 @@ h6 {
     }
 }
 
+.page__toast {
+    position: fixed;
+    inset-block-end: 1rem;
+    inset-inline-end: 1rem;
+    display: flex;
+    align-items: center;
+    background-color: oklch(1 0 0);
+    border: 2px solid oklch(0 0 0);
+    border-radius: 0.5rem;
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    min-block-size: 3rem;
+    font-weight: 700;
+}
+
 /* Filmgrid */
 
 .movie-cards {

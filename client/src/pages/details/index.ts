@@ -4,7 +4,7 @@ import MovieItem from "../../components/movieItem";
 import type { TMDBMovie } from "../../types/movie";
 import { getUserListCached, updateMovieData } from "../../lib/store";
 import backButton from "../../components/backButton";
-import { setPageTitle } from "../../lib/utils";
+import { setPageTitle, showToast } from "../../lib/utils";
 
 export default async (movie: TMDBMovie) => {
     setPageTitle("Details");
@@ -90,8 +90,8 @@ export default async (movie: TMDBMovie) => {
                 personal_rating: personalRating ? Number(personalRating) : null,
                 review: review || null,
             });
-
-            statusSpan.textContent = "Changes saved !";
+            // Toasty!!!!
+            showToast("Changes saved!");
         });
     }
 
