@@ -6,6 +6,7 @@ import {
     addMovieToWatched,
     removeMovieFromWatched,
     isMovieInWatched,
+    toggleFavorite,
 } from "../lib/store";
 
 export default function MovieItem(config: MovieItemConfig) {
@@ -263,8 +264,7 @@ export default function MovieItem(config: MovieItemConfig) {
         );
 
         favoriteButton.addEventListener("click", () => {
-            // TODO: Implementera toggleFavorite i store
-            console.log("Inte klart :)");
+            toggleFavorite(movie);
         });
 
         actions.appendChild(favoriteButton);
