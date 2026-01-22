@@ -34,7 +34,7 @@ export default () => {
         movies: filteredMovies,
         heading: "Watched",
         showCount: true,
-        introduction: "This page shows a all movies added to the watched list.",
+        introduction: "This page shows all movies added to the watched list.",
         itemConfig: {
             showButtons: {
                 remove: true,
