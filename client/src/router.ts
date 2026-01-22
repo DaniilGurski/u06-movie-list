@@ -30,11 +30,6 @@ export const routes: Route[] = [
         label: "Watched",
         showInNav: true,
     },
-    {
-        path: "/test",
-        label: "Test",
-        showInNav: false,
-    },
 ];
 
 const router = async (): Promise<HTMLElement | DocumentFragment> => {
