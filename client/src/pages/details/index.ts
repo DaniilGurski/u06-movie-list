@@ -5,10 +5,6 @@ import type { TMDBMovie } from "../../types/movie";
 import { getUserListCached, updateMovieData } from "../../lib/store";
 import backButton from "../../components/backButton";
 
-// TODO: Back to previous page
-// TODO: Add line clamp for movie review
-// TODO: Add actions buttons for uneditable movie cards
-// TODO: Add link to tmdb
 export default async (movie: TMDBMovie) => {
     document.title = "Details";
 
@@ -64,6 +60,15 @@ export default async (movie: TMDBMovie) => {
             const personalRating = formData.get("personal_rating");
             const review = formData.get("review") as string;
 
+            const statusSpan = form.querySelector(
+                "#status-message",
+            ) as HTMLSpanElement;
+
+            if (!personalRating || !review) {
+                statusSpan.textContent = "All fields required";
+                return;
+            }
+
             if (!savedMovie.id) return;
 
             await updateMovieData(savedMovie.id, {
@@ -71,9 +76,6 @@ export default async (movie: TMDBMovie) => {
                 review: review || null,
             });
 
-            const statusSpan = form.querySelector(
-                "#status-message",
-            ) as HTMLSpanElement;
             statusSpan.textContent = "Changes saved !";
         });
     }
