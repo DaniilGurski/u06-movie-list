@@ -4,9 +4,10 @@ import MovieItem from "../../components/movieItem";
 import type { TMDBMovie } from "../../types/movie";
 import { getUserListCached, updateMovieData } from "../../lib/store";
 import backButton from "../../components/backButton";
+import { setPageTitle } from "../../lib/utils";
 
 export default async (movie: TMDBMovie) => {
-    document.title = "Details";
+    setPageTitle("Details");
 
     const details = document.createDocumentFragment();
     const content = document.createElement("main");

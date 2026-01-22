@@ -3,9 +3,10 @@ import footer from "../../components/footer";
 import watchedFilter from "../../components/watchedFilter";
 import MovieList from "../../components/movieList";
 import { getUserListCached, getWatchedFilter } from "../../lib/store";
+import { setPageTitle } from "../../lib/utils";
 
 export default () => {
-    document.title = "Watched";
+    setPageTitle("Watched");
 
     const page = document.createDocumentFragment();
     const content = document.createElement("main");

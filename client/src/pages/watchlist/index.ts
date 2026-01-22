@@ -2,9 +2,10 @@ import header from "../../components/header";
 import footer from "../../components/footer";
 import MovieList from "../../components/movieList";
 import { getUserListCached } from "../../lib/store";
+import { setPageTitle } from "../../lib/utils";
 
 export default () => {
-    document.title = "Watchlist";
+    setPageTitle("Watchlist");
 
     const page = document.createDocumentFragment();
     const content = document.createElement("main");

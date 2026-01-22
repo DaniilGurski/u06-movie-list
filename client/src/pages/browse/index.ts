@@ -3,8 +3,11 @@ import footer from "../../components/footer";
 import SearchField from "../../components/search";
 import MovieList from "../../components/movieList";
 import { getMovies, getSearchInputValue } from "../../lib/store";
+import { setPageTitle } from "../../lib/utils";
 
 export default function browse() {
+    setPageTitle("Browse");
+  
     const browse = document.createDocumentFragment();
     const content = document.createElement("main");
 
