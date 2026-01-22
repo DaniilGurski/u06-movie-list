@@ -28,6 +28,14 @@ export default () => {
                     : parseInt(ratingSelect.value),
         });
     });
+    
+    const clearButton = form.querySelector("button")!;
+    clearButton.addEventListener("click", () => {
+        setWatchedFilter({
+            favoriteStatus: "all",
+            rating: undefined,
+        });
+    });
 
     return form;
 };
