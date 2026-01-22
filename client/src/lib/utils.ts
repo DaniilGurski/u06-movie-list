@@ -11,7 +11,8 @@ export const stringToHTMLElement = (htmlString: string) => {
 
 export const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
+
+    return date.toLocaleDateString("sv-SE", {
         year: "numeric",
         month: "short",
         day: "numeric",
