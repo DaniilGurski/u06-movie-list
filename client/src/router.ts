@@ -5,33 +5,40 @@ import watched from "./pages/watched";
 import notFound from "./pages/notFound";
 import details from "./pages/details";
 import test from "./pages/test"; // Testsida för movieList.ts
+import { getMovieByIdTMDB } from "./services/tmdbApi";
+import { getUserListCached } from "./lib/store";
 
 // Nu kan vi lägga till/ta bort vad som ska finnas i menyn samt dölja det med "showInNav"
 
-export const routes: Route[] = [{
-    path: "/",
-    label: "Home page",
-    showInNav: false
-}, {
-    path: "/browse",
-    label: "Browse",
-    showInNav: true
-}, {
-    path: "/watchlist",
-    label: "Watchlist",
-    showInNav: true
-}, {
-    path: "/watched",
-    label: "Watched",
-    showInNav: true
-},
-{
-    path: "/test",
-    label: "Test",
-    showInNav: false
-}]
+export const routes: Route[] = [
+    {
+        path: "/",
+        label: "Home page",
+        showInNav: false,
+    },
+    {
+        path: "/browse",
+        label: "Browse",
+        showInNav: true,
+    },
+    {
+        path: "/watchlist",
+        label: "Watchlist",
+        showInNav: true,
+    },
+    {
+        path: "/watched",
+        label: "Watched",
+        showInNav: true,
+    },
+    {
+        path: "/test",
+        label: "Test",
+        showInNav: false,
+    },
+];
 
-const router = (): HTMLElement | DocumentFragment => {
+const router = async (): Promise<HTMLElement | DocumentFragment> => {
     const path = window.location.pathname;
 
     // Om path börjar med /details, extrahera id/nummer om det finns
@@ -40,14 +47,12 @@ const router = (): HTMLElement | DocumentFragment => {
         const movieId = Number(path.split("/")[2]);
 
         // Visa 404-sidan om id/nummer saknas, är noll, negativt eller inte är ett nummer
-
         if (isNaN(movieId) || movieId <= 0) {
             return notFound();
         }
 
-        // Annars visa details sidan med aktuellt id/nummer
-
-        return details(movieId);
+        const movie = await getMovieByIdTMDB(movieId);
+        return details(movie);
     }
 
     switch (path) {

@@ -13,7 +13,7 @@ export const getPopularMoviesTMDB = async (): Promise<TMDBMovie[]> => {
 
         if (!res.ok) {
             throw new Error(
-                `Failed to fetch popular movies: ${res.statusText}`
+                `Failed to fetch popular movies: ${res.statusText}`,
             );
         }
 
@@ -33,8 +33,8 @@ export const getMovieByIdTMDB = async (id: number) => {
             throw new Error(`Failed to fetch movie by ID: ${res.statusText}`);
         }
 
-        const data: TMDBResponse = await res.json();
-        return data.results;
+        const data: TMDBMovie = await res.json();
+        return data;
     } catch (error) {
         console.error("Error getting movie by ID:", error);
         throw error;
@@ -42,16 +42,16 @@ export const getMovieByIdTMDB = async (id: number) => {
 };
 
 export const getSearchedMovieTMDB = async (
-    name: string
+    name: string,
 ): Promise<TMDBMovie[]> => {
     try {
         const res = await fetch(
-            `http://localhost:3000/api/tmdb?search=${name}`
+            `http://localhost:3000/api/tmdb?search=${name}`,
         );
 
         if (!res.ok) {
             throw new Error(
-                `Failed to fetch searched movies: ${res.statusText}`
+                `Failed to fetch searched movies: ${res.statusText}`,
             );
         }
 

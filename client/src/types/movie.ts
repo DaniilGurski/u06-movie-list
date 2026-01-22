@@ -28,9 +28,17 @@ export type MovieItemConfig = {
         edit?: boolean;
         favorite?: boolean;
     };
+    showEditables?: {
+        personalRating: boolean;
+        personalReview: boolean;
+    };
     showDateAdded?: boolean;
     showPersonalRating?: boolean;
     showPersonalReview?: boolean;
+    defaultValues?: {
+        personalRating?: number;
+        personalReview?: string;
+    };
 };
 
 export type MovieListConfig = {
