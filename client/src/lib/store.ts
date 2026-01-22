@@ -168,6 +168,21 @@ class Store {
         this.triggerRender();
     }
 
+    // Update movie data (personal rating, review)
+
+    async updateMovieData(
+        tmdbId: number,
+        data: { personal_rating?: number | null; review?: string | null },
+    ) {
+        try {
+            await movieApi.updateMovieData(tmdbId, data);
+            await this.fetchUserList();
+        } catch (error) {
+            console.error("Error updating movie data:", error);
+            throw error;
+        }
+    }
+
     /**
      * fetches the users movie list from the api
      * @returns a promise of the user's movie list
@@ -259,6 +274,7 @@ export const addMovieToWatched = store.addMovieToWatched.bind(store); // Async
 export const removeMovieFromWatchlist =
     store.removeMovieFromWatchlist.bind(store); // Async
 export const removeMovieFromWatched = store.removeMovieFromWatched.bind(store); // Async
+export const updateMovieData = store.updateMovieData.bind(store); // Async
 
 export const isMovieInWatchlist = store.isMovieInWatchlist.bind(store);
 export const isMovieInWatched = store.isMovieInWatched.bind(store);
@@ -268,5 +284,3 @@ export const getUserList = store.getUserList.bind(store); // Async
 export const getUserListCached = store.getUserListCached.bind(store);
 export const getWatchedFilter = store.getWatchedFilter.bind(store);
 export const setWatchedFilter = store.setWatchedFilter.bind(store);
-
-export const triggerRender = store.triggerRender.bind(store);

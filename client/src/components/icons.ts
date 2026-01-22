@@ -70,5 +70,13 @@ export function placeholderIcon(): SVGElement {
     return svg;
 }
 
+// Footer-ikon "till toppen" av sidan
+
+export function toTopIcon(): SVGElement {
+    const svg = baseSVG("footer__up-button-icon");
+    svgPath(svg, "m18 15-6-6-6 6");
+    return svg;
+}
+
 // Todo ikon för att ta bort en film, ikon för att redigera en film, ikon för att "hjärta" en film? Övriga ikoner?
 // Jag har använt https://lucide.dev/icons/

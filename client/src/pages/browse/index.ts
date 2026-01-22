@@ -21,6 +21,7 @@ export default function browse() {
     const browsePageMovieList = MovieList({
         heading: "Popular",
         introduction: "This movies are popular right now.",
+        showCount: false,
         movies,
         itemConfig: {
             showButtons: {

@@ -1,18 +1,84 @@
 import header from "../../components/header";
 import footer from "../../components/footer";
+import MovieItem from "../../components/movieItem";
+import type { TMDBMovie } from "../../types/movie";
+import { getUserListCached, updateMovieData } from "../../lib/store";
+import backButton from "../../components/backButton";
 
-export default (movieId: number) => {
-
+// TODO: Back to previous page
+// TODO: Add line clamp for movie review
+// TODO: Add actions buttons for uneditable movie cards
+// TODO: Add link to tmdb
+export default async (movie: TMDBMovie) => {
     document.title = "Details";
 
     const details = document.createDocumentFragment();
     const content = document.createDocumentFragment();
 
-    const heading = document.createElement("h1");
-    heading.textContent = `Details for movie ${movieId}`;
+    if (!movie) {
+        throw new Error("Movie not found");
+    }
 
-    content.append(heading);
+    const form = document.createElement("form");
+    const savedMovie = getUserListCached().find((savedMovie) => {
+        return savedMovie.tmdb_id === movie.id;
+    });
+
+    let card;
+
+    // You can only edit personal ratings and reviews for movies that are already in the list
+    if (savedMovie) {
+        card = MovieItem({
+            movie,
+            showButtons: {
+                watched: true,
+                watchlist: true,
+            },
+            showEditables: {
+                personalRating: true,
+                personalReview: true,
+            },
+            defaultValues: {
+                personalRating: savedMovie.personal_rating,
+                personalReview: savedMovie.review,
+            },
+        });
+    } else {
+        card = MovieItem({
+            movie,
+            showButtons: {
+                watched: true,
+                watchlist: true,
+            },
+        });
+    }
+
+    // Check if movie is in user list
+    form.append(card);
+
+    // Handle form submission for updating personal rating and review
+    if (savedMovie) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const personalRating = formData.get("personal_rating");
+            const review = formData.get("review") as string;
+
+            if (!savedMovie.id) return;
+
+            await updateMovieData(savedMovie.id, {
+                personal_rating: personalRating ? Number(personalRating) : null,
+                review: review || null,
+            });
+
+            const statusSpan = form.querySelector(
+                "#status-message",
+            ) as HTMLSpanElement;
+            statusSpan.textContent = "Changes saved !";
+        });
+    }
+
+    content.append(form, backButton());
     details.append(header(), content, footer());
-
     return details;
 };

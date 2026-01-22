@@ -33,6 +33,7 @@ export default () => {
     const watchlistPageMovieList = MovieList({
         movies: filteredMovies,
         heading: "Watched",
+        showCount: true,
         introduction: "This page shows a all movies added to the watched list.",
         itemConfig: {
             showButtons: {
