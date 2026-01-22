@@ -283,6 +283,30 @@ h6 {
     font-weight: 400;
 }
 
+.page__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 2px solid oklch(1 0 0);
+    border-radius: 0.5rem;
+    block-size: 3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    inline-size: 100%;
+    cursor: pointer;
+    touch-action: manipulation;
+    white-space: nowrap;
+
+    @media (width >=60rem) {
+        inline-size: fit-content;
+    }
+}
+
 /* Filmgrid */
 
 .movie-cards {
@@ -346,21 +370,23 @@ h6 {
 
     & img {
         inline-size: 100%;
+        block-size: 100%;
         aspect-ratio: 1;
         object-fit: cover;
         object-position: top;
     }
 }
 
-.details-form .movie-card__image {
-    align-self: stretch; /* ??? */
+.details-form .movie-card__image img {
+    aspect-ratio: unset;
+    object-position: unset;
 
-    & img {
-        block-size: 100%;
-        aspect-ratio: unset;
-        object-position: unset;
-    }
+    /* &:hover {
+        transform: scale(1.5);
+        cursor: zoom-in;
+    } */
 }
+
 
 .movie-card__placeholder {
     display: flex;
