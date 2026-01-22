@@ -25,9 +25,11 @@ export const setPageTitle = (title: string) => {
 
 // AND BOOM GOES THE DYNAMITE.
 
-export function showToast(message: string) {
+export function showToast(message: string, type?: "success" | "error") {
     const toast = document.createElement("div");
     toast.className = "page__toast";
+    toast.dataset.type = type;
+    toast.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
     toast.textContent = message;
     document.body.appendChild(toast);
 

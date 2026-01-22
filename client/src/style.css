@@ -314,12 +314,24 @@ h6 {
     display: flex;
     align-items: center;
     background-color: oklch(1 0 0);
-    border: 2px solid oklch(0 0 0);
+    border: 2px solid currentColor;
     border-radius: 0.5rem;
     padding-inline: 1rem;
     padding-block: 0.5rem;
     min-block-size: 3rem;
-    font-weight: 700;
+    font-weight: 400;
+
+    &[data-type="success"] {
+        background-color: oklch(0.9622 0.0157 160.63);
+        color: oklch(0.5745 0.1574 149.63);
+        border-color: oklch(0.5745 0.1574 149.63);
+    }
+
+    &[data-type="error"] {
+        background-color: oklch(0.9463 0.0278 6.65);
+        color: oklch(0.5523 0.2157 22.1);
+        border-color: oklch(0.5523 0.2157 22.1);
+    }
 }
 
 /* Filmgrid */

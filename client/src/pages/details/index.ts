@@ -75,12 +75,9 @@ export default async (movie: TMDBMovie) => {
             const personalRating = formData.get("personal_rating");
             const review = formData.get("review") as string;
 
-            const statusSpan = form.querySelector(
-                "#status-message",
-            ) as HTMLSpanElement;
 
             if (!personalRating) {
-                statusSpan.textContent = "Rating required";
+                showToast("Rating required!", "error");
                 return;
             }
 
@@ -91,7 +88,7 @@ export default async (movie: TMDBMovie) => {
                 review: review || null,
             });
             // Toasty!!!!
-            showToast("Changes saved!");
+            showToast("Changes saved!", "success");
         });
     }
 
