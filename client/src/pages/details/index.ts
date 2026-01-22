@@ -13,7 +13,7 @@ export default async (movie: TMDBMovie) => {
     document.title = "Details";
 
     const details = document.createDocumentFragment();
-    const content = document.createDocumentFragment();
+    const content = document.createElement("main");
 
     if (!movie) {
         throw new Error("Movie not found");

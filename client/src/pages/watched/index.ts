@@ -8,6 +8,7 @@ export default () => {
     document.title = "Watched";
 
     const page = document.createDocumentFragment();
+    const content = document.createElement("main");
 
     const movies = getUserListCached().filter(
         (movie) => movie.status === "watched",
@@ -46,7 +47,8 @@ export default () => {
         },
     });
 
-    page.append(header(), watchedFilter(), watchlistPageMovieList, footer());
+    content.append( watchedFilter(), watchlistPageMovieList);
+    page.append(header(), content, footer());
 
     return page;
 };
