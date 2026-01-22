@@ -575,6 +575,103 @@ h6 {
     font-weight: 400;
 }
 
+.filter {
+    border-radius: 0.5rem;
+    background-color: oklch(1 0 0);
+    color: oklch(0 0 0);
+}
+
+.filter__form {
+    display: grid;
+    grid-template-areas: "favorite rating button";
+    grid-template-columns: auto 1fr auto;
+    gap: .75rem;
+    inline-size: 100%;
+    background-color: oklch(0.9702 0 0);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+}
+
+.filter__form-favorite {
+    grid-area: favorite;
+    place-self: center left;
+}
+
+.filter__form-favorite-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+    inline-size: 3rem;
+    block-size: 3rem;
+    padding: 1rem;
+    border: 2px solid oklch(0 0 0);
+    border-radius: .5rem;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.filter__form-favorite__icon {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.filter__form-favorite:has(input:checked) .filter__form-favorite-label {
+    color: oklch(0.6379 0.2484 31.02);
+}
+
+.filter__form-favorite:has(input:checked) .filter__form-favorite__icon {
+    fill: oklch(0.6379 0.2484 31.02);
+}
+
+.filter__form-rating {
+    grid-area: rating;
+    place-self: center center;
+    inline-size: 100%;
+    background-color: oklch(1 0 0);
+    border: 2px solid currentColor;
+    border-radius: 0.5rem;
+    padding-inline: 1rem;
+    padding-inline-end: 1rem;
+    padding-inline-end: 2.5rem;
+    padding-block: 0.5rem;
+    block-size: 3rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+}
+
+.filter__form-button {
+    grid-area: button;
+    place-self: center right;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: oklch(0 0 0);
+    color: oklch(1 0 0);
+    padding-inline: 1rem;
+    padding-block: 0.5rem;
+    border: 2px solid oklch(0 0 0);
+    border-radius: 0.5rem;
+    block-size: 3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    inline-size: 100%;
+    cursor: pointer;
+    touch-action: manipulation;
+    white-space: nowrap;
+
+    @media (width >=60rem) {
+        inline-size: fit-content;
+    }
+
+
+}
+
 /* Footer */
 
 .footer {
