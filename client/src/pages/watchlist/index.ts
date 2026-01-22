@@ -14,6 +14,7 @@ export default () => {
         movies,
         heading: "Watchlist",
         introduction: "This page shows a all movies added to the watchlist.",
+        showCount: true,
         itemConfig: {
             showButtons: {
                 watched: true,
