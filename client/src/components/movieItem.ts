@@ -76,7 +76,9 @@ export default function MovieItem(config: MovieItemConfig) {
 
     const year = document.createElement("span");
     year.className = "movie-card__year";
-    year.textContent = `(${movie.release_date?.split("-")[0] ?? ""})`;
+    year.textContent = movie.release_date
+        ? `(${new Date(movie.release_date).getFullYear()})`
+        : "";
 
     title.appendChild(titleText);
     title.appendChild(year);
