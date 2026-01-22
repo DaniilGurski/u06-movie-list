@@ -18,3 +18,7 @@ export const formatDate = (dateString: string): string => {
         day: "numeric",
     });
 };
+
+export const setPageTitle = (title: string) => {
+    document.title = `${title} | MaybeMovies`;
+};
