@@ -1,0 +1,18 @@
+.watched-filter {
+    display: grid;
+    background-color: oklch(0.9702 0 0);
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    justify-items: start;
+    gap: 0.5rem;
+
+    label {
+        margin-right: 0.5rem;
+        font-weight: bold;
+    }
+
+    select {
+        inline-size: 4rem;
+    }
+}

@@ -11,6 +11,12 @@ class Store {
     userList: TMDBMovieInList[] = [];
     movies: TMDBMovie[] = [];
     searchInputValue: string = "";
+    watchedListFilter: {
+        favoriteStatus: "all" | "favorite" | "no_favorite";
+        rating?: number;
+    } = {
+        favoriteStatus: "all",
+    };
 
     constructor() {
         this.renderCallback = () => {};
@@ -258,6 +264,17 @@ class Store {
         });
     }
 
+    // Watched List Filter
+
+    getWatchedFilter() {
+        return this.watchedListFilter;
+    }
+
+    setWatchedFilter(filter: typeof this.watchedListFilter) {
+        this.watchedListFilter = filter;
+        this.triggerRender();
+    }
+
     triggerRender() {
         if (this.renderCallback) {
             this.renderCallback();
@@ -291,3 +308,5 @@ export const getUserList = store.getUserList.bind(store); // Async
 
 export const getUserListCached = store.getUserListCached.bind(store);
 export const toggleFavorite = store.toggleFavorite.bind(store);
+export const getWatchedFilter = store.getWatchedFilter.bind(store);
+export const setWatchedFilter = store.setWatchedFilter.bind(store);
