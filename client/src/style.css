@@ -66,6 +66,14 @@ h6 {
     isolation: isolate;
 }
 
+.back-button {
+    font-size: 1.125rem;
+    cursor: pointer;
+    text-decoration: underline;
+    background: none;
+    border: none;
+}
+
 /* Utility */
 
 .container {
@@ -291,6 +299,10 @@ h6 {
         grid-template-columns: 1fr 2fr;
         row-gap: 1.5rem;
     }
+}
+
+.movie-card__textarea {
+    line-clamp: 3;
 }
 
 .movie-card__image {

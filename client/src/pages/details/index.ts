@@ -3,10 +3,14 @@ import footer from "../../components/footer";
 import MovieItem from "../../components/movieItem";
 import type { TMDBMovie } from "../../types/movie";
 import { getUserListCached, updateMovieData } from "../../lib/store";
+import backButton from "../../components/backButton";
 
+// TODO: Back to previous page
+// TODO: Add line clamp for movie review
+// TODO: Add actions buttons for uneditable movie cards
+// TODO: Add link to tmdb
 export default async (movie: TMDBMovie) => {
     document.title = "Details";
-    console.log("render");
 
     const details = document.createDocumentFragment();
     const content = document.createDocumentFragment();
@@ -42,6 +46,10 @@ export default async (movie: TMDBMovie) => {
     } else {
         card = MovieItem({
             movie,
+            showButtons: {
+                watched: true,
+                watchlist: true,
+            },
         });
     }
 
@@ -70,7 +78,7 @@ export default async (movie: TMDBMovie) => {
         });
     }
 
-    content.append(form);
+    content.append(form, backButton());
     details.append(header(), content, footer());
     return details;
 };

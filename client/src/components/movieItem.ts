@@ -359,7 +359,7 @@ export default function MovieItem(config: MovieItemConfig) {
         const personalReviewGroup = document.createElement("div");
         personalReviewGroup.classList.add(
             "movie-card__content-group",
-            "movie-card__content-group--editable",
+            "movie-card__text-area",
         );
 
         const personalReviewLabel = document.createElement("label");
