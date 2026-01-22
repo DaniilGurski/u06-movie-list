@@ -7,13 +7,14 @@ export default () => {
     document.title = "Watchlist";
 
     const page = document.createDocumentFragment();
+    const content = document.createElement("main");
 
     const movies = getUserListCached().filter((movie) => movie.status === "watchlist");
 
     const watchlistPageMovieList = MovieList({
         movies,
         heading: "Watchlist",
-        introduction: "This page shows a all movies added to the watchlist.",
+        introduction: "This page shows all movies added to the watchlist.",
         showCount: true,
         itemConfig: {
             showButtons: {
@@ -24,7 +25,8 @@ export default () => {
         }
     });
 
-    page.append(header(), watchlistPageMovieList, footer());
+    content.append(watchlistPageMovieList);
+    page.append(header(), content, footer());
 
     return page;
 };

@@ -6,7 +6,7 @@ import { getMovies, getSearchInputValue } from "../../lib/store";
 
 export default function browse() {
     const browse = document.createDocumentFragment();
-    const content = document.createDocumentFragment();
+    const content = document.createElement("main");
 
     const heading = document.createElement("h2");
     // const defaultSearchInputValue = getSearchInputValue();

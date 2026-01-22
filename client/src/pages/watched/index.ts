@@ -8,6 +8,7 @@ export default () => {
     document.title = "Watched";
 
     const page = document.createDocumentFragment();
+    const content = document.createElement("main");
 
     const movies = getUserListCached().filter(
         (movie) => movie.status === "watched",
@@ -34,7 +35,7 @@ export default () => {
         movies: filteredMovies,
         heading: "Watched",
         showCount: true,
-        introduction: "This page shows a all movies added to the watched list.",
+        introduction: "This page shows all movies added to the watched list.",
         itemConfig: {
             showButtons: {
                 remove: true,
@@ -46,7 +47,8 @@ export default () => {
         },
     });
 
-    page.append(header(), watchedFilter(), watchlistPageMovieList, footer());
+    content.append( watchedFilter(), watchlistPageMovieList);
+    page.append(header(), content, footer());
 
     return page;
 };
