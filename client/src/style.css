@@ -441,7 +441,7 @@ h6 {
 .movie-cards__empty-list {
     display: grid;
     justify-items: center;
-    gap: .75rem;
+    gap: 0.75rem;
     overflow: hidden;
 }
 
@@ -488,7 +488,7 @@ h6 {
 
 .footer__layout {
     display: grid;
-    grid-template-areas: "group up" "disclaimer disclaimer";
+    grid-template-areas: "group up" "disclaimer disclaimer" "tmdb tmdb";
     grid-template-columns: 1fr auto;
     gap: 1.5rem;
     padding-block: 1.5rem;
@@ -529,6 +529,16 @@ h6 {
 
 .footer__disclaimer-label {
     grid-area: disclaimer;
+    grid-column: span 2;
+    place-self: center left;
+
+    @media (width >=60rem) {
+        grid-column: span 1;
+    }
+}
+
+.footer__disclaimer-tmdb {
+    grid-area: tmdb;
     grid-column: span 2;
     place-self: center left;
 

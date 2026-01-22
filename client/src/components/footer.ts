@@ -28,10 +28,15 @@ export default function footer() {
     disclaimer.className = "footer__disclaimer-label"
     disclaimer.textContent = "This website was created as part of a school assignment. This is not a production website and should not be used as such. "
 
+    const attributionTMDB = document.createElement("p");
+    attributionTMDB.className = "footer__disclaimer-tmdb"
+    attributionTMDB.textContent = "This website uses TMDB and the TMDB APIs but is not endorsed, certified, or otherwise approved by TMDB."
+
     footer.appendChild(layoutDiv);
     layoutDiv.appendChild(groupInfo);
     layoutDiv.appendChild(toTop);
     layoutDiv.appendChild(disclaimer);
+    layoutDiv.appendChild(attributionTMDB);
 
 
     return footer;
