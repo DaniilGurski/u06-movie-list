@@ -284,6 +284,9 @@ export default function MovieItem(config: MovieItemConfig) {
         removeButton.textContent = "Remove";
 
         removeButton.addEventListener("click", () => {
+
+            if(!confirm(`Yor are about to delete ${movie.title}, are you sure?`)) return
+            
             if ("status" in movie) {
                 if (movie.status === "watchlist") {
                     removeMovieFromWatchlist(movie);
