@@ -50,6 +50,8 @@ export default function MovieItem(config: MovieItemConfig) {
         const img = document.createElement("img");
         img.src = `https://image.tmdb.org/t/p/w300${movie.poster_path}`;
         img.alt = "";
+        img.width = 300;
+        img.height = 450;
 
         img.addEventListener("error", () => {
             posterImage.replaceChildren(
@@ -89,7 +91,7 @@ export default function MovieItem(config: MovieItemConfig) {
 
     const description = document.createElement("p");
     description.className = "movie-card__description";
-    description.textContent = movie.overview ?? "";
+    description.textContent = movie.overview || "No description available.";
 
     content.appendChild(description);
 
