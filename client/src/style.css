@@ -309,8 +309,8 @@ h6 {
 
 .page__toast {
     position: fixed;
-    inset-block-end: 1rem;
-    inset-inline-end: 1rem;
+    inset-block-end: 1.5rem;
+    inset-inline-end: 1.5rem;
     display: flex;
     align-items: center;
     background-color: oklch(1 0 0);
