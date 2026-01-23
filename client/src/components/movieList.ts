@@ -43,7 +43,7 @@ export default function MovieList(config: MovieListConfig) {
         section.appendChild(emptyState({
             imgSrc: "/src/assets/images/big_chungus.webp",
             heading: "No movies in this list",
-            message: "Big Chungus says: maybe you should watch something with Ben Affleck ",
+            message: "Big Chungus says: maybe you should watch something with Ben Affleck? ",
             curatedMovie: {
                 id: 1230631, title: "Ben Affleck & Jennifer Lopez: Never Say Never"
             }
