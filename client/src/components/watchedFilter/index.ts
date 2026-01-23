@@ -1,10 +1,15 @@
 import templateString from "./template.html?raw";
 import { stringToHTMLElement } from "../../lib/utils";
 import { getWatchedFilter, setWatchedFilter } from "../../lib/store";
+import { heartIcon } from "../icons";
 import "./style.css";
 
 export default () => {
-    const form = stringToHTMLElement(templateString) as HTMLFormElement;
+    const container = stringToHTMLElement(templateString);
+    const form = container.querySelector("form")!;
+
+    const favoritesLabel = form.querySelector('label[for="favorites"]')!;
+    favoritesLabel.appendChild(heartIcon("filter__form-favorite__icon"));
 
     const favoritesCheckbox: HTMLInputElement =
         form.querySelector("#favorites")!;
@@ -28,7 +33,7 @@ export default () => {
                     : parseInt(ratingSelect.value),
         });
     });
-    
+
     const clearButton = form.querySelector("button")!;
     clearButton.addEventListener("click", () => {
         setWatchedFilter({
@@ -37,5 +42,5 @@ export default () => {
         });
     });
 
-    return form;
+    return container;
 };

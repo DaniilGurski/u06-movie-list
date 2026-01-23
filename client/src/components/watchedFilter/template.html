@@ -1,20 +1,18 @@
-<form class="watched-filter">
-    <div>
-        <label for="favorites">Favorites:</label>
-        <input type="checkbox" id="favorites" name="favorites" value="on" />
-    </div>
-    <div>
-        <label for="rating">Rating:</label>
-        <select id="rating" name="rating">
-            <option value="all">All</option>
+<div class="filter container">
+    <form class="filter__form">
+        <div class="filter__form-favorite">
+            <label class="filter__form-favorite-label" for="favorites"></label>
+            <input type="checkbox" id="favorites" class="visually-hidden" name="favorites" value="on"
+                aria-label="Filter by favorites" />
+        </div>
+        <select class="filter__form-rating" id="rating" name="rating" aria-label="Filter by rating">
+            <option value="all">All ratings</option>
             <option value="1">⭐</option>
             <option value="2">⭐⭐</option>
             <option value="3">⭐⭐⭐</option>
             <option value="4">⭐⭐⭐⭐</option>
             <option value="5">⭐⭐⭐⭐⭐</option>
         </select>
-    </div>
-    <div>
-        <button>Clear filter</button>
-    </div>
-</form>
+        <button class="filter__form-button" type="button">Clear filter</button>
+    </form>
+</div>

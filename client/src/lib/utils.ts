@@ -22,3 +22,23 @@ export const formatDate = (dateString: string): string => {
 export const setPageTitle = (title: string) => {
     document.title = `${title} | MaybeMovies`;
 };
+
+// AND BOOM GOES THE DYNAMITE.
+
+export function showToast(message: string, type?: "success" | "error") {
+    const toast = document.createElement("div");
+    toast.className = "page__toast";
+    toast.dataset.type = type;
+    toast.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    //setTimeout, minns ni den ELLER?!!?!?
+    setTimeout(() => toast.remove(), 3000);
+}
+
+// "Slumpa fram en film", tar mellan 1 och 1000 för att va säker (och slippa en fetch här), eller?
+
+export function getRandomMovieId(min: number = 1, max: number = 1000): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

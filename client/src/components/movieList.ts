@@ -1,6 +1,6 @@
 import type { MovieListConfig } from "../types/movie";
 import MovieItem from "./movieItem";
-import { noMoviesInList } from "../components/noMoviesInList";
+import { emptyState } from "../components/emptyState";
 
 export default function MovieList(config: MovieListConfig) {
 
@@ -40,8 +40,14 @@ export default function MovieList(config: MovieListConfig) {
     list.classList.add("movie-cards");
 
     if (movies.length === 0) {
-        const emptyState = noMoviesInList("/src/assets/images/big_chungus.webp", "No movies in this list", "Big Chungus says: maybe you hate movies?");
-        section.appendChild(emptyState);
+        section.appendChild(emptyState({
+            imgSrc: "/src/assets/images/big_chungus.webp",
+            heading: "No movies in this list",
+            message: "Big Chungus says: maybe you should watch something with Ben Affleck? ",
+            curatedMovie: {
+                id: 1230631, title: "Ben Affleck & Jennifer Lopez: Never Say Never"
+            }
+        }));
     } else {
         const list = document.createElement("ul");
         list.classList.add("movie-cards");

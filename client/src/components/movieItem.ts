@@ -327,7 +327,7 @@ export default function MovieItem(config: MovieItemConfig) {
         personalRatingLabel.htmlFor = `personal-rating-${tmdbId}`;
 
         const personalRatingSelect = document.createElement("select");
-        personalRatingSelect.className = "movie-card__input";
+        personalRatingSelect.className = "movie-card__select";
         personalRatingSelect.id = `personal-rating-${tmdbId}`;
         personalRatingSelect.name = "personal_rating";
 
