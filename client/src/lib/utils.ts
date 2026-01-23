@@ -36,3 +36,9 @@ export function showToast(message: string, type?: "success" | "error") {
     //setTimeout, minns ni den ELLER?!!?!?
     setTimeout(() => toast.remove(), 3000);
 }
+
+// "Slumpa fram en film", tar mellan 1 och 1000 för att va säker (och slippa en fetch här), eller?
+
+export function getRandomMovieId(min: number = 1, max: number = 1000): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

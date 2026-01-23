@@ -48,3 +48,11 @@ export type MovieListConfig = {
     introduction?: string;
     showCount?: boolean;
 };
+
+export interface EmptyStateConfig {
+    imgSrc?: string;
+    heading?: string;
+    message?: string;
+    curatedMovie?: { id: number; title: string };
+    randomMovieId?: number;
+}
