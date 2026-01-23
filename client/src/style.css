@@ -347,12 +347,14 @@ h6 {
 .movie-card {
     display: grid;
     grid-template-columns: auto;
+    grid-template-areas: "image" "content";
     border-radius: 0.5rem;
     background-color: oklch(0.9702 0 0);
     overflow: hidden;
 
     @media (width >=60rem) {
         grid-template-columns: 1fr 2fr;
+        grid-template-areas: "image content";
         row-gap: 1.5rem;
     }
 }
@@ -393,6 +395,7 @@ h6 {
 }
 
 .movie-card__image {
+    grid-area: image;
     overflow: hidden;
 
     & img {
@@ -415,6 +418,10 @@ h6 {
 }
 
 
+.details-form {
+    overflow: hidden;
+}
+
 .movie-card__placeholder {
     display: flex;
     flex-flow: column wrap;
@@ -428,6 +435,11 @@ h6 {
     aspect-ratio: 1;
 }
 
+.details-form .movie-card__placeholder {
+    aspect-ratio: unset;
+}
+
+
 .movie-card__placeholder-icon {
     inline-size: 5rem;
     block-size: auto;
@@ -440,12 +452,14 @@ h6 {
 }
 
 .movie-card__content {
+    grid-area: content;
     place-self: center center;
     display: flex;
     flex-flow: column wrap;
     padding: 1.5rem;
     gap: calc(1.5rem / 2);
     text-overflow: ellipsis;
+    inline-size: 100%;
 }
 
 .movie-card__title {
@@ -539,7 +553,8 @@ h6 {
     justify-items: start;
     gap: 0.75rem;
     overflow: hidden;
-    max-inline-size: 36.5rem; /* Halva container */
+    max-inline-size: 36.5rem;
+    /* Halva container */
 }
 
 /* Strictly for the lulz */
