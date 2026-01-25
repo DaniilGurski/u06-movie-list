@@ -25,20 +25,17 @@ export const getPopularMoviesTMDB = async (): Promise<TMDBMovie[]> => {
     }
 };
 
+// Tar bort try/catch för att felet ska nå routern direkt utan att loggas i konsolen först
+
 export const getMovieByIdTMDB = async (id: number) => {
-    try {
-        const res = await fetch(`http://localhost:3000/api/tmdb/${id}`);
+    const res = await fetch(`http://localhost:3000/api/tmdb/${id}`);
 
-        if (!res.ok) {
-            throw new Error(`Failed to fetch movie by ID: ${res.statusText}`);
-        }
-
-        const data: TMDBMovie = await res.json();
-        return data;
-    } catch (error) {
-        console.error("Error getting movie by ID:", error);
-        throw error;
+    if (!res.ok) {
+        throw new Error(`Failed to fetch movie by ID: ${res.statusText}`);
     }
+
+    const data: TMDBMovie = await res.json();
+    return data;
 };
 
 export const getSearchedMovieTMDB = async (

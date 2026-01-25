@@ -45,8 +45,12 @@ const router = async (): Promise<HTMLElement | DocumentFragment> => {
             return notFound();
         }
 
-        const movie = await getMovieByIdTMDB(movieId);
-        return details(movie);
+        try {
+            const movie = await getMovieByIdTMDB(movieId);
+            return details(movie);
+        } catch {
+            return notFound();
+        }
     }
 
     switch (path) {
