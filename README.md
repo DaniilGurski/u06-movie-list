@@ -28,7 +28,7 @@ View detailed information about any movie
 
 ## How it's built
 
-The app has three layers: Frontend (TypeScript) → Backend (Express) → TMDB API
+The app has three layers: Frontend (TypeScript),  Backend (Express) and TMDB API. The backend acts as a proxy for TMDB requests. This keeps the API key secret and the frontend never sees it.
 
 The frontend has three main files:
 - tmdbApi.ts fetches movie data from TMDB (through our backend)
@@ -53,6 +53,8 @@ The frontend has three main files:
 
 We expanded the basic store pattern we were given to handle all user actions. Every time something changes, we update the state and call `triggerRender()` to refresh the page.
 
+Components and pages never call the API directly - they always go through the store. This keeps data flow predictable.
+
 #### Things we figured out:
 
 - Handling two different IDs: TMDB gives movies one ID, our database gives them another. We built getMovieDbId() to translate between them. This was a tricky problem to solve.
@@ -60,6 +62,8 @@ We expanded the basic store pattern we were given to handle all user actions. Ev
 - Check before adding: Before adding a movie, we check if it already exists. If it does, we just update its status instead of creating a duplicate.
 
 - Cached vs fresh data: We have both getUserList() (fetches from API) and getUserListCached() (returns what we already have). This avoids unnecessary API calls.
+
+- Always fresh data: After every update to the backend, we fetch the full list again instead of updating local state manually. This avoids sync issues - we never have to worry about local and server data getting out of step.
 
 ### TMDB Service (tmdbApi.ts)
 
