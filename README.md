@@ -1,4 +1,4 @@
-# MaybeMovies - a full-stack movie watchlist and tracking application
+# Maybe?.Movies - a full-stack movie watchlist and tracking application
 
 MaybeMovies lets users browse movies, maintain a watchlist, and track watched movies with personal ratings and reviews.
 
