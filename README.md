@@ -1,5 +1,3 @@
-README.md
-
 # MaybeMovies - a full-stack movie watchlist and tracking application
 
 MaybeMovies lets users browse movies, maintain a watchlist, and track watched movies with personal ratings and reviews.
@@ -28,14 +26,16 @@ View detailed information about any movie
 
 ## How it's built
 
-The app has three layers: Frontend (TypeScript),  Backend (Express) and TMDB API. The backend acts as a proxy for TMDB requests. This keeps the API key secret and the frontend never sees it.
+The app has three layers: Frontend (TypeScript), Backend (Express) and TMDB API. The backend acts as a proxy for TMDB requests. This keeps the API key secret and the frontend never sees it.
 
-The frontend has three main files:
+### The frontend has three main files:
+
 - tmdbApi.ts fetches movie data from TMDB (through our backend)
 - movieApi.ts handles the user's lists: adding, updating and deleting movies
 - store.ts keeps track of state and tells the page when to update
 
-**Tech stack:** TypeScript, Express, TMDB API, Vite
+### Tech stack:
+TypeScript, Express, TMDB API, Vite.
 
 ## Our approach
 
@@ -46,6 +46,7 @@ The frontend has three main files:
 5. Built reusable and configurable components
 6. Assembled pages by combining components into full pages
 7. Connected everything by hooking up buttons, forms, navigation et cetera
+8. Fetch TMDB movies from backend express server
 
 ## Highlights
 
@@ -61,7 +62,9 @@ Components and pages never call the API directly - they always go through the st
 
 - Check before adding: Before adding a movie, we check if it already exists. If it does, we just update its status instead of creating a duplicate.
 
-- Cached vs fresh data: We have both getUserList() (fetches from API) and getUserListCached() (returns what we already have). This avoids unnecessary API calls.
+- To avoid unnecessary API call, we store the user list in the store.
+
+- After we write to the database we read in the new user list to keep our application synced (read after write)
 
 - Always fresh data: After every update to the backend, we fetch the full list again instead of updating local state manually. This avoids sync issues - we never have to worry about local and server data getting out of step.
 
@@ -134,7 +137,7 @@ The project was bigger than the time we had.
 
 ### Working with the "Simple SPA" pattern
 
-We started with a template for building a single-page application. Honestly, we didn't love everything about it - for example, we thought pages should control whether they have a header and footer.
+We started with a template for building a single-page application. Honestly, we didn't love everything about it. For example, we thought pages should control whether they have a header and footer.
 
 We moved code around and renamed files until it felt more manageable. The router now expects HTML elements instead of strings, which meant all components had to return actual elements.
 
