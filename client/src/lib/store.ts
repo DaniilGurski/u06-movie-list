@@ -169,8 +169,8 @@ class Store {
     // Update movie data (personal rating, review)
 
     async updateMovieData(
-        tmdbId: number,
-        data: { personal_rating?: number | null; review?: string | null },
+        tmdbId: TMDBMovie["id"],
+        data: Pick<TMDBMovieInList, "personal_rating" | "review">
     ) {
         try {
             await movieApi.updateMovieData(tmdbId, data);
@@ -240,7 +240,7 @@ class Store {
 
     // Hämtar databasens id från tmdb_id
 
-    getMovieDbId(tmdbId: number): number | undefined {
+    getMovieDbId(tmdbId: TMDBMovieInList["tmdb_id"]): number | undefined {
         const movie = this.userList.find((movie) => {
             return movie.tmdb_id === tmdbId;
         });
@@ -249,14 +249,14 @@ class Store {
 
     // Tittar om en film är i /watchlist
 
-    isMovieInWatchlist(movieId: number): boolean {
+    isMovieInWatchlist(movieId: TMDBMovie["id"]): boolean {
         return this.userList.some((movie) => {
             return movie.tmdb_id === movieId && movie.status === "watchlist";
         });
     }
 
     // Tittar om en film är i /watched
-    isMovieInWatched(movieId: number): boolean {
+    isMovieInWatched(movieId: TMDBMovie["id"]): boolean {
         return this.userList.some((movie) => {
             return movie.tmdb_id === movieId && movie.status === "watched";
         });

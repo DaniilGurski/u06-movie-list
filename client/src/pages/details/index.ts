@@ -84,8 +84,8 @@ export default async (movie: TMDBMovie) => {
             if (!savedMovie.id) return;
 
             await updateMovieData(savedMovie.id, {
-                personal_rating: personalRating ? Number(personalRating) : null,
-                review: review || null,
+                personal_rating: personalRating ? Number(personalRating) : undefined,
+                review: review || undefined,
             });
             // Toasty!!!!
             showToast("Changes saved!", "success");

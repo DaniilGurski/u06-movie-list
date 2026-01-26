@@ -67,8 +67,8 @@ export const updateMovieStatus = async (
 
 // Update data like personal rating, personal review for a movie
 export const updateMovieData = async (
-    tmdbId: number,
-    data: { personal_rating?: number | null; review?: string | null },
+    tmdbId: TMDBMovieInList["id"],
+    data: Pick<TMDBMovieInList, "personal_rating" | "review">,
 ): Promise<TMDBMovieInList> => {
     try {
         const res = await fetch(`${baseURL}/${tmdbId}`, {
@@ -93,7 +93,7 @@ export const updateMovieData = async (
 
 // Uppdatera en films favorite-status
 export const updateMovieFavorite = async (
-    id: number,
+    id: TMDBMovieInList["id"],
     isFavorite: boolean,
 ): Promise<TMDBMovieInList> => {
     try {
@@ -123,7 +123,7 @@ export const updateMovieFavorite = async (
 
 // Ta bort en film från /watchlist eller /watched
 
-const deleteMovie = async (id: number): Promise<void> => {
+const deleteMovie = async (id: TMDBMovieInList["id"]): Promise<void> => {
     try {
         const res = await fetch(`${baseURL}/${id}`, {
             method: "DELETE",
