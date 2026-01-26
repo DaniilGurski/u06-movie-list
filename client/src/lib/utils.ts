@@ -20,7 +20,7 @@ export const formatDate = (dateString: string): string => {
 };
 
 export const setPageTitle = (title: string) => {
-    document.title = `${title} | MaybeMovies`;
+    document.title = `${title} | Maybe?.Movies`;
 };
 
 // AND BOOM GOES THE DYNAMITE.
